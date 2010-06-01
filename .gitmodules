@@ -19,3 +19,6 @@
 [submodule "dependencies/freetype"]
 	path = dependencies/freetype
 	url = git://github.com/Kanma/Athena-Dependencies-FreeType.git
+[submodule "dependencies/freeimage"]
+	path = dependencies/freeimage
+	url = git://github.com/Kanma/Athena-Dependencies-FreeImage.git
