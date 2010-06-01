@@ -25,3 +25,6 @@
 [submodule "dependencies/ogre"]
 	path = dependencies/ogre
 	url = git://github.com/Kanma/Athena-Dependencies-Ogre.git
+[submodule "dependencies/xmake"]
+	path = dependencies/xmake
+	url = git://github.com/Kanma/XMake.git
