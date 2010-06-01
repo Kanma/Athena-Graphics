@@ -16,3 +16,6 @@
 [submodule "dependencies/zziplib"]
 	path = dependencies/zziplib
 	url = git://github.com/Kanma/Athena-Dependencies-zziplib.git
+[submodule "dependencies/freetype"]
+	path = dependencies/freetype
+	url = git://github.com/Kanma/Athena-Dependencies-FreeType.git
