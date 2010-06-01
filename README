@@ -1,0 +1,55 @@
+********************************************************************************
+*                                                                              *
+*                               Athena-Graphics                                *
+*                    http://github.com/Kanma/Athena-Graphics                   *
+*                                                                              *
+********************************************************************************
+
+
+---------------------------------------
+- Summary
+---------------------------------------
+
+Athena-Graphics is the one of the modules of the Athena Game Framework, in the
+form of a library written in C++.
+
+This module provides concrete implementations of the visual & debug components
+of the 'entities system' implemented in Athena-Entities. It also contains some
+graphics-related utility classes.
+
+The 3D rendering engine used is OGRE (Object-Oriented Graphics Rendering Engine,
+http://www.ogre3d.org).
+
+The use of this module is optional, you can choose to implement your own
+components instead.
+
+
+---------------------------------------
+- Credits
+---------------------------------------
+
+This module is implemented using OGRE 1.7 (Object-Oriented Graphics Rendering
+Engine), a scene-oriented and flexible 3D engine, released under the MIT License.
+
+
+---------------------------------------
+- License
+---------------------------------------
+
+Athena-Graphics is is made available under the MIT License. The text of the license
+is in the file 'LICENSE'.
+
+Under the MIT License you may use Athena-Graphics for any purpose you wish, without
+warranty, and modify it if you require, subject to one condition:
+
+   "The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software."
+
+In practice this means that whenever you distribute your application, whether as
+binary or as source code, you must include somewhere in your distribution the
+text in the file 'LICENSE'. This might be in the printed documentation, as a
+file on delivered media, or even on the credits / acknowledgements of the
+runtime application itself; any of those would satisfy the requirement.
+
+Even if the license doesn't require it, please consider to contribute your
+modifications back to the community.
