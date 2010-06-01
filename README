@@ -10,8 +10,8 @@
 - Summary
 ---------------------------------------
 
-Athena-Graphics is the one of the modules of the Athena Game Framework, in the
-form of a library written in C++.
+Athena-Graphics is one of the modules of the Athena Game Framework, in the form
+of a library written in C++.
 
 This module provides concrete implementations of the visual & debug components
 of the 'entities system' implemented in Athena-Entities. It also contains some
