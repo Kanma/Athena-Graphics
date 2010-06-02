@@ -1,5 +1,6 @@
 # List the source files
 set(SRCS Line3D.cpp
+         LinesList.cpp
 )
 
 # Precompiler definitions
