@@ -1,10 +1,12 @@
 # List the source files
 set(SRCS Conversions.cpp
+         Declarations.cpp
          Line3D.cpp
          LinesList.cpp
          MeshBuilder.cpp
          MeshTransformer.cpp
          SceneRenderTargetListener.cpp
+         VisualComponent.cpp
 )
 
 # Precompiler definitions

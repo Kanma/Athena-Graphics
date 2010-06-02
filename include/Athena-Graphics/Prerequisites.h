@@ -28,6 +28,14 @@ namespace Athena
         class MeshBuilder;
         class MeshTransformer;
         class SceneRenderTargetListener;
+
+
+    	/// The Ogre Root
+    	extern ATHENA_SYMBOL Ogre::Root*			pOgreRoot;
+    	/// The Ogre Scene manager
+    	extern ATHENA_SYMBOL Ogre::SceneManager*	pSceneManager;
+    	/// The window
+    	extern ATHENA_SYMBOL Ogre::RenderWindow*	pMainWindow;
     }
 }
 
