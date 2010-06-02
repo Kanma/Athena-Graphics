@@ -24,6 +24,8 @@ namespace Athena
     namespace Graphics
     {
         class Line3D;
+        class LinesList;
+        class MeshBuilder;
     }
 }
 

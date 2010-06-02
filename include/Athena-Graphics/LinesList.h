@@ -1,7 +1,7 @@
 /** @file	LinesList.h
 	@author	Philip Abbet
 
-	Definition of the class 'Athena::Graphics::LinesList'
+	Declaration of the class 'Athena::Graphics::LinesList'
 */
 
 #ifndef _ATHENA_GRAPHICS_LINESLIST_H_

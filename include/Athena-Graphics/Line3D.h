@@ -2,7 +2,7 @@
 	@author	Trep (of the Ogre forum)
 	@author	Philip Abbet
 
-	Definition of the class 'Athena::Graphics::Line3D'
+	Declaration of the class 'Athena::Graphics::Line3D'
 */
 
 #ifndef _ATHENA_GRAPHICS_LINE3D_H_
