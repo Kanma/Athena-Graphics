@@ -4,6 +4,7 @@ set(SRCS Conversions.cpp
          LinesList.cpp
          MeshBuilder.cpp
          MeshTransformer.cpp
+         SceneRenderTargetListener.cpp
 )
 
 # Precompiler definitions

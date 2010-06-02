@@ -27,6 +27,7 @@ namespace Athena
         class LinesList;
         class MeshBuilder;
         class MeshTransformer;
+        class SceneRenderTargetListener;
     }
 }
 
