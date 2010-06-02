@@ -5,6 +5,7 @@ set(SRCS Conversions.cpp
          LinesList.cpp
          MeshBuilder.cpp
          MeshTransformer.cpp
+         Object.cpp
          SceneRenderTargetListener.cpp
          VisualComponent.cpp
 )
