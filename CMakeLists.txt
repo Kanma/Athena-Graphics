@@ -53,20 +53,22 @@ if (ATHENA_GRAPHICS_STATIC)
 else()
     xmake_init_dynamic(ATHENA_GRAPHICS)
     xmake_add_link_paths(ATHENA_GRAPHICS "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
-    xmake_add_link_targets(ATHENA_GRAPHICS Athena-Graphics Ogre)
+    xmake_add_link_targets(ATHENA_GRAPHICS Athena-Graphics)
 endif()
 
 xmake_add_include_paths(ATHENA_GRAPHICS ${ATHENA_GRAPHICS_SOURCE_DIR}/include
-                                        ${XMAKE_ATHENA_ENTITIES_INCLUDE_PATHS})
+                                        ${XMAKE_ATHENA_ENTITIES_INCLUDE_PATHS}
+                                        ${XMAKE_OGRE_INCLUDE_PATHS})
 
 if (XMAKE_OGRE_FRAMEWORK)
-    xmake_add_link_flags(ATHENA_GRAPHICS "-F${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" "-framework Ogre" "-framework Carbon" "-framework Cocoa")
+    if (NOT ATHENA_GRAPHICS_STATIC)
+        xmake_add_link_flags(ATHENA_GRAPHICS ${XMAKE_OGRE_LINK_FLAGS})
+    endif()
 else()
     xmake_add_link_paths(ATHENA_GRAPHICS "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
     xmake_add_link_targets(ATHENA_GRAPHICS Ogre)
 endif()
 
 # Subdirectories to process
-# add_subdirectory(include)
-# add_subdirectory(src)
-# add_subdirectory(unittests)
+add_subdirectory(include)
+add_subdirectory(src)
