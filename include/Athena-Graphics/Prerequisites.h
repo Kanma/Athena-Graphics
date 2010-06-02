@@ -26,6 +26,7 @@ namespace Athena
         class Line3D;
         class LinesList;
         class MeshBuilder;
+        class MeshTransformer;
     }
 }
 
