@@ -1,5 +1,6 @@
 # List the source files
-set(SRCS Line3D.cpp
+set(SRCS Conversions.cpp
+         Line3D.cpp
          LinesList.cpp
 )
 
