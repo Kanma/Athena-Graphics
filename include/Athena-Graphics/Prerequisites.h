@@ -29,6 +29,9 @@ namespace Athena
         class MeshTransformer;
         class SceneRenderTargetListener;
 
+        class DirectionalLight;
+        class Object;
+
 
     	/// The Ogre Root
     	extern ATHENA_SYMBOL Ogre::Root*			pOgreRoot;
