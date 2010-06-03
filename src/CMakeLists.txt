@@ -7,6 +7,7 @@ set(SRCS Conversions.cpp
          MeshBuilder.cpp
          MeshTransformer.cpp
          Object.cpp
+         Plane.cpp
          PointLight.cpp
          SceneRenderTargetListener.cpp
          Spotlight.cpp
