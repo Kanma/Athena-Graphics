@@ -31,6 +31,7 @@ namespace Athena
 
         class DirectionalLight;
         class Object;
+        class PointLight;
 
 
     	/// The Ogre Root

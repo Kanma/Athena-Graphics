@@ -7,6 +7,7 @@ set(SRCS Conversions.cpp
          MeshBuilder.cpp
          MeshTransformer.cpp
          Object.cpp
+         PointLight.cpp
          SceneRenderTargetListener.cpp
          VisualComponent.cpp
 )
