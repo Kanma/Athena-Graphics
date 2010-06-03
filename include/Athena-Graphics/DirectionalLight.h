@@ -1,7 +1,7 @@
 /** @file	DirectionalLight.h
 	@author	Philip Abbet
 
-	Definition of the class 'Athena::Graphics::DirectionalLight'
+	Declaration of the class 'Athena::Graphics::DirectionalLight'
 */
 
 #ifndef _ATHENA_GRAPHICS_DIRECTIONALLIGHT_H_

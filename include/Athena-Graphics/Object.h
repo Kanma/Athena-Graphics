@@ -1,7 +1,7 @@
 /** @file	Object.h
 	@author	Philip Abbet
 
-	Declarations of the class 'Athena::Graphics::Object'
+	Declaration of the class 'Athena::Graphics::Object'
 */
 
 #ifndef _ATHENA_GRAPHICS_OBJECT_H_
