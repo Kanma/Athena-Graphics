@@ -75,6 +75,20 @@ Ogre::Matrix4 toOgre(const Math::Matrix4& m)
 
 //-----------------------------------------------------------------------
 
+Ogre::Radian toOgre(const Math::Radian& a)
+{
+    return Ogre::Radian(a.valueRadians());
+}
+
+//-----------------------------------------------------------------------
+
+Ogre::Degree toOgre(const Math::Degree& a)
+{
+    return Ogre::Degree(a.valueDegrees());
+}
+
+//-----------------------------------------------------------------------
+
 Math::Vector2 fromOgre(const Ogre::Vector2& v)
 {
     return Math::Vector2(v.x, v.y);
@@ -132,6 +146,20 @@ Math::Matrix4 fromOgre(const Ogre::Matrix4& m)
                          m[1][0], m[1][1], m[1][2], m[1][3],
                          m[2][0], m[2][1], m[2][2], m[2][3],
                          m[3][0], m[3][1], m[3][2], m[3][3]);
+}
+
+//-----------------------------------------------------------------------
+
+Math::Radian fromOgre(const Ogre::Radian& a)
+{
+    return Math::Radian(a.valueRadians());
+}
+
+//-----------------------------------------------------------------------
+
+Math::Degree fromOgre(const Ogre::Degree& a)
+{
+    return Math::Degree(a.valueDegrees());
 }
 
 }

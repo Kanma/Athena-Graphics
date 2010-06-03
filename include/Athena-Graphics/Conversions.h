@@ -40,6 +40,9 @@ Ogre::AxisAlignedBox toOgre(const Math::AxisAlignedBox& b);
 Ogre::Matrix3 toOgre(const Math::Matrix3& m);
 Ogre::Matrix4 toOgre(const Math::Matrix4& m);
 
+Ogre::Radian toOgre(const Math::Radian& a);
+Ogre::Degree toOgre(const Math::Degree& a);
+
 
 Math::Vector2 fromOgre(const Ogre::Vector2& v);
 Math::Vector3 fromOgre(const Ogre::Vector3& v);
@@ -51,6 +54,9 @@ Math::AxisAlignedBox fromOgre(const Ogre::AxisAlignedBox& b);
 
 Math::Matrix3 fromOgre(const Ogre::Matrix3& m);
 Math::Matrix4 fromOgre(const Ogre::Matrix4& m);
+
+Math::Radian fromOgre(const Ogre::Radian& a);
+Math::Degree fromOgre(const Ogre::Degree& a);
 
 }
 }

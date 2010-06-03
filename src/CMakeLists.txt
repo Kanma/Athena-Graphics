@@ -9,6 +9,7 @@ set(SRCS Conversions.cpp
          Object.cpp
          PointLight.cpp
          SceneRenderTargetListener.cpp
+         Spotlight.cpp
          VisualComponent.cpp
 )
 
