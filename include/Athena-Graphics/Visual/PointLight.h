@@ -1,24 +1,25 @@
-/** @file	Athena_Graphics_Spotlight.h
+/** @file	PointLight.h
 	@author	Philip Abbet
 
-	Declaration of the class 'Athena::Graphics::Spotlight'
+	Declaration of the class 'Athena::Graphics::Visual::PointLight'
 */
 
-#ifndef _ATHENA_GRAPHICS_SPOTLIGHT_H_
-#define _ATHENA_GRAPHICS_SPOTLIGHT_H_
+#ifndef _ATHENA_GRAPHICS_POINTLIGHT_H_
+#define _ATHENA_GRAPHICS_POINTLIGHT_H_
 
 #include <Athena-Graphics/Prerequisites.h>
-#include <Athena-Graphics/PointLight.h>
+#include <Athena-Graphics/Visual/DirectionalLight.h>
 
 
 namespace Athena {
 namespace Graphics {
+namespace Visual {
 
 
 //---------------------------------------------------------------------------------------
-/// @brief	A visual component that manages a spotlight
+/// @brief	A visual component that manages a point light
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Spotlight: public PointLight
+class ATHENA_SYMBOL PointLight: public DirectionalLight
 {
 	//_____ Construction / Destruction __________
 public:
@@ -26,12 +27,12 @@ public:
     /// @brief	Constructor
     /// @param	strName		Name of the component
     //-----------------------------------------------------------------------------------
-	Spotlight(const std::string& strName, Entities::ComponentsList* pList);
-
+    PointLight(const std::string& strName, Entities::ComponentsList* pList);
+	
     //-----------------------------------------------------------------------------------
     /// @brief	Destructor
     //-----------------------------------------------------------------------------------
-	virtual ~Spotlight();
+	virtual ~PointLight();
 
     //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
@@ -40,15 +41,15 @@ public:
     /// @param	pList	List to which the component must be added
     /// @return			The new component
     //-----------------------------------------------------------------------------------
-	static Spotlight* create(const std::string& strName, Entities::ComponentsList* pList);
+	static PointLight* create(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Cast a component to a Spotlight
+    /// @brief	Cast a component to a PointLight
     ///
     /// @param	pComponent	The component
-    /// @return				The component, 0 if it isn't castable to a Spotlight
+    /// @return				The component, 0 if it isn't castable to a PointLight
     //-----------------------------------------------------------------------------------
-	static Spotlight* cast(Entities::Component* pComponent);
+	static PointLight* cast(Entities::Component* pComponent);
 
 
 	//_____ Implementation of CVisualComponent __________
@@ -66,34 +67,48 @@ public:
 	//_____ Management of the Light __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Sets the range of a spotlight, i.e. the angle of the inner and outer
-    ///			cones and the rate of falloff between them
-    /// @param	innerAngle	Angle covered by the bright inner cone  
-    /// @param	outerAngle	Angle covered by the outer cone  
-    /// @param	falloff		The rate of falloff between the inner and outer cones. 1.0
-    ///						means a linear falloff, less means slower falloff, higher
-    ///						means faster falloff. 
+    /// @brief	Sets the attenuation parameters of the light source ie how it diminishes
+    ///			with distance
+    /// @remark	Lights normally get fainter the further they are away. Also, each light
+    ///			is given a maximum range beyond which it cannot affect any objects.
+    ///			Light attentuation is not applicable to directional lights since they
+    ///			have an infinite range and constant intensity.
+    ///			This follows a standard attenuation approach - see any good 3D text for
+    ///			the details of what they mean.
+    /// @param	range		The absolute upper range of the light in world units  
+    /// @param	constant	The constant factor in the attenuation formula: 1.0 means
+    ///						never attenuate, 0.0 is complete attenuation  
+    /// @param	linear		The linear factor in the attenuation formula: 1 means
+    ///						attenuate evenly over the distance  
+    /// @param	quadratic	The quadratic factor in the attenuation formula: adds a
+    ///						curvature to the attenuation formula
     //-----------------------------------------------------------------------------------
-	void setRange(const Math::Radian &innerAngle, const Math::Radian &outerAngle,
-				  Math::Real falloff = 1.0);
+	void setAttenuation(Math::Real range, Math::Real constant, Math::Real linear,
+					    Math::Real quadratic);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Returns the angle covered by the spotlights inner cone
-    /// @return	The angle
+    /// @brief	Returns the absolute upper range of the light
+    /// @return	The range
     //-----------------------------------------------------------------------------------
-	const Math::Radian getInnerAngle() const;
+	Math::Real getAttenuationRange() const;
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Returns the angle covered by the spotlights outer cone
-    /// @return	The angle
+    /// @brief	Returns the constant factor in the attenuation formula
+    /// @return	The constant factor
     //-----------------------------------------------------------------------------------
-	const Math::Radian getOuterAngle() const;
+	Math::Real getAttenuationConstant() const;
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Returns the falloff between the inner and outer cones of the spotlight
-    /// @return	The fallof
+    /// @brief	Returns the linear factor in the attenuation formula
+    /// @return	The linear factor
     //-----------------------------------------------------------------------------------
-	Math::Real getFalloff() const;
+	Math::Real getAttenuationLinear() const;
+
+    //-----------------------------------------------------------------------------------
+    /// @brief	Returns the quadric factor in the attenuation formula
+    /// @return	The quadric factor
+    //-----------------------------------------------------------------------------------
+	Math::Real getAttenuationQuadric() const;
 
 
 	//_____ Management of the properties __________
@@ -143,6 +158,7 @@ public:
 	static const std::string TYPE;	///< Name of the type of component
 };
 
+}
 }
 }
 

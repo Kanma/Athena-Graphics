@@ -1,26 +1,26 @@
-/** @file	Object.h
+/** @file	DirectionalLight.h
 	@author	Philip Abbet
 
-	Declaration of the class 'Athena::Graphics::Object'
+	Declaration of the class 'Athena::Graphics::Visual::DirectionalLight'
 */
 
-#ifndef _ATHENA_GRAPHICS_OBJECT_H_
-#define _ATHENA_GRAPHICS_OBJECT_H_
+#ifndef _ATHENA_GRAPHICS_DIRECTIONALLIGHT_H_
+#define _ATHENA_GRAPHICS_DIRECTIONALLIGHT_H_
 
 #include <Athena-Graphics/Prerequisites.h>
-#include <Athena-Graphics/VisualComponent.h>
-#include <Ogre/OgreEntity.h>
-#include <Ogre/OgreResourceGroupManager.h>
+#include <Athena-Graphics/Visual/VisualComponent.h>
+#include <Ogre/OgreLight.h>
 
 
 namespace Athena {
 namespace Graphics {
+namespace Visual {
 
 
 //---------------------------------------------------------------------------------------
-/// @brief	A visual component that contains a mesh
+/// @brief	A visual component that manages a directional light
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Object: public VisualComponent
+class ATHENA_SYMBOL DirectionalLight: public VisualComponent
 {
 	//_____ Construction / Destruction __________
 public:
@@ -28,12 +28,12 @@ public:
     /// @brief	Constructor
     /// @param	strName		Name of the component
     //-----------------------------------------------------------------------------------
-	Object(const std::string& strName, Entities::ComponentsList* pList);
+	DirectionalLight(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
     /// @brief	Destructor
     //-----------------------------------------------------------------------------------
-	virtual ~Object();
+	virtual ~DirectionalLight();
 
     //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
@@ -42,15 +42,15 @@ public:
     /// @param	pList	List to which the component must be added
     /// @return			The new component
     //-----------------------------------------------------------------------------------
-	static Object* create(const std::string& strName, Entities::ComponentsList* pList);
+	static DirectionalLight* create(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Cast a component to a Object
+    /// @brief	Cast a component to a DirectionalLight
     ///
     /// @param	pComponent	The component
-    /// @return				The component, 0 if it isn't castable to a Object
+    /// @return				The component, 0 if it isn't castable to a DirectionalLight
     //-----------------------------------------------------------------------------------
-	static Object* cast(Component* pComponent);
+	static DirectionalLight* cast(Entities::Component* pComponent);
 
 
 	//_____ Implementation of CVisualComponent __________
@@ -65,28 +65,56 @@ public:
 	}
 
 
-	//_____ Methods __________
+	//_____ Management of the Light __________
 public:
 	//-----------------------------------------------------------------------------------
-	/// @brief	Returns the Ogre entity used by this component
-	/// @return	The Ogre entity
+	/// @brief	Returns the Ogre light used by this component
+	/// @return	The Ogre light
 	//-----------------------------------------------------------------------------------
-	inline Ogre::Entity* getOgreEntity()
+	inline Ogre::Light* getOgreLight()
 	{
-		return m_pEntity;
+		return m_pLight;
 	}
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Load a mesh
-    ///
-    /// @param	strMeshName		The name of the mesh
-    /// @param	strGroupName	The name of the resource group
-    /// @return					'true' if successful
+    /// @brief	Sets the color of the diffuse light given off by this source
+    /// @param	color	The diffuse color
+    /// @remark	Material objects have ambient, diffuse and specular values which indicate
+    ///			how much of each type of light an object reflects. This value denotes the
+    ///			amount and colour of this type of light the light exudes into the scene.
+    ///			The actual appearance of objects is a combination of the two.
+    ///			Diffuse light simulates the typical light emanating from light sources and
+    ///			affects the base colour of objects together with ambient light. 
     //-----------------------------------------------------------------------------------
-	bool loadMesh(const std::string& strMeshName, const std::string& strGroupName =
-				  Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	void setDiffuseColor(const Math::Color& color) const;
 
+    //-----------------------------------------------------------------------------------
+    /// @brief	Returns the colour of the diffuse light given off by this light source
+    ///			(see setDiffuseColor for more info)
+    /// @return	The diffuse color
+    //-----------------------------------------------------------------------------------
+	const Math::Color getDiffuseColor() const;
 	
+    //-----------------------------------------------------------------------------------
+    /// @brief	Sets the color of the specular light given off by this source
+    /// @param	color	The specular color
+    /// @remark	Material objects have ambient, diffuse and specular values which indicate
+    ///			how much of each type of light an object reflects. This value denotes the
+    ///			amount and colour of this type of light the light exudes into the scene.
+    ///			The actual appearance of objects is a combination of the two.
+    ///			Specular light affects the appearance of shiny highlights on objects, and
+    ///			is also dependent on the 'shininess' Material value.
+    //-----------------------------------------------------------------------------------
+	void setSpecularColor(const Math::Color& color) const;
+
+    //-----------------------------------------------------------------------------------
+    /// @brief	Returns the colour of the specular light given off by this light source
+    ///			(see setSpecularColor for more info)
+    /// @return	The specular color
+    //-----------------------------------------------------------------------------------
+	const Math::Color getSpecularColor() const;
+
+
 	//_____ Management of the properties __________
 public:
     //-----------------------------------------------------------------------------------
@@ -131,14 +159,15 @@ public:
 
 	//_____ Constants __________
 public:
-	static const std::string TYPE;  ///< Name of the type of component
+	static const std::string TYPE;	///< Name of the type of component
 
 
 	//_____ Attributes __________
 protected:
-	Ogre::Entity* m_pEntity;
+	Ogre::Light* m_pLight;			///< The Ogre light
 };
 
+}
 }
 }
 

@@ -1,10 +1,10 @@
 /**	@file	Plane.cpp
 	@author	Philip Abbet
 
-	Implementation of the class 'Athena::Graphics::Plane'
+	Implementation of the class 'Athena::Graphics::Visual::Plane'
 */
 
-#include <Athena-Graphics/Plane.h>
+#include <Athena-Graphics/Visual/Plane.h>
 #include <Athena-Graphics/Conversions.h>
 #include <Athena-Core/Log/LogManager.h>
 #include <Ogre/OgreEntity.h>
@@ -15,6 +15,7 @@
 
 using namespace Athena;
 using namespace Athena::Graphics;
+using namespace Athena::Graphics::Visual;
 using namespace Athena::Entities;
 using namespace Athena::Utils;
 using namespace Athena::Log;

@@ -1,29 +1,27 @@
-/** @file	VisualComponent.h
+/** @file	Plane.h
 	@author	Philip Abbet
 
-	Declaration of the class 'Athena::Graphics::VisualComponent'
+	Declaration of the class 'Athena::Graphics::Visual::Plane'
 */
 
-#ifndef _ATHENA_GRAPHICS_VISUALCOMPONENT_H_
-#define _ATHENA_GRAPHICS_VISUALCOMPONENT_H_
+#ifndef _ATHENA_GRAPHICS_PLANE_H_
+#define _ATHENA_GRAPHICS_PLANE_H_
 
 #include <Athena-Graphics/Prerequisites.h>
-#include <Athena-Entities/ComponentsList.h>
-#include <Athena-Entities/Entity.h>
-#include <Athena-Core/Signals/SignalsList.h>
-#include <Athena-Core/Signals/Declarations.h>
-#include <Ogre/OgreMovableObject.h>
-#include <Ogre/OgreSceneNode.h>
+#include <Athena-Graphics/Visual/VisualComponent.h>
+#include <Athena-Math/Vector3.h>
+#include <Ogre/OgreEntity.h>
 
 
 namespace Athena {
 namespace Graphics {
+namespace Visual {
 
 
 //---------------------------------------------------------------------------------------
-/// @brief	Base class for all the visual components of an entity
+/// @brief	A visual component that manages a plane
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL VisualComponent: public Entities::Component
+class ATHENA_SYMBOL Plane: public VisualComponent
 {
 	//_____ Construction / Destruction __________
 public:
@@ -31,12 +29,12 @@ public:
     /// @brief	Constructor
     /// @param	strName		Name of the component
     //-----------------------------------------------------------------------------------
-	VisualComponent(const std::string& strName, Entities::ComponentsList* pList);
+	Plane(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
     /// @brief	Destructor
     //-----------------------------------------------------------------------------------
-	virtual ~VisualComponent();
+	virtual ~Plane();
 
     //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
@@ -45,118 +43,77 @@ public:
     /// @param	pList	List to which the component must be added
     /// @return			The new component
     //-----------------------------------------------------------------------------------
-	static VisualComponent* create(const std::string& strName, Entities::ComponentsList* pList);
+	static Plane* create(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Cast a component to a VisualComponent
+    /// @brief	Cast a component to a Plane
     ///
     /// @param	pComponent	The component
-    /// @return				The component, 0 if it isn't castable to a VisualComponent
+    /// @return				The component, 0 if it isn't castable to a Plane
     //-----------------------------------------------------------------------------------
-	static VisualComponent* cast(Entities::Component* pComponent);
+	static Plane* cast(Entities::Component* pComponent);
 
 
-	//_____ Implementation of CComponent __________
+	//_____ Implementation of CVisualComponent __________
 public:
 	//-----------------------------------------------------------------------------------
 	/// @brief	Returns the type of the component
 	/// @return	The type
 	//-----------------------------------------------------------------------------------
-	virtual const std::string getType() const { return TYPE; }
+	virtual const std::string getType() const
+	{
+		return TYPE;
+	}
 
 
 	//_____ Methods __________
 public:
 	//-----------------------------------------------------------------------------------
-	/// @brief	Set if the movable object of the visual component (if any) must cast
-	///         shadows
-	///
-	/// @param	bCastShadows	Indicates if the movable object must cast shadows
+	/// @brief	Returns the Ogre entity used by this component
+	/// @return	The Ogre entity
 	//-----------------------------------------------------------------------------------
-	void setCastShadows(bool bCastShadows);
-
-	//-----------------------------------------------------------------------------------
-	/// @brief	Indicates if the movable object of the visual component (if any)  must cast
-	///			shadows
-	///
-	/// @return	'true' if this movable object must cast shadows
-	//-----------------------------------------------------------------------------------
-	inline bool mustCastShadows() const
+	inline Ogre::Entity* getOgreEntity()
 	{
-		return m_bCastShadows;
+		return m_pEntity;
 	}
 
-	//-----------------------------------------------------------------------------------
-	/// @brief	Returns the scene node used by the component
-	/// @return	The scene node
-	//-----------------------------------------------------------------------------------
-	virtual Ogre::SceneNode* getSceneNode() const
-	{
-		return m_pSceneNode;
-	}
+
+    //-----------------------------------------------------------------------------------
+    /// @brief	Setup the plane
+    ///
+    /// @param	strMaterial		Material to use
+    /// @param	normalVector	Orientation of the plane
+    /// @param	distance		Distance from the origin
+    /// @param	width			The width of the plane in world coordinates
+    /// @param	height			The height of the plane in world coordinates
+    /// @param	xSegments		The number of segments of the plane in the x direction
+    /// @param	ySegments		The number of segments of the plane in the y direction
+    /// @param	bNormals		If true, normals are created perpendicular to the plane
+    /// @param	iNbTexCoordSet	The number of 2D texture coordinate sets created - by
+    ///							default the corners are created to be the corner of the
+    ///                         texture.
+    /// @param	uTile			The number of times the texture should be repeated in the
+    ///                         u direction
+    /// @param	vTile			The number of times the texture should be repeated in the
+    ///                         v direction
+    /// @param	upVector		The 'Up' direction of the plane
+    /// @return					'true' if successful
+    //-----------------------------------------------------------------------------------
+	bool createPlane(const std::string& strMaterial, const Math::Vector3& normalVector,
+					 Math::Real distance, Math::Real width, Math::Real height,
+					 int xSegments = 1, int ySegments = 1, bool bNormals = true,
+					 int iNbTexCoordSet = 1, Math::Real uTile = 1.0f, Math::Real vTile = 1.0f,
+					 const Math::Vector3& upVector = Math::Vector3::UNIT_Y);
 
 protected:
-	void attachObject(Ogre::MovableObject* pObject);
-
-
-	//_____ Visibility __________
-public:
-	//-----------------------------------------------------------------------------------
-	/// @brief	Makes all objects attached to this component become visible / invisible
-	/// @remark	This is a shortcut to calling setVisible() on the objects attached to this
-	///			component
-	/// @param	bVisible	Whether the objects are to be made visible or invisible
-	//-----------------------------------------------------------------------------------
-	inline void setVisible(bool bVisible)
-	{
-		m_pSceneNode->setVisible(bVisible, false);
-		m_bVisible = bVisible;
-	}
-
-	//-----------------------------------------------------------------------------------
-	/// @brief	Inverts the visibility of all objects attached to this component
-	/// @remark	This is a shortcut to calling setVisible(!isVisible()) on the objects
-	///			attached to this component
-	//-----------------------------------------------------------------------------------
-	void flipVisibility()
-	{
-		setVisible(!m_bVisible);
-	}
-
-	//-----------------------------------------------------------------------------------
-	/// @brief	Indicates if the component is visible or hidden
-	/// @return	'true' if the component is visible
-	//-----------------------------------------------------------------------------------
-	inline bool isVisible() const
-	{
-		return m_bVisible;
-	}
-
-
-	//_____ Slots __________
-protected:
     //-----------------------------------------------------------------------------------
-    /// @brief	Called when the transforms origin of the component is changed
-    ///
-    /// @param	pValue	 Contains the ID of the new transforms origin
-    ///
-    /// @remark	When this method is called, the previous origin is still available
+    /// @brief	Create the plane from the values of the attributes
+    /// @return	'true' if successful
     //-----------------------------------------------------------------------------------
-	void onTransformsOriginChanged(Utils::Variant* pValue);
+	bool createPlane();
 
-    //-----------------------------------------------------------------------------------
-    /// @brief	Called when the transforms to apply to the component have changed
-    ///
-    /// @param	pValue	 Not used
-    //-----------------------------------------------------------------------------------
-	void onTransformsChanged(Utils::Variant* pValue = 0);
-
-	void onSceneShown(Utils::Variant* pValue);
-	void onSceneHidden(Utils::Variant* pValue);
-	void onEntityEnabled(Utils::Variant* pValue);
-	void onEntityDisabled(Utils::Variant* pValue);
-
-
+	
+	
 	//_____ Management of the properties __________
 public:
     //-----------------------------------------------------------------------------------
@@ -201,16 +158,27 @@ public:
 
 	//_____ Constants __________
 public:
-	static const std::string TYPE;  ///< Name of the type of component
+	static const std::string TYPE;	///< Name of the type of component
 
 
 	//_____ Attributes __________
 protected:
-	bool				m_bVisible;
-	bool				m_bCastShadows;
-	Ogre::SceneNode*	m_pSceneNode;
+	Ogre::Entity*	m_pEntity;
+	std::string	    m_strMaterial;
+	Math::Vector3	m_normalVector;
+    Math::Real		m_distance;
+	Math::Real		m_width;
+	Math::Real		m_height;
+    int				m_xSegments;
+	int				m_ySegments;
+	bool			m_bNormals;
+	int				m_iNbTexCoordSet;
+	Math::Real		m_uTile;
+	Math::Real		m_vTile;
+	Math::Vector3	m_upVector;
 };
 
+}
 }
 }
 

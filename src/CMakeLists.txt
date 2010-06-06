@@ -1,18 +1,18 @@
 # List the source files
-set(SRCS Camera.cpp
-         Conversions.cpp
+set(SRCS Conversions.cpp
          Declarations.cpp
-         DirectionalLight.cpp
          Line3D.cpp
          LinesList.cpp
          MeshBuilder.cpp
          MeshTransformer.cpp
-         Object.cpp
-         Plane.cpp
-         PointLight.cpp
          SceneRenderTargetListener.cpp
-         Spotlight.cpp
-         VisualComponent.cpp
+         Visual/Camera.cpp
+         Visual/DirectionalLight.cpp
+         Visual/Object.cpp
+         Visual/Plane.cpp
+         Visual/PointLight.cpp
+         Visual/Spotlight.cpp
+         Visual/VisualComponent.cpp
 )
 
 # Precompiler definitions

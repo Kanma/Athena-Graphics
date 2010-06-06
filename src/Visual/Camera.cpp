@@ -1,16 +1,17 @@
 /**	@file	Camera.cpp
 	@author	Philip Abbet
 
-	Implementation of the class 'Athena::Graphics::Camera'
+	Implementation of the class 'Athena::Graphics::Visual::Camera'
 */
 
-#include <Athena-Graphics/Camera.h>
+#include <Athena-Graphics/Visual/Camera.h>
 #include <Athena-Core/Log/LogManager.h>
 #include <Ogre/OgreCamera.h>
 #include <Ogre/OgreSceneManager.h>
 
 using namespace Athena;
 using namespace Athena::Graphics;
+using namespace Athena::Graphics::Visual;
 using namespace Athena::Entities;
 using namespace Athena::Utils;
 using namespace Athena::Log;

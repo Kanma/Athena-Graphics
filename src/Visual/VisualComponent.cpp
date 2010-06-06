@@ -1,10 +1,10 @@
 /**	@file	VisualComponent.cpp
 	@author	Philip Abbet
 
-	Implementation of the class 'Athena::Graphics::VisualComponent'
+	Implementation of the class 'Athena::Graphics::Visual::VisualComponent'
 */
 
-#include <Athena-Graphics/VisualComponent.h>
+#include <Athena-Graphics/Visual/VisualComponent.h>
 #include <Athena-Graphics/Conversions.h>
 #include <Athena-Entities/Transforms.h>
 #include <Athena-Entities/Scene.h>
@@ -14,6 +14,7 @@
 
 using namespace Athena;
 using namespace Athena::Graphics;
+using namespace Athena::Graphics::Visual;
 using namespace Athena::Entities;
 using namespace Athena::Signals;
 using namespace Athena::Utils;

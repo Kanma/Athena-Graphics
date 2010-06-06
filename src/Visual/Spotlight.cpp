@@ -1,15 +1,16 @@
 /**	@file	Spotlight.cpp
 	@author	Philip Abbet
 
-	Implementation of the class 'Athena::Graphics::Spotlight'
+	Implementation of the class 'Athena::Graphics::Visual::Spotlight'
 */
 
-#include <Athena-Graphics/Spotlight.h>
+#include <Athena-Graphics/Visual/Spotlight.h>
 #include <Athena-Graphics/Conversions.h>
 #include <Athena-Core/Log/LogManager.h>
 
 using namespace Athena;
 using namespace Athena::Graphics;
+using namespace Athena::Graphics::Visual;
 using namespace Athena::Entities;
 using namespace Athena::Signals;
 using namespace Athena::Utils;

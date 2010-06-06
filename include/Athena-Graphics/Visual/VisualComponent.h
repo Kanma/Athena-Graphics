@@ -1,25 +1,30 @@
-/** @file	DirectionalLight.h
+/** @file	VisualComponent.h
 	@author	Philip Abbet
 
-	Declaration of the class 'Athena::Graphics::DirectionalLight'
+	Declaration of the class 'Athena::Graphics::Visual::VisualComponent'
 */
 
-#ifndef _ATHENA_GRAPHICS_DIRECTIONALLIGHT_H_
-#define _ATHENA_GRAPHICS_DIRECTIONALLIGHT_H_
+#ifndef _ATHENA_GRAPHICS_VISUALCOMPONENT_H_
+#define _ATHENA_GRAPHICS_VISUALCOMPONENT_H_
 
 #include <Athena-Graphics/Prerequisites.h>
-#include <Athena-Graphics/VisualComponent.h>
-#include <Ogre/OgreLight.h>
+#include <Athena-Entities/ComponentsList.h>
+#include <Athena-Entities/Entity.h>
+#include <Athena-Core/Signals/SignalsList.h>
+#include <Athena-Core/Signals/Declarations.h>
+#include <Ogre/OgreMovableObject.h>
+#include <Ogre/OgreSceneNode.h>
 
 
 namespace Athena {
 namespace Graphics {
+namespace Visual {
 
 
 //---------------------------------------------------------------------------------------
-/// @brief	A visual component that manages a directional light
+/// @brief	Base class for all the visual components of an entity
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL DirectionalLight: public VisualComponent
+class ATHENA_SYMBOL VisualComponent: public Entities::Component
 {
 	//_____ Construction / Destruction __________
 public:
@@ -27,12 +32,12 @@ public:
     /// @brief	Constructor
     /// @param	strName		Name of the component
     //-----------------------------------------------------------------------------------
-	DirectionalLight(const std::string& strName, Entities::ComponentsList* pList);
+	VisualComponent(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
     /// @brief	Destructor
     //-----------------------------------------------------------------------------------
-	virtual ~DirectionalLight();
+	virtual ~VisualComponent();
 
     //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
@@ -41,77 +46,116 @@ public:
     /// @param	pList	List to which the component must be added
     /// @return			The new component
     //-----------------------------------------------------------------------------------
-	static DirectionalLight* create(const std::string& strName, Entities::ComponentsList* pList);
+	static VisualComponent* create(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Cast a component to a DirectionalLight
+    /// @brief	Cast a component to a VisualComponent
     ///
     /// @param	pComponent	The component
-    /// @return				The component, 0 if it isn't castable to a DirectionalLight
+    /// @return				The component, 0 if it isn't castable to a VisualComponent
     //-----------------------------------------------------------------------------------
-	static DirectionalLight* cast(Entities::Component* pComponent);
+	static VisualComponent* cast(Entities::Component* pComponent);
 
 
-	//_____ Implementation of CVisualComponent __________
+	//_____ Implementation of CComponent __________
 public:
 	//-----------------------------------------------------------------------------------
 	/// @brief	Returns the type of the component
 	/// @return	The type
 	//-----------------------------------------------------------------------------------
-	virtual const std::string getType() const
-	{
-		return TYPE;
-	}
+	virtual const std::string getType() const { return TYPE; }
 
 
-	//_____ Management of the Light __________
+	//_____ Methods __________
 public:
 	//-----------------------------------------------------------------------------------
-	/// @brief	Returns the Ogre light used by this component
-	/// @return	The Ogre light
+	/// @brief	Set if the movable object of the visual component (if any) must cast
+	///         shadows
+	///
+	/// @param	bCastShadows	Indicates if the movable object must cast shadows
 	//-----------------------------------------------------------------------------------
-	inline Ogre::Light* getOgreLight()
+	void setCastShadows(bool bCastShadows);
+
+	//-----------------------------------------------------------------------------------
+	/// @brief	Indicates if the movable object of the visual component (if any)  must cast
+	///			shadows
+	///
+	/// @return	'true' if this movable object must cast shadows
+	//-----------------------------------------------------------------------------------
+	inline bool mustCastShadows() const
 	{
-		return m_pLight;
+		return m_bCastShadows;
 	}
 
+	//-----------------------------------------------------------------------------------
+	/// @brief	Returns the scene node used by the component
+	/// @return	The scene node
+	//-----------------------------------------------------------------------------------
+	virtual Ogre::SceneNode* getSceneNode() const
+	{
+		return m_pSceneNode;
+	}
+
+protected:
+	void attachObject(Ogre::MovableObject* pObject);
+
+
+	//_____ Visibility __________
+public:
+	//-----------------------------------------------------------------------------------
+	/// @brief	Makes all objects attached to this component become visible / invisible
+	/// @remark	This is a shortcut to calling setVisible() on the objects attached to this
+	///			component
+	/// @param	bVisible	Whether the objects are to be made visible or invisible
+	//-----------------------------------------------------------------------------------
+	inline void setVisible(bool bVisible)
+	{
+		m_pSceneNode->setVisible(bVisible, false);
+		m_bVisible = bVisible;
+	}
+
+	//-----------------------------------------------------------------------------------
+	/// @brief	Inverts the visibility of all objects attached to this component
+	/// @remark	This is a shortcut to calling setVisible(!isVisible()) on the objects
+	///			attached to this component
+	//-----------------------------------------------------------------------------------
+	void flipVisibility()
+	{
+		setVisible(!m_bVisible);
+	}
+
+	//-----------------------------------------------------------------------------------
+	/// @brief	Indicates if the component is visible or hidden
+	/// @return	'true' if the component is visible
+	//-----------------------------------------------------------------------------------
+	inline bool isVisible() const
+	{
+		return m_bVisible;
+	}
+
+
+	//_____ Slots __________
+protected:
     //-----------------------------------------------------------------------------------
-    /// @brief	Sets the color of the diffuse light given off by this source
-    /// @param	color	The diffuse color
-    /// @remark	Material objects have ambient, diffuse and specular values which indicate
-    ///			how much of each type of light an object reflects. This value denotes the
-    ///			amount and colour of this type of light the light exudes into the scene.
-    ///			The actual appearance of objects is a combination of the two.
-    ///			Diffuse light simulates the typical light emanating from light sources and
-    ///			affects the base colour of objects together with ambient light. 
+    /// @brief	Called when the transforms origin of the component is changed
+    ///
+    /// @param	pValue	 Contains the ID of the new transforms origin
+    ///
+    /// @remark	When this method is called, the previous origin is still available
     //-----------------------------------------------------------------------------------
-	void setDiffuseColor(const Math::Color& color) const;
+	void onTransformsOriginChanged(Utils::Variant* pValue);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Returns the colour of the diffuse light given off by this light source
-    ///			(see setDiffuseColor for more info)
-    /// @return	The diffuse color
+    /// @brief	Called when the transforms to apply to the component have changed
+    ///
+    /// @param	pValue	 Not used
     //-----------------------------------------------------------------------------------
-	const Math::Color getDiffuseColor() const;
-	
-    //-----------------------------------------------------------------------------------
-    /// @brief	Sets the color of the specular light given off by this source
-    /// @param	color	The specular color
-    /// @remark	Material objects have ambient, diffuse and specular values which indicate
-    ///			how much of each type of light an object reflects. This value denotes the
-    ///			amount and colour of this type of light the light exudes into the scene.
-    ///			The actual appearance of objects is a combination of the two.
-    ///			Specular light affects the appearance of shiny highlights on objects, and
-    ///			is also dependent on the 'shininess' Material value.
-    //-----------------------------------------------------------------------------------
-	void setSpecularColor(const Math::Color& color) const;
+	void onTransformsChanged(Utils::Variant* pValue = 0);
 
-    //-----------------------------------------------------------------------------------
-    /// @brief	Returns the colour of the specular light given off by this light source
-    ///			(see setSpecularColor for more info)
-    /// @return	The specular color
-    //-----------------------------------------------------------------------------------
-	const Math::Color getSpecularColor() const;
+	void onSceneShown(Utils::Variant* pValue);
+	void onSceneHidden(Utils::Variant* pValue);
+	void onEntityEnabled(Utils::Variant* pValue);
+	void onEntityDisabled(Utils::Variant* pValue);
 
 
 	//_____ Management of the properties __________
@@ -158,14 +202,17 @@ public:
 
 	//_____ Constants __________
 public:
-	static const std::string TYPE;	///< Name of the type of component
+	static const std::string TYPE;  ///< Name of the type of component
 
 
 	//_____ Attributes __________
 protected:
-	Ogre::Light* m_pLight;			///< The Ogre light
+	bool				m_bVisible;
+	bool				m_bCastShadows;
+	Ogre::SceneNode*	m_pSceneNode;
 };
 
+}
 }
 }
 

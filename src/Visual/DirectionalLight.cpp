@@ -1,16 +1,17 @@
 /**	@file	DirectionalLight.cpp
 	@author	Philip Abbet
 
-	Implementation of the class 'Athena::Graphics::DirectionalLight'
+	Implementation of the class 'Athena::Graphics::Visual::DirectionalLight'
 */
 
-#include <Athena-Graphics/DirectionalLight.h>
+#include <Athena-Graphics/Visual/DirectionalLight.h>
 #include <Athena-Graphics/Conversions.h>
 #include <Athena-Core/Log/LogManager.h>
 #include <Ogre/OgreSceneManager.h>
 
 using namespace Athena;
 using namespace Athena::Graphics;
+using namespace Athena::Graphics::Visual;
 using namespace Athena::Entities;
 using namespace Athena::Signals;
 using namespace Athena::Utils;

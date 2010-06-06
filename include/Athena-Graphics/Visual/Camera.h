@@ -1,14 +1,14 @@
 /** @file	Camera.h
 	@author	Philip Abbet
 
-	Declaration of the class 'Athena::Graphics::Camera'
+	Declaration of the class 'Athena::Graphics::Visual::Camera'
 */
 
 #ifndef _ATHENA_GRAPHICS_CAMERA_H_
 #define _ATHENA_GRAPHICS_CAMERA_H_
 
 #include <Athena-Graphics/Prerequisites.h>
-#include <Athena-Graphics/VisualComponent.h>
+#include <Athena-Graphics/Visual/VisualComponent.h>
 #include <Athena-Graphics/Conversions.h>
 #include <Ogre/OgreRenderTarget.h>
 #include <Ogre/OgreCamera.h>
@@ -16,6 +16,7 @@
 
 namespace Athena {
 namespace Graphics {
+namespace Visual {
 
 
 //---------------------------------------------------------------------------------------
@@ -616,6 +617,7 @@ protected:
 	Ogre::Camera* m_pCamera;		///< The Ogre camera
 };
 
+}
 }
 }
 

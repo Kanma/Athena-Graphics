@@ -1,10 +1,10 @@
 /**	@file	Object.cpp
 	@author	Philip Abbet
 
-	Implementation of the class 'Athena::Graphics::Object'
+	Implementation of the class 'Athena::Graphics::Visual::Object'
 */
 
-#include <Athena-Graphics/Object.h>
+#include <Athena-Graphics/Visual/Object.h>
 #include <Athena-Core/Log/LogManager.h>
 #include <Ogre/OgreEntity.h>
 #include <Ogre/OgreSubEntity.h>
@@ -14,6 +14,7 @@
 
 using namespace Athena;
 using namespace Athena::Graphics;
+using namespace Athena::Graphics::Visual;
 using namespace Athena::Entities;
 using namespace Athena::Utils;
 using namespace Athena::Log;

@@ -1,24 +1,27 @@
-/** @file	PointLight.h
+/** @file	Object.h
 	@author	Philip Abbet
 
-	Declaration of the class 'Athena::Graphics::PointLight'
+	Declaration of the class 'Athena::Graphics::Visual::Object'
 */
 
-#ifndef _ATHENA_GRAPHICS_POINTLIGHT_H_
-#define _ATHENA_GRAPHICS_POINTLIGHT_H_
+#ifndef _ATHENA_GRAPHICS_OBJECT_H_
+#define _ATHENA_GRAPHICS_OBJECT_H_
 
 #include <Athena-Graphics/Prerequisites.h>
-#include <Athena-Graphics/DirectionalLight.h>
+#include <Athena-Graphics/Visual/VisualComponent.h>
+#include <Ogre/OgreEntity.h>
+#include <Ogre/OgreResourceGroupManager.h>
 
 
 namespace Athena {
 namespace Graphics {
+namespace Visual {
 
 
 //---------------------------------------------------------------------------------------
-/// @brief	A visual component that manages a point light
+/// @brief	A visual component that contains a mesh
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL PointLight: public DirectionalLight
+class ATHENA_SYMBOL Object: public VisualComponent
 {
 	//_____ Construction / Destruction __________
 public:
@@ -26,12 +29,12 @@ public:
     /// @brief	Constructor
     /// @param	strName		Name of the component
     //-----------------------------------------------------------------------------------
-    PointLight(const std::string& strName, Entities::ComponentsList* pList);
-	
+	Object(const std::string& strName, Entities::ComponentsList* pList);
+
     //-----------------------------------------------------------------------------------
     /// @brief	Destructor
     //-----------------------------------------------------------------------------------
-	virtual ~PointLight();
+	virtual ~Object();
 
     //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
@@ -40,15 +43,15 @@ public:
     /// @param	pList	List to which the component must be added
     /// @return			The new component
     //-----------------------------------------------------------------------------------
-	static PointLight* create(const std::string& strName, Entities::ComponentsList* pList);
+	static Object* create(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Cast a component to a PointLight
+    /// @brief	Cast a component to a Object
     ///
     /// @param	pComponent	The component
-    /// @return				The component, 0 if it isn't castable to a PointLight
+    /// @return				The component, 0 if it isn't castable to a Object
     //-----------------------------------------------------------------------------------
-	static PointLight* cast(Entities::Component* pComponent);
+	static Object* cast(Component* pComponent);
 
 
 	//_____ Implementation of CVisualComponent __________
@@ -63,53 +66,28 @@ public:
 	}
 
 
-	//_____ Management of the Light __________
+	//_____ Methods __________
 public:
-    //-----------------------------------------------------------------------------------
-    /// @brief	Sets the attenuation parameters of the light source ie how it diminishes
-    ///			with distance
-    /// @remark	Lights normally get fainter the further they are away. Also, each light
-    ///			is given a maximum range beyond which it cannot affect any objects.
-    ///			Light attentuation is not applicable to directional lights since they
-    ///			have an infinite range and constant intensity.
-    ///			This follows a standard attenuation approach - see any good 3D text for
-    ///			the details of what they mean.
-    /// @param	range		The absolute upper range of the light in world units  
-    /// @param	constant	The constant factor in the attenuation formula: 1.0 means
-    ///						never attenuate, 0.0 is complete attenuation  
-    /// @param	linear		The linear factor in the attenuation formula: 1 means
-    ///						attenuate evenly over the distance  
-    /// @param	quadratic	The quadratic factor in the attenuation formula: adds a
-    ///						curvature to the attenuation formula
-    //-----------------------------------------------------------------------------------
-	void setAttenuation(Math::Real range, Math::Real constant, Math::Real linear,
-					    Math::Real quadratic);
+	//-----------------------------------------------------------------------------------
+	/// @brief	Returns the Ogre entity used by this component
+	/// @return	The Ogre entity
+	//-----------------------------------------------------------------------------------
+	inline Ogre::Entity* getOgreEntity()
+	{
+		return m_pEntity;
+	}
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Returns the absolute upper range of the light
-    /// @return	The range
+    /// @brief	Load a mesh
+    ///
+    /// @param	strMeshName		The name of the mesh
+    /// @param	strGroupName	The name of the resource group
+    /// @return					'true' if successful
     //-----------------------------------------------------------------------------------
-	Math::Real getAttenuationRange() const;
+	bool loadMesh(const std::string& strMeshName, const std::string& strGroupName =
+				  Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
-    //-----------------------------------------------------------------------------------
-    /// @brief	Returns the constant factor in the attenuation formula
-    /// @return	The constant factor
-    //-----------------------------------------------------------------------------------
-	Math::Real getAttenuationConstant() const;
-
-    //-----------------------------------------------------------------------------------
-    /// @brief	Returns the linear factor in the attenuation formula
-    /// @return	The linear factor
-    //-----------------------------------------------------------------------------------
-	Math::Real getAttenuationLinear() const;
-
-    //-----------------------------------------------------------------------------------
-    /// @brief	Returns the quadric factor in the attenuation formula
-    /// @return	The quadric factor
-    //-----------------------------------------------------------------------------------
-	Math::Real getAttenuationQuadric() const;
-
-
+	
 	//_____ Management of the properties __________
 public:
     //-----------------------------------------------------------------------------------
@@ -154,9 +132,15 @@ public:
 
 	//_____ Constants __________
 public:
-	static const std::string TYPE;	///< Name of the type of component
+	static const std::string TYPE;  ///< Name of the type of component
+
+
+	//_____ Attributes __________
+protected:
+	Ogre::Entity* m_pEntity;
 };
 
+}
 }
 }
 

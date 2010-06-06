@@ -1,26 +1,25 @@
-/** @file	Plane.h
+/** @file	Athena_Graphics_Spotlight.h
 	@author	Philip Abbet
 
-	Declaration of the class 'Athena::Graphics::Plane'
+	Declaration of the class 'Athena::Graphics::Visual::Spotlight'
 */
 
-#ifndef _ATHENA_GRAPHICS_PLANE_H_
-#define _ATHENA_GRAPHICS_PLANE_H_
+#ifndef _ATHENA_GRAPHICS_SPOTLIGHT_H_
+#define _ATHENA_GRAPHICS_SPOTLIGHT_H_
 
 #include <Athena-Graphics/Prerequisites.h>
-#include <Athena-Graphics/VisualComponent.h>
-#include <Athena-Math/Vector3.h>
-#include <Ogre/OgreEntity.h>
+#include <Athena-Graphics/Visual/PointLight.h>
 
 
 namespace Athena {
 namespace Graphics {
+namespace Visual {
 
 
 //---------------------------------------------------------------------------------------
-/// @brief	A visual component that manages a plane
+/// @brief	A visual component that manages a spotlight
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Plane: public VisualComponent
+class ATHENA_SYMBOL Spotlight: public PointLight
 {
 	//_____ Construction / Destruction __________
 public:
@@ -28,12 +27,12 @@ public:
     /// @brief	Constructor
     /// @param	strName		Name of the component
     //-----------------------------------------------------------------------------------
-	Plane(const std::string& strName, Entities::ComponentsList* pList);
+	Spotlight(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
     /// @brief	Destructor
     //-----------------------------------------------------------------------------------
-	virtual ~Plane();
+	virtual ~Spotlight();
 
     //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
@@ -42,15 +41,15 @@ public:
     /// @param	pList	List to which the component must be added
     /// @return			The new component
     //-----------------------------------------------------------------------------------
-	static Plane* create(const std::string& strName, Entities::ComponentsList* pList);
+	static Spotlight* create(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Cast a component to a Plane
+    /// @brief	Cast a component to a Spotlight
     ///
     /// @param	pComponent	The component
-    /// @return				The component, 0 if it isn't castable to a Plane
+    /// @return				The component, 0 if it isn't castable to a Spotlight
     //-----------------------------------------------------------------------------------
-	static Plane* cast(Entities::Component* pComponent);
+	static Spotlight* cast(Entities::Component* pComponent);
 
 
 	//_____ Implementation of CVisualComponent __________
@@ -65,54 +64,39 @@ public:
 	}
 
 
-	//_____ Methods __________
+	//_____ Management of the Light __________
 public:
-	//-----------------------------------------------------------------------------------
-	/// @brief	Returns the Ogre entity used by this component
-	/// @return	The Ogre entity
-	//-----------------------------------------------------------------------------------
-	inline Ogre::Entity* getOgreEntity()
-	{
-		return m_pEntity;
-	}
-
+    //-----------------------------------------------------------------------------------
+    /// @brief	Sets the range of a spotlight, i.e. the angle of the inner and outer
+    ///			cones and the rate of falloff between them
+    /// @param	innerAngle	Angle covered by the bright inner cone  
+    /// @param	outerAngle	Angle covered by the outer cone  
+    /// @param	falloff		The rate of falloff between the inner and outer cones. 1.0
+    ///						means a linear falloff, less means slower falloff, higher
+    ///						means faster falloff. 
+    //-----------------------------------------------------------------------------------
+	void setRange(const Math::Radian &innerAngle, const Math::Radian &outerAngle,
+				  Math::Real falloff = 1.0);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Setup the plane
-    ///
-    /// @param	strMaterial		Material to use
-    /// @param	normalVector	Orientation of the plane
-    /// @param	distance		Distance from the origin
-    /// @param	width			The width of the plane in world coordinates
-    /// @param	height			The height of the plane in world coordinates
-    /// @param	xSegments		The number of segments of the plane in the x direction
-    /// @param	ySegments		The number of segments of the plane in the y direction
-    /// @param	bNormals		If true, normals are created perpendicular to the plane
-    /// @param	iNbTexCoordSet	The number of 2D texture coordinate sets created - by
-    ///							default the corners are created to be the corner of the
-    ///                         texture.
-    /// @param	uTile			The number of times the texture should be repeated in the
-    ///                         u direction
-    /// @param	vTile			The number of times the texture should be repeated in the
-    ///                         v direction
-    /// @param	upVector		The 'Up' direction of the plane
-    /// @return					'true' if successful
+    /// @brief	Returns the angle covered by the spotlights inner cone
+    /// @return	The angle
     //-----------------------------------------------------------------------------------
-	bool createPlane(const std::string& strMaterial, const Math::Vector3& normalVector,
-					 Math::Real distance, Math::Real width, Math::Real height,
-					 int xSegments = 1, int ySegments = 1, bool bNormals = true,
-					 int iNbTexCoordSet = 1, Math::Real uTile = 1.0f, Math::Real vTile = 1.0f,
-					 const Math::Vector3& upVector = Math::Vector3::UNIT_Y);
+	const Math::Radian getInnerAngle() const;
 
-protected:
     //-----------------------------------------------------------------------------------
-    /// @brief	Create the plane from the values of the attributes
-    /// @return	'true' if successful
+    /// @brief	Returns the angle covered by the spotlights outer cone
+    /// @return	The angle
     //-----------------------------------------------------------------------------------
-	bool createPlane();
+	const Math::Radian getOuterAngle() const;
 
-	
-	
+    //-----------------------------------------------------------------------------------
+    /// @brief	Returns the falloff between the inner and outer cones of the spotlight
+    /// @return	The fallof
+    //-----------------------------------------------------------------------------------
+	Math::Real getFalloff() const;
+
+
 	//_____ Management of the properties __________
 public:
     //-----------------------------------------------------------------------------------
@@ -158,25 +142,9 @@ public:
 	//_____ Constants __________
 public:
 	static const std::string TYPE;	///< Name of the type of component
-
-
-	//_____ Attributes __________
-protected:
-	Ogre::Entity*	m_pEntity;
-	std::string	    m_strMaterial;
-	Math::Vector3	m_normalVector;
-    Math::Real		m_distance;
-	Math::Real		m_width;
-	Math::Real		m_height;
-    int				m_xSegments;
-	int				m_ySegments;
-	bool			m_bNormals;
-	int				m_iNbTexCoordSet;
-	Math::Real		m_uTile;
-	Math::Real		m_vTile;
-	Math::Vector3	m_upVector;
 };
 
+}
 }
 }
 

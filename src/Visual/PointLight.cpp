@@ -1,14 +1,15 @@
 /**	@file	PointLight.cpp
 	@author	Philip Abbet
 
-	Implementation of the class 'Athena::Graphics::PointLight'
+	Implementation of the class 'Athena::Graphics::Visual::PointLight'
 */
 
-#include <Athena-Graphics/PointLight.h>
+#include <Athena-Graphics/Visual/PointLight.h>
 #include <Athena-Core/Log/LogManager.h>
 
 using namespace Athena;
 using namespace Athena::Graphics;
+using namespace Athena::Graphics::Visual;
 using namespace Athena::Entities;
 using namespace Athena::Signals;
 using namespace Athena::Utils;

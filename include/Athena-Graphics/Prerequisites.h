@@ -29,12 +29,19 @@ namespace Athena
         class MeshTransformer;
         class SceneRenderTargetListener;
 
-        class DirectionalLight;
-        class Object;
-        class Plane;
-        class PointLight;
-        class Spotlight;
-
+    	//------------------------------------------------------------------------------------
+    	/// @brief	Contains all the visual components
+    	//------------------------------------------------------------------------------------
+        namespace Visual
+        {
+            class Camera;
+            class DirectionalLight;
+            class Object;
+            class Plane;
+            class PointLight;
+            class Spotlight;
+            class VisualComponent;
+        }
 
     	/// The Ogre Root
     	extern ATHENA_SYMBOL Ogre::Root*			pOgreRoot;
