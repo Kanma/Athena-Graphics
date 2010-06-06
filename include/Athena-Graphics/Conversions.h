@@ -10,17 +10,21 @@
 #include <Athena-Graphics/Prerequisites.h>
 #include <Athena-Math/AxisAlignedBox.h>
 #include <Athena-Math/Color.h>
-#include <Athena-Math/Quaternion.h>
 #include <Athena-Math/Matrix3.h>
 #include <Athena-Math/Matrix4.h>
+#include <Athena-Math/Plane.h>
+#include <Athena-Math/Quaternion.h>
+#include <Athena-Math/Sphere.h>
 #include <Athena-Math/Vector2.h>
 #include <Athena-Math/Vector3.h>
 #include <Athena-Math/Vector4.h>
 #include <Ogre/OgreAxisAlignedBox.h>
 #include <Ogre/OgreColourValue.h>
-#include <Ogre/OgreQuaternion.h>
 #include <Ogre/OgreMatrix3.h>
 #include <Ogre/OgreMatrix4.h>
+#include <Ogre/OgrePlane.h>
+#include <Ogre/OgreQuaternion.h>
+#include <Ogre/OgreSphere.h>
 #include <Ogre/OgreVector2.h>
 #include <Ogre/OgreVector3.h>
 #include <Ogre/OgreVector4.h>
@@ -43,6 +47,9 @@ Ogre::Matrix4 toOgre(const Math::Matrix4& m);
 Ogre::Radian toOgre(const Math::Radian& a);
 Ogre::Degree toOgre(const Math::Degree& a);
 
+Ogre::Plane toOgre(const Math::Plane& p);
+Ogre::Sphere toOgre(const Math::Sphere& s);
+
 
 Math::Vector2 fromOgre(const Ogre::Vector2& v);
 Math::Vector3 fromOgre(const Ogre::Vector3& v);
@@ -57,6 +64,9 @@ Math::Matrix4 fromOgre(const Ogre::Matrix4& m);
 
 Math::Radian fromOgre(const Ogre::Radian& a);
 Math::Degree fromOgre(const Ogre::Degree& a);
+
+Math::Plane fromOgre(const Ogre::Plane& p);
+Math::Sphere fromOgre(const Ogre::Sphere& s);
 
 }
 }

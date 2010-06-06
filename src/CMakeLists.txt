@@ -1,5 +1,6 @@
 # List the source files
-set(SRCS Conversions.cpp
+set(SRCS Camera.cpp
+         Conversions.cpp
          Declarations.cpp
          DirectionalLight.cpp
          Line3D.cpp

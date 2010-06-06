@@ -89,6 +89,20 @@ Ogre::Degree toOgre(const Math::Degree& a)
 
 //-----------------------------------------------------------------------
 
+Ogre::Plane toOgre(const Math::Plane& p)
+{
+    return Ogre::Plane(toOgre(p.normal), -p.d);
+}
+
+//-----------------------------------------------------------------------
+
+Ogre::Sphere toOgre(const Math::Sphere& s)
+{
+    return Ogre::Sphere(toOgre(s.getCenter()), s.getRadius());
+}
+
+//-----------------------------------------------------------------------
+
 Math::Vector2 fromOgre(const Ogre::Vector2& v)
 {
     return Math::Vector2(v.x, v.y);
@@ -160,6 +174,20 @@ Math::Radian fromOgre(const Ogre::Radian& a)
 Math::Degree fromOgre(const Ogre::Degree& a)
 {
     return Math::Degree(a.valueDegrees());
+}
+
+//-----------------------------------------------------------------------
+
+Math::Plane toOgre(const Ogre::Plane& p)
+{
+    return Math::Plane(fromOgre(p.normal), -p.d);
+}
+
+//-----------------------------------------------------------------------
+
+Math::Sphere toOgre(const Ogre::Sphere& s)
+{
+    return Math::Sphere(fromOgre(s.getCenter()), s.getRadius());
 }
 
 }
