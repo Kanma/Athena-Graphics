@@ -35,6 +35,7 @@ namespace Athena
     	//------------------------------------------------------------------------------------
         namespace Debug
         {
+            class AudioListener;
             class DebugComponent;
         }
 
