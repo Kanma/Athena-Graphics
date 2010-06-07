@@ -41,6 +41,7 @@ namespace Athena
             class Camera;
             class DebugComponent;
             class DirectionalLight;
+            class PointLight;
         }
 
     	//------------------------------------------------------------------------------------
