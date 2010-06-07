@@ -43,6 +43,7 @@ namespace Athena
             class DirectionalLight;
             class PointLight;
             class Skeleton;
+            class Spotlight;
         }
 
     	//------------------------------------------------------------------------------------
