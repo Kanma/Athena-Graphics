@@ -37,6 +37,7 @@ namespace Athena
         {
             class AudioListener;
             class AudioSource;
+            class Axes;
             class Camera;
             class DebugComponent;
             class DirectionalLight;

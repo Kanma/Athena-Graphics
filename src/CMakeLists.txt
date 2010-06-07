@@ -9,6 +9,7 @@ set(SRCS Conversions.cpp
          SceneRenderTargetListener.cpp
          Debug/AudioListener.cpp
          Debug/AudioSource.cpp
+         Debug/Axes.cpp
          Debug/Camera.cpp
          Debug/DebugComponent.cpp
          Debug/DirectionalLight.cpp
