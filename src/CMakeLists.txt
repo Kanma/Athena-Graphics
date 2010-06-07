@@ -8,6 +8,7 @@ set(SRCS Conversions.cpp
          MeshTransformer.cpp
          SceneRenderTargetListener.cpp
          Debug/AudioListener.cpp
+         Debug/AudioSource.cpp
          Debug/DebugComponent.cpp
          Visual/Camera.cpp
          Visual/DirectionalLight.cpp
