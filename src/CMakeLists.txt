@@ -1,6 +1,7 @@
 # List the source files
 set(SRCS Conversions.cpp
          Declarations.cpp
+         GraphicTools.cpp
          Line3D.cpp
          LinesList.cpp
          MeshBuilder.cpp

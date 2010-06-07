@@ -23,6 +23,7 @@ namespace Athena
 	//------------------------------------------------------------------------------------
     namespace Graphics
     {
+        class GraphicTools;
         class Line3D;
         class LinesList;
         class MeshBuilder;
