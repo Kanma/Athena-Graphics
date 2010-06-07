@@ -14,6 +14,7 @@ set(SRCS Conversions.cpp
          Debug/DebugComponent.cpp
          Debug/DirectionalLight.cpp
          Debug/PointLight.cpp
+         Debug/Skeleton.cpp
          Visual/Camera.cpp
          Visual/DirectionalLight.cpp
          Visual/Object.cpp
