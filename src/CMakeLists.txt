@@ -4,6 +4,7 @@ set(SRCS Conversions.cpp
          GraphicTools.cpp
          Line3D.cpp
          LinesList.cpp
+         MeshAnimation.cpp
          MeshBuilder.cpp
          MeshTransformer.cpp
          SceneRenderTargetListener.cpp

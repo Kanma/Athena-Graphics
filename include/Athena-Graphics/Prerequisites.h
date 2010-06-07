@@ -26,6 +26,7 @@ namespace Athena
         class GraphicTools;
         class Line3D;
         class LinesList;
+        class MeshAnimation;
         class MeshBuilder;
         class MeshTransformer;
         class SceneRenderTargetListener;
