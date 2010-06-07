@@ -39,6 +39,7 @@ namespace Athena
             class AudioSource;
             class Camera;
             class DebugComponent;
+            class DirectionalLight;
         }
 
     	//------------------------------------------------------------------------------------

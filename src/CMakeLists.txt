@@ -11,6 +11,7 @@ set(SRCS Conversions.cpp
          Debug/AudioSource.cpp
          Debug/Camera.cpp
          Debug/DebugComponent.cpp
+         Debug/DirectionalLight.cpp
          Visual/Camera.cpp
          Visual/DirectionalLight.cpp
          Visual/Object.cpp
