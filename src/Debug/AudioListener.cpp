@@ -49,6 +49,21 @@ AudioListener::~AudioListener()
 }
 
 
+//-----------------------------------------------------------------------
+
+AudioListener* AudioListener::create(const std::string& strName, ComponentsList* pList)
+{
+	return new AudioListener(strName, pList);
+}
+
+//-----------------------------------------------------------------------
+
+AudioListener* AudioListener::cast(Component* pComponent)
+{
+	return dynamic_cast<AudioListener*>(pComponent);
+}
+
+
 /*************************************** METHODS ***************************************/
 
 void AudioListener::show()

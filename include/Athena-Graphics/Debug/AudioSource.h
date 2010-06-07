@@ -34,6 +34,23 @@ public:
     //-----------------------------------------------------------------------------------
 	virtual ~AudioSource();
 
+    //-----------------------------------------------------------------------------------
+    /// @brief	Create a new component (Component creation method)
+    ///
+    /// @param	strName	Name of the component
+    /// @param	pList	List to which the component must be added
+    /// @return			The new component
+    //-----------------------------------------------------------------------------------
+	static AudioSource* create(const std::string& strName, Entities::ComponentsList* pList);
+
+    //-----------------------------------------------------------------------------------
+    /// @brief	Cast a component to an AudioSource
+    ///
+    /// @param	pComponent	The component
+    /// @return				The component, 0 if it isn't castable to a Camera
+    //-----------------------------------------------------------------------------------
+	static AudioSource* cast(Entities::Component* pComponent);
+
 
 	//_____ Implementation of CDebugComponent __________
 public:

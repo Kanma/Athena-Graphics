@@ -48,6 +48,20 @@ AudioSource::~AudioSource()
 	hide();
 }
 
+//-----------------------------------------------------------------------
+
+AudioSource* AudioSource::create(const std::string& strName, ComponentsList* pList)
+{
+	return new AudioSource(strName, pList);
+}
+
+//-----------------------------------------------------------------------
+
+AudioSource* AudioSource::cast(Component* pComponent)
+{
+	return dynamic_cast<AudioSource*>(pComponent);
+}
+
 
 /*************************************** METHODS ***************************************/
 
