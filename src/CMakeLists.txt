@@ -7,6 +7,7 @@ set(SRCS Conversions.cpp
          MeshBuilder.cpp
          MeshTransformer.cpp
          SceneRenderTargetListener.cpp
+         Debug/DebugComponent.cpp
          Visual/Camera.cpp
          Visual/DirectionalLight.cpp
          Visual/Object.cpp
