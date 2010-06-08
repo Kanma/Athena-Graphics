@@ -35,7 +35,7 @@ xmake_include_directories(ATHENA_GRAPHICS)
 # Declaration of the library
 if (NOT ATHENA_GRAPHICS_STATIC)
     add_library(Athena-Graphics SHARED ${SRCS})
-    xmake_target_link_libraries(Athena-Graphics ATHENA_GRAPHICS)
+    xmake_target_link_libraries(Athena-Graphics ATHENA_ENTITIES)
 
     if (XMAKE_OGRE_FRAMEWORK)
         set_target_properties(Athena-Graphics PROPERTIES LINK_FLAGS "${XMAKE_OGRE_LINK_FLAGS} -Wl,-rpath,@loader_path/.,-rpath,@loader_path/../Frameworks")
