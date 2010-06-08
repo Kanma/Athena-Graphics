@@ -49,11 +49,11 @@ add_subdirectory(dependencies)
 if (ATHENA_GRAPHICS_STATIC)
     xmake_init_static(ATHENA_GRAPHICS)
     xmake_add_link_paths(ATHENA_GRAPHICS "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
-    xmake_add_link_targets(ATHENA_GRAPHICS Athena-Graphics)
+    xmake_add_link_targets(ATHENA_GRAPHICS Athena-Graphics "${XMAKE_ATHENA_ENTITIES_LINK_TARGETS}")
 else()
     xmake_init_dynamic(ATHENA_GRAPHICS)
     xmake_add_link_paths(ATHENA_GRAPHICS "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
-    xmake_add_link_targets(ATHENA_GRAPHICS Athena-Graphics "${XMAKE_ATHENA_ENTITIES_LINK_TARGETS}")
+    xmake_add_link_targets(ATHENA_GRAPHICS Athena-Graphics)
 endif()
 
 xmake_add_include_paths(ATHENA_GRAPHICS ${ATHENA_GRAPHICS_SOURCE_DIR}/include
