@@ -83,7 +83,6 @@ bool Object::loadMesh(const std::string& strMeshName, const std::string& strGrou
 	assert(!m_pEntity);
 	assert(!strMeshName.empty());
 	assert(pSceneManager);
-	assert(pLogManager);
 	assert(m_pSceneNode);
 
 	try

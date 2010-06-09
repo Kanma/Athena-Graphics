@@ -90,7 +90,6 @@ bool Plane::createPlane(const std::string& strMaterial, const Math::Vector3& nor
 {
 	// Assertions
 	assert(pSceneManager);
-	assert(pLogManager);
 	assert(m_pSceneNode);
 
 	// Copy the parameters to the internal attributes
@@ -117,7 +116,6 @@ bool Plane::createPlane()
 {
 	// Assertions
 	assert(pSceneManager);
-	assert(pLogManager);
 	assert(m_pSceneNode);
 
 	try
