@@ -29,6 +29,7 @@ namespace Athena
         class MeshAnimation;
         class MeshBuilder;
         class MeshTransformer;
+        class OgreLogListener;
         class SceneRenderTargetListener;
 
     	//------------------------------------------------------------------------------------

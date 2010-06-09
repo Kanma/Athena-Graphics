@@ -7,6 +7,7 @@ set(SRCS Conversions.cpp
          MeshAnimation.cpp
          MeshBuilder.cpp
          MeshTransformer.cpp
+         OgreLogListener.cpp
          SceneRenderTargetListener.cpp
          Debug/AudioListener.cpp
          Debug/AudioSource.cpp
