@@ -1,5 +1,6 @@
 # List the source files
-set(SRCS Conversions.cpp
+set(SRCS module.cpp
+         Conversions.cpp
          Declarations.cpp
          GraphicTools.cpp
          Line3D.cpp

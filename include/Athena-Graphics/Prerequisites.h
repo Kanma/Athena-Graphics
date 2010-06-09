@@ -62,6 +62,13 @@ namespace Athena
             class VisualComponent;
         }
 
+
+    	//------------------------------------------------------------------------------------
+    	/// @brief	Initialize the Graphics module
+    	//------------------------------------------------------------------------------------
+        extern void initialize();
+
+
     	/// The Ogre Root
     	extern ATHENA_SYMBOL Ogre::Root*			pOgreRoot;
     	/// The Ogre Scene manager
