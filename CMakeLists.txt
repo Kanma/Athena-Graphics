@@ -61,9 +61,7 @@ xmake_add_include_paths(ATHENA_GRAPHICS ${ATHENA_GRAPHICS_SOURCE_DIR}/include
                                         ${XMAKE_OGRE_INCLUDE_PATHS})
 
 if (XMAKE_OGRE_FRAMEWORK)
-    if (NOT ATHENA_GRAPHICS_STATIC)
-        xmake_add_link_flags(ATHENA_GRAPHICS ${XMAKE_OGRE_LINK_FLAGS})
-    endif()
+    xmake_add_link_flags(ATHENA_GRAPHICS ${XMAKE_OGRE_LINK_FLAGS})
 else()
     xmake_add_link_paths(ATHENA_GRAPHICS "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
     xmake_add_link_targets(ATHENA_GRAPHICS Ogre)
