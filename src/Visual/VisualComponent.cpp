@@ -46,7 +46,7 @@ VisualComponent::VisualComponent(const std::string& strName, ComponentsList* pLi
 	m_pSceneNode = pSceneManager->createSceneNode();
 
 	// Signals handling
-	m_signals.connect(SIGNAL_COMPONENT_TRANSFORMS_ORIGIN_CHANGED, this, &VisualComponent::onTransformsOriginChanged);
+	m_signals.connect(SIGNAL_COMPONENT_PARENT_TRANSFORMS_CHANGED, this, &VisualComponent::onParentTransformsChanged);
 
 	// Register to the 'Scene shown' and 'Scene hidden' signals
 	SignalsList* pSignals = m_pList->getEntity()->getScene()->getSignalsList();
@@ -90,7 +90,7 @@ VisualComponent::~VisualComponent()
 	pSignals->disconnect(SIGNAL_SCENE_HIDDEN, this, &VisualComponent::onSceneHidden);
 
 	// Signals handling
-	m_signals.disconnect(SIGNAL_COMPONENT_TRANSFORMS_ORIGIN_CHANGED, this, &VisualComponent::onTransformsOriginChanged);
+	m_signals.disconnect(SIGNAL_COMPONENT_PARENT_TRANSFORMS_CHANGED, this, &VisualComponent::onParentTransformsChanged);
 
 	// Destroy the scene node
 	pSceneManager->destroySceneNode(m_pSceneNode->getName());
@@ -145,7 +145,7 @@ void VisualComponent::attachObject(Ogre::MovableObject* pObject)
 
 /**************************************** SLOTS ****************************************/
 
-void VisualComponent::onTransformsOriginChanged(Utils::Variant* pValue)
+void VisualComponent::onParentTransformsChanged(Utils::Variant* pValue)
 {
 	// Assertions
 	assert(m_pSceneNode);

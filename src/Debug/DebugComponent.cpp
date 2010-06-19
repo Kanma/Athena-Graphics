@@ -46,7 +46,7 @@ DebugComponent::DebugComponent(const std::string& strName, ComponentsList* pList
 	m_pSceneNode = pSceneManager->createSceneNode();
 
 	// Signals handling
-	m_signals.connect(SIGNAL_COMPONENT_TRANSFORMS_ORIGIN_CHANGED, this, &DebugComponent::onTransformsOriginChanged);
+	m_signals.connect(SIGNAL_COMPONENT_PARENT_TRANSFORMS_CHANGED, this, &DebugComponent::onParentTransformsChanged);
 
 	// Register to the 'Scene shown' and 'Scene hidden' signals
 	SignalsList* pSignals = m_pList->getEntity()->getScene()->getSignalsList();
@@ -90,7 +90,7 @@ DebugComponent::~DebugComponent()
 	pSignals->disconnect(SIGNAL_SCENE_HIDDEN, this, &DebugComponent::onSceneHidden);
 
 	// Signals handling
-	m_signals.disconnect(SIGNAL_COMPONENT_TRANSFORMS_ORIGIN_CHANGED, this, &DebugComponent::onTransformsOriginChanged);
+	m_signals.disconnect(SIGNAL_COMPONENT_PARENT_TRANSFORMS_CHANGED, this, &DebugComponent::onParentTransformsChanged);
 
 	// Destroy the scene node
 	pSceneManager->destroySceneNode(m_pSceneNode->getName());
@@ -113,7 +113,7 @@ DebugComponent* DebugComponent::cast(Component* pComponent)
 
 /**************************************** SLOTS ****************************************/
 
-void DebugComponent::onTransformsOriginChanged(Utils::Variant* pValue)
+void DebugComponent::onParentTransformsChanged(Utils::Variant* pValue)
 {
 	// Assertions
 	assert(m_pSceneNode);
