@@ -58,9 +58,6 @@ DebugComponent::DebugComponent(const std::string& strName, ComponentsList* pList
 	pSignals->connect(SIGNAL_ENTITY_ENABLED, this, &DebugComponent::onEntityEnabled);
 	pSignals->connect(SIGNAL_ENTITY_DISABLED, this, &DebugComponent::onEntityDisabled);
 
-	// Use the transforms of the entity as our origin by default
-	setTransformsOrigin(m_pList->getEntity()->getTransforms());
-
 	// If the scene is already shown, simulates a signal event
 	if (m_pList->getEntity()->getScene()->isShown())
 		onSceneShown(0);
@@ -76,8 +73,6 @@ DebugComponent::~DebugComponent()
 	assert(m_pList);
 	assert(m_pList->getEntity());
 	assert(m_pList->getEntity()->getSignalsList());
-
-	setTransformsOrigin(0);
 
 	// Unregister from the 'Entity attached' and 'Entity detached' signals
 	SignalsList* pSignals = m_pList->getEntity()->getSignalsList();
@@ -121,9 +116,9 @@ void DebugComponent::onParentTransformsChanged(Utils::Variant* pValue)
 	assert(pValue);
 
 	// Unregister to the signals of the previous origin
-	if (m_pTransformsOrigin)
+	if (getTransforms())
 	{
-		SignalsList* pSignals = m_pTransformsOrigin->getSignalsList();
+		SignalsList* pSignals = getTransforms()->getSignalsList();
 		pSignals->disconnect(SIGNAL_COMPONENT_TRANSFORMS_CHANGED, this, &DebugComponent::onTransformsChanged);
 
 		m_pSceneNode->setPosition(Vector3::ZERO);
@@ -148,11 +143,11 @@ void DebugComponent::onTransformsChanged(Utils::Variant* pValue)
 	// Assertions
 	assert(m_pSceneNode);
 
-	if (m_pTransformsOrigin)
+	if (getTransforms())
 	{
-		m_pSceneNode->setPosition(toOgre(m_pTransformsOrigin->getWorldPosition()));
-		m_pSceneNode->setOrientation(toOgre(m_pTransformsOrigin->getWorldOrientation()));
-		m_pSceneNode->setScale(toOgre(m_pTransformsOrigin->getWorldScale()));
+		m_pSceneNode->setPosition(toOgre(getTransforms()->getWorldPosition()));
+		m_pSceneNode->setOrientation(toOgre(getTransforms()->getWorldOrientation()));
+		m_pSceneNode->setScale(toOgre(getTransforms()->getWorldScale()));
 	}
 	else
 	{

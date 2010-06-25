@@ -282,7 +282,7 @@ void Skeleton::setSkeletonSource(Visual::Object* pPart)
 		bShown = true;
 	}
 
-	m_pSkeletonSource = pPart; // ? pPart : Object::cast(m_pTransformsOrigin));
+	m_pSkeletonSource = pPart; // ? pPart : Object::cast(getTransforms()));
 
 	if (bShown)
 		show();

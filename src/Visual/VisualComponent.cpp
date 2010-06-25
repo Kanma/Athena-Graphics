@@ -44,6 +44,8 @@ VisualComponent::VisualComponent(const std::string& strName, ComponentsList* pLi
 
 	// Create a scene node
 	m_pSceneNode = pSceneManager->createSceneNode();
+	
+    onTransformsChanged(0);
 
 	// Signals handling
 	m_signals.connect(SIGNAL_COMPONENT_PARENT_TRANSFORMS_CHANGED, this, &VisualComponent::onParentTransformsChanged);
@@ -57,9 +59,6 @@ VisualComponent::VisualComponent(const std::string& strName, ComponentsList* pLi
 	pSignals = m_pList->getEntity()->getSignalsList();
 	pSignals->connect(SIGNAL_ENTITY_ENABLED, this, &VisualComponent::onEntityEnabled);
 	pSignals->connect(SIGNAL_ENTITY_DISABLED, this, &VisualComponent::onEntityDisabled);
-
-	// Use the transforms of the entity as our origin by default
-	setTransformsOrigin(m_pList->getEntity()->getTransforms());
 
 	// If the scene is already shown, simulates a signal event
 	if (m_pList->getEntity()->getScene()->isShown())
@@ -76,8 +75,6 @@ VisualComponent::~VisualComponent()
 	assert(m_pList);
 	assert(m_pList->getEntity());
 	assert(m_pList->getEntity()->getSignalsList());
-
-	setTransformsOrigin(0);
 
 	// Unregister from the 'Entity attached' and 'Entity detached' signals
 	SignalsList* pSignals = m_pList->getEntity()->getSignalsList();
@@ -153,9 +150,9 @@ void VisualComponent::onParentTransformsChanged(Utils::Variant* pValue)
 	assert(pValue);
 
 	// Unregister to the signals of the previous origin
-	if (m_pTransformsOrigin)
+	if (getTransforms())
 	{
-		SignalsList* pSignals = m_pTransformsOrigin->getSignalsList();
+		SignalsList* pSignals = getTransforms()->getSignalsList();
 		pSignals->disconnect(SIGNAL_COMPONENT_TRANSFORMS_CHANGED, this, &VisualComponent::onTransformsChanged);
 
 		m_pSceneNode->setPosition(Vector3::ZERO);
@@ -180,11 +177,11 @@ void VisualComponent::onTransformsChanged(Utils::Variant* pValue)
 	// Assertions
 	assert(m_pSceneNode);
 
-	if (m_pTransformsOrigin)
+	if (getTransforms())
 	{
-		m_pSceneNode->setPosition(toOgre(m_pTransformsOrigin->getWorldPosition()));
-		m_pSceneNode->setOrientation(toOgre(m_pTransformsOrigin->getWorldOrientation()));
-		m_pSceneNode->setScale(toOgre(m_pTransformsOrigin->getWorldScale()));
+		m_pSceneNode->setPosition(toOgre(getTransforms()->getWorldPosition()));
+		m_pSceneNode->setOrientation(toOgre(getTransforms()->getWorldOrientation()));
+		m_pSceneNode->setScale(toOgre(getTransforms()->getWorldScale()));
 	}
 	else
 	{

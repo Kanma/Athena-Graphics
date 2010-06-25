@@ -76,7 +76,7 @@ void Spotlight::setSpotlightSource(Visual::Spotlight* pPart)
 		bShown = true;
 	}
 
-	m_pSpotlightSource = pPart; // ? pPart : Visual::Spotlight::cast(m_pTransformsOrigin));
+	m_pSpotlightSource = pPart; // ? pPart : Visual::Spotlight::cast(getTransforms()));
 
 	if (bShown)
 		show();
