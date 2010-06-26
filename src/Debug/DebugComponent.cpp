@@ -45,8 +45,8 @@ DebugComponent::DebugComponent(const std::string& strName, ComponentsList* pList
 	// Create a scene node
 	m_pSceneNode = pSceneManager->createSceneNode();
 
-	// Signals handling
-	m_signals.connect(SIGNAL_COMPONENT_PARENT_TRANSFORMS_CHANGED, this, &DebugComponent::onParentTransformsChanged);
+	// Use the transforms of the entity by default
+	setTransforms(0);
 
 	// Register to the 'Scene shown' and 'Scene hidden' signals
 	SignalsList* pSignals = m_pList->getEntity()->getScene()->getSignalsList();
@@ -84,9 +84,6 @@ DebugComponent::~DebugComponent()
 	pSignals->disconnect(SIGNAL_SCENE_SHOWN, this, &DebugComponent::onSceneShown);
 	pSignals->disconnect(SIGNAL_SCENE_HIDDEN, this, &DebugComponent::onSceneHidden);
 
-	// Signals handling
-	m_signals.disconnect(SIGNAL_COMPONENT_PARENT_TRANSFORMS_CHANGED, this, &DebugComponent::onParentTransformsChanged);
-
 	// Destroy the scene node
 	pSceneManager->destroySceneNode(m_pSceneNode->getName());
 }
@@ -106,39 +103,9 @@ DebugComponent* DebugComponent::cast(Component* pComponent)
 }
 
 
-/**************************************** SLOTS ****************************************/
+/*************************************** METHODS ***************************************/
 
-void DebugComponent::onParentTransformsChanged(Utils::Variant* pValue)
-{
-	// Assertions
-	assert(m_pSceneNode);
-	assert(m_pList);
-	assert(pValue);
-
-	// Unregister to the signals of the previous origin
-	if (getTransforms())
-	{
-		SignalsList* pSignals = getTransforms()->getSignalsList();
-		pSignals->disconnect(SIGNAL_COMPONENT_TRANSFORMS_CHANGED, this, &DebugComponent::onTransformsChanged);
-
-		m_pSceneNode->setPosition(Vector3::ZERO);
-		m_pSceneNode->setOrientation(Quaternion::IDENTITY);
-		m_pSceneNode->setScale(Vector3::UNIT_SCALE);
-	}
-
-	Transforms* pTransforms = Transforms::cast(m_pList->getComponent(tComponentID(pValue->toString())));
-
-	// Register to the signals of the new origin
-	if (pTransforms)
-	{
-		SignalsList* pSignals = pTransforms->getSignalsList();
-		pSignals->connect(SIGNAL_COMPONENT_TRANSFORMS_CHANGED, this, &DebugComponent::onTransformsChanged);
-	}
-}
-
-//-----------------------------------------------------------------------
-
-void DebugComponent::onTransformsChanged(Utils::Variant* pValue)
+void DebugComponent::onTransformsChanged()
 {
 	// Assertions
 	assert(m_pSceneNode);
@@ -157,7 +124,8 @@ void DebugComponent::onTransformsChanged(Utils::Variant* pValue)
 	}
 }
 
-//-----------------------------------------------------------------------
+
+/**************************************** SLOTS ****************************************/
 
 void DebugComponent::onSceneShown(Utils::Variant* pValue)
 {

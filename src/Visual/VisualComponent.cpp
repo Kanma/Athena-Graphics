@@ -44,11 +44,9 @@ VisualComponent::VisualComponent(const std::string& strName, ComponentsList* pLi
 
 	// Create a scene node
 	m_pSceneNode = pSceneManager->createSceneNode();
-	
-    onTransformsChanged(0);
 
-	// Signals handling
-	m_signals.connect(SIGNAL_COMPONENT_PARENT_TRANSFORMS_CHANGED, this, &VisualComponent::onParentTransformsChanged);
+	// Use the transforms of the entity by default
+	setTransforms(0);
 
 	// Register to the 'Scene shown' and 'Scene hidden' signals
 	SignalsList* pSignals = m_pList->getEntity()->getScene()->getSignalsList();
@@ -85,9 +83,6 @@ VisualComponent::~VisualComponent()
 	pSignals = m_pList->getEntity()->getScene()->getSignalsList();
 	pSignals->disconnect(SIGNAL_SCENE_SHOWN, this, &VisualComponent::onSceneShown);
 	pSignals->disconnect(SIGNAL_SCENE_HIDDEN, this, &VisualComponent::onSceneHidden);
-
-	// Signals handling
-	m_signals.disconnect(SIGNAL_COMPONENT_PARENT_TRANSFORMS_CHANGED, this, &VisualComponent::onParentTransformsChanged);
 
 	// Destroy the scene node
 	pSceneManager->destroySceneNode(m_pSceneNode->getName());
@@ -139,40 +134,9 @@ void VisualComponent::attachObject(Ogre::MovableObject* pObject)
 	pObject->setVisible(m_bVisible);
 }
 
-
-/**************************************** SLOTS ****************************************/
-
-void VisualComponent::onParentTransformsChanged(Utils::Variant* pValue)
-{
-	// Assertions
-	assert(m_pSceneNode);
-	assert(m_pList);
-	assert(pValue);
-
-	// Unregister to the signals of the previous origin
-	if (getTransforms())
-	{
-		SignalsList* pSignals = getTransforms()->getSignalsList();
-		pSignals->disconnect(SIGNAL_COMPONENT_TRANSFORMS_CHANGED, this, &VisualComponent::onTransformsChanged);
-
-		m_pSceneNode->setPosition(Vector3::ZERO);
-		m_pSceneNode->setOrientation(Quaternion::IDENTITY);
-		m_pSceneNode->setScale(Vector3::UNIT_SCALE);
-	}
-
-	Transforms* pTransforms = Transforms::cast(m_pList->getComponent(tComponentID(pValue->toString())));
-
-	// Register to the signals of the new origin
-	if (pTransforms)
-	{
-		SignalsList* pSignals = pTransforms->getSignalsList();
-		pSignals->connect(SIGNAL_COMPONENT_TRANSFORMS_CHANGED, this, &VisualComponent::onTransformsChanged);
-	}
-}
-
 //-----------------------------------------------------------------------
 
-void VisualComponent::onTransformsChanged(Utils::Variant* pValue)
+void VisualComponent::onTransformsChanged()
 {
 	// Assertions
 	assert(m_pSceneNode);
@@ -191,7 +155,8 @@ void VisualComponent::onTransformsChanged(Utils::Variant* pValue)
 	}
 }
 
-//-----------------------------------------------------------------------
+
+/**************************************** SLOTS ****************************************/
 
 void VisualComponent::onSceneShown(Utils::Variant* pValue)
 {

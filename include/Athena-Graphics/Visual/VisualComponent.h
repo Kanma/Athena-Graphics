@@ -99,6 +99,14 @@ public:
 protected:
 	void attachObject(Ogre::MovableObject* pObject);
 
+	//-----------------------------------------------------------------------------------
+	/// @brief	Called when the transforms affecting this component have changed
+	///
+	/// Can be called when the component isn't affected by any transforms anymore
+	/// (getTransforms() returns 0).
+	//-----------------------------------------------------------------------------------
+	virtual void onTransformsChanged();
+
 
 	//_____ Visibility __________
 public:
@@ -134,24 +142,9 @@ public:
 	}
 
 
+
 	//_____ Slots __________
 protected:
-    //-----------------------------------------------------------------------------------
-    /// @brief	Called when the parent transforms of the component is changed
-    ///
-    /// @param	pValue	 Contains the ID of the new parent transforms
-    ///
-    /// @remark	When this method is called, the previous transforms is still available
-    //-----------------------------------------------------------------------------------
-	void onParentTransformsChanged(Utils::Variant* pValue);
-
-    //-----------------------------------------------------------------------------------
-    /// @brief	Called when the transforms to apply to the component have changed
-    ///
-    /// @param	pValue	 Not used
-    //-----------------------------------------------------------------------------------
-	void onTransformsChanged(Utils::Variant* pValue = 0);
-
 	void onSceneShown(Utils::Variant* pValue);
 	void onSceneHidden(Utils::Variant* pValue);
 	void onEntityEnabled(Utils::Variant* pValue);
