@@ -1,10 +1,10 @@
-/**	@file	DebugComponent.cpp
+/**	@file	EntityComponent.cpp
 	@author	Philip Abbet
 
-	Implementation of the class 'Athena::Graphics::Debug::DebugComponent'
+	Implementation of the class 'Athena::Graphics::Visual::EntityComponent'
 */
 
-#include <Athena-Graphics/Debug/DebugComponent.h>
+#include <Athena-Graphics/Visual/EntityComponent.h>
 #include <Athena-Graphics/Conversions.h>
 #include <Athena-Entities/Transforms.h>
 #include <Athena-Entities/Scene.h>
@@ -14,7 +14,7 @@
 
 using namespace Athena;
 using namespace Athena::Graphics;
-using namespace Athena::Graphics::Debug;
+using namespace Athena::Graphics::Visual;
 using namespace Athena::Entities;
 using namespace Athena::Signals;
 using namespace Athena::Utils;
@@ -25,13 +25,13 @@ using namespace std;
 /************************************** CONSTANTS **************************************/
 
 ///< Name of the type of component
-const std::string DebugComponent::TYPE = "Athena/Debug/DebugComponent";
+const std::string EntityComponent::TYPE = "Athena/Visual/EntityComponent";
 
 
 /***************************** CONSTRUCTION / DESTRUCTION ******************************/
 
-DebugComponent::DebugComponent(const std::string& strName, ComponentsList* pList)
-: Component(strName, pList), m_pSceneNode(0)
+EntityComponent::EntityComponent(const std::string& strName, ComponentsList* pList)
+: VisualComponent(strName, pList), m_bVisible(true), m_bCastShadows(false), m_pSceneNode(0)
 {
 	// Assertions
 	assert(getSceneManager());
@@ -40,7 +40,7 @@ DebugComponent::DebugComponent(const std::string& strName, ComponentsList* pList
 	assert(m_pList->getEntity()->getSignalsList());
 	assert(m_pList->getEntity()->getTransforms());
 
-	m_id.type = COMP_DEBUG;
+	m_id.type = COMP_VISUAL;
 
 	// Create a scene node
 	m_pSceneNode = getSceneManager()->createSceneNode();
@@ -50,13 +50,13 @@ DebugComponent::DebugComponent(const std::string& strName, ComponentsList* pList
 
 	// Register to the 'Scene shown' and 'Scene hidden' signals
 	SignalsList* pSignals = m_pList->getEntity()->getScene()->getSignalsList();
-	pSignals->connect(SIGNAL_SCENE_SHOWN, this, &DebugComponent::onSceneShown);
-	pSignals->connect(SIGNAL_SCENE_HIDDEN, this, &DebugComponent::onSceneHidden);
+	pSignals->connect(SIGNAL_SCENE_SHOWN, this, &EntityComponent::onSceneShown);
+	pSignals->connect(SIGNAL_SCENE_HIDDEN, this, &EntityComponent::onSceneHidden);
 
 	// Register to the 'Entity enabled' and 'Entity disabled' signals
 	pSignals = m_pList->getEntity()->getSignalsList();
-	pSignals->connect(SIGNAL_ENTITY_ENABLED, this, &DebugComponent::onEntityEnabled);
-	pSignals->connect(SIGNAL_ENTITY_DISABLED, this, &DebugComponent::onEntityDisabled);
+	pSignals->connect(SIGNAL_ENTITY_ENABLED, this, &EntityComponent::onEntityEnabled);
+	pSignals->connect(SIGNAL_ENTITY_DISABLED, this, &EntityComponent::onEntityDisabled);
 
 	// If the scene is already shown, simulates a signal event
 	if (m_pList->getEntity()->getScene()->isShown())
@@ -65,7 +65,7 @@ DebugComponent::DebugComponent(const std::string& strName, ComponentsList* pList
 
 //-----------------------------------------------------------------------
 
-DebugComponent::~DebugComponent()
+EntityComponent::~EntityComponent()
 {
 	// Assertions
 	assert(getSceneManager());
@@ -76,13 +76,13 @@ DebugComponent::~DebugComponent()
 
 	// Unregister from the 'Entity attached' and 'Entity detached' signals
 	SignalsList* pSignals = m_pList->getEntity()->getSignalsList();
-	pSignals->disconnect(SIGNAL_ENTITY_ENABLED, this, &DebugComponent::onEntityEnabled);
-	pSignals->disconnect(SIGNAL_ENTITY_DISABLED, this, &DebugComponent::onEntityDisabled);
+	pSignals->disconnect(SIGNAL_ENTITY_ENABLED, this, &EntityComponent::onEntityEnabled);
+	pSignals->disconnect(SIGNAL_ENTITY_DISABLED, this, &EntityComponent::onEntityDisabled);
 
 	// Unregister from the 'Scene shown' and 'Scene hidden' signals
 	pSignals = m_pList->getEntity()->getScene()->getSignalsList();
-	pSignals->disconnect(SIGNAL_SCENE_SHOWN, this, &DebugComponent::onSceneShown);
-	pSignals->disconnect(SIGNAL_SCENE_HIDDEN, this, &DebugComponent::onSceneHidden);
+	pSignals->disconnect(SIGNAL_SCENE_SHOWN, this, &EntityComponent::onSceneShown);
+	pSignals->disconnect(SIGNAL_SCENE_HIDDEN, this, &EntityComponent::onSceneHidden);
 
 	// Destroy the scene node
 	getSceneManager()->destroySceneNode(m_pSceneNode->getName());
@@ -90,22 +90,53 @@ DebugComponent::~DebugComponent()
 
 //-----------------------------------------------------------------------
 
-DebugComponent* DebugComponent::create(const std::string& strName, ComponentsList* pList)
+EntityComponent* EntityComponent::create(const std::string& strName, ComponentsList* pList)
 {
-	return new DebugComponent(strName, pList);
+	return new EntityComponent(strName, pList);
 }
 
 //-----------------------------------------------------------------------
 
-DebugComponent* DebugComponent::cast(Component* pComponent)
+EntityComponent* EntityComponent::cast(Component* pComponent)
 {
-	return dynamic_cast<DebugComponent*>(pComponent);
+	return dynamic_cast<EntityComponent*>(pComponent);
 }
 
 
 /*************************************** METHODS ***************************************/
 
-void DebugComponent::onTransformsChanged()
+void EntityComponent::setCastShadows(bool bCastShadows)
+{
+	// Assertions
+	assert(m_pSceneNode);
+
+	if (bCastShadows == m_bCastShadows)
+		return;
+
+	m_bCastShadows = bCastShadows;
+
+	SceneNode::ObjectIterator iter = m_pSceneNode->getAttachedObjectIterator();
+	while (iter.hasMoreElements())
+		iter.getNext()->setCastShadows(bCastShadows);
+}
+
+//-----------------------------------------------------------------------
+
+void EntityComponent::attachObject(Ogre::MovableObject* pObject)
+{
+	// Assertions
+	assert(m_pSceneNode);
+	assert(pObject);
+
+	m_pSceneNode->attachObject(pObject);
+
+	pObject->setCastShadows(m_bCastShadows);
+	pObject->setVisible(m_bVisible);
+}
+
+//-----------------------------------------------------------------------
+
+void EntityComponent::onTransformsChanged()
 {
 	// Assertions
 	assert(m_pSceneNode);
@@ -118,16 +149,16 @@ void DebugComponent::onTransformsChanged()
 	}
 	else
 	{
-		m_pSceneNode->setPosition(Vector3::ZERO);
-		m_pSceneNode->setOrientation(Quaternion::IDENTITY);
-		m_pSceneNode->setScale(Vector3::UNIT_SCALE);
+		m_pSceneNode->setPosition(Ogre::Vector3::ZERO);
+		m_pSceneNode->setOrientation(Ogre::Quaternion::IDENTITY);
+		m_pSceneNode->setScale(Ogre::Vector3::UNIT_SCALE);
 	}
 }
 
 
 /**************************************** SLOTS ****************************************/
 
-void DebugComponent::onSceneShown(Utils::Variant* pValue)
+void EntityComponent::onSceneShown(Utils::Variant* pValue)
 {
 	// Assertions
 	assert(m_pSceneNode);
@@ -142,7 +173,7 @@ void DebugComponent::onSceneShown(Utils::Variant* pValue)
 
 //-----------------------------------------------------------------------
 
-void DebugComponent::onSceneHidden(Utils::Variant* pValue)
+void EntityComponent::onSceneHidden(Utils::Variant* pValue)
 {
 	// Assertions
 	assert(m_pSceneNode);
@@ -157,7 +188,7 @@ void DebugComponent::onSceneHidden(Utils::Variant* pValue)
 
 //-----------------------------------------------------------------------
 
-void DebugComponent::onEntityEnabled(Utils::Variant* pValue)
+void EntityComponent::onEntityEnabled(Utils::Variant* pValue)
 {
 	// Assertions
 	assert(m_pSceneNode);
@@ -171,7 +202,7 @@ void DebugComponent::onEntityEnabled(Utils::Variant* pValue)
 
 //-----------------------------------------------------------------------
 
-void DebugComponent::onEntityDisabled(Utils::Variant* pValue)
+void EntityComponent::onEntityDisabled(Utils::Variant* pValue)
 {
 	// Assertions
 	assert(m_pSceneNode);
@@ -186,7 +217,7 @@ void DebugComponent::onEntityDisabled(Utils::Variant* pValue)
 
 /***************************** MANAGEMENT OF THE PROPERTIES ****************************/
 
-Utils::PropertiesList* DebugComponent::getProperties() const
+Utils::PropertiesList* EntityComponent::getProperties() const
 {
 	// Call the base class implementation
 	PropertiesList* pProperties = Component::getProperties();
@@ -194,6 +225,55 @@ Utils::PropertiesList* DebugComponent::getProperties() const
 	// Create the category belonging to this type
 	pProperties->selectCategory(TYPE, false);
 
+	// Visibility
+	pProperties->set("visible", new Variant(isVisible()));
+
+	// Shadows casting
+	pProperties->set("castShadows", new Variant(mustCastShadows()));
+
 	// Returns the list
 	return pProperties;
+}
+
+//-----------------------------------------------------------------------
+
+bool EntityComponent::setProperty(const std::string& strCategory, const std::string& strName,
+							      Utils::Variant* pValue)
+{
+	assert(!strCategory.empty());
+	assert(!strName.empty());
+	assert(pValue);
+
+	if (strCategory == TYPE)
+		return EntityComponent::setProperty(strName, pValue);
+
+	return Component::setProperty(strCategory, strName, pValue);
+}
+
+//-----------------------------------------------------------------------
+
+bool EntityComponent::setProperty(const std::string& strName, Utils::Variant* pValue)
+{
+	// Assertions
+	assert(!strName.empty());
+	assert(pValue);
+
+	// Visibility
+	if (strName == "visible")
+	{
+		if (m_bVisible != pValue->toBool())
+			setVisible(!m_bVisible);
+	}
+
+	// Shadows casting
+	else if (strName == "castShadows")
+	{
+		if (m_bCastShadows != pValue->toBool())
+			setCastShadows(!m_bCastShadows);
+	}
+
+	// Destroy the value
+	delete pValue;
+
+	return true;
 }

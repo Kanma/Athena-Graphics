@@ -33,9 +33,9 @@ const std::string	DirectionalLight::TYPE	= "Athena/Visual/DirectionalLight";
 /***************************** CONSTRUCTION / DESTRUCTION ******************************/
 
 DirectionalLight::DirectionalLight(const std::string& strName, ComponentsList* pList)
-: VisualComponent(strName, pList), m_pLight(0)
+: EntityComponent(strName, pList), m_pLight(0)
 {
-	assert(pSceneManager && "There isn't an Scene manager's instance");
+	assert(getSceneManager() && "There isn't an Scene manager's instance");
 	assert(m_pSceneNode);
 	assert(m_pList->getEntity());
 	assert(m_pList->getEntity()->getSignalsList());
@@ -43,7 +43,7 @@ DirectionalLight::DirectionalLight(const std::string& strName, ComponentsList* p
 	try
 	{
 		// Create the light
-		m_pLight = pSceneManager->createLight(m_id.strEntity + ".Visual[" + m_id.strName + "].Light");
+		m_pLight = getSceneManager()->createLight(m_id.strEntity + ".Visual[" + m_id.strName + "].Light");
 		m_pLight->setType(Light::LT_DIRECTIONAL);
 
 		// Attach it to the scene node
@@ -57,7 +57,7 @@ DirectionalLight::DirectionalLight(const std::string& strName, ComponentsList* p
 		// Destroy the light
 		if (m_pLight)
 		{
-			pSceneManager->destroyLight(m_pLight);
+			getSceneManager()->destroyLight(m_pLight);
 			m_pLight = 0;
 		}
 
@@ -73,7 +73,7 @@ DirectionalLight::DirectionalLight(const std::string& strName, ComponentsList* p
 DirectionalLight::~DirectionalLight()
 {
 	// Assertions
-	assert(pSceneManager);
+	assert(getSceneManager());
 	assert(m_pSceneNode);
 
 	if (m_pLight)
@@ -81,7 +81,7 @@ DirectionalLight::~DirectionalLight()
 		assert(m_pLight->getParentNode() == m_pSceneNode);
 
 		m_pSceneNode->detachObject(m_pLight);
-		pSceneManager->destroyLight(m_pLight);
+		getSceneManager()->destroyLight(m_pLight);
 		m_pLight = 0;
 	}
 }
@@ -143,7 +143,7 @@ const Math::Color DirectionalLight::getSpecularColor() const
 Utils::PropertiesList* DirectionalLight::getProperties() const
 {
 	// Call the base class implementation
-	PropertiesList* pProperties = VisualComponent::getProperties();
+	PropertiesList* pProperties = EntityComponent::getProperties();
 
 	// Create the category belonging to this type
 	pProperties->selectCategory(TYPE, false);
@@ -170,7 +170,7 @@ bool DirectionalLight::setProperty(const std::string& strCategory, const std::st
 	if (strCategory == TYPE)
 		return DirectionalLight::setProperty(strName, pValue);
 
-	return VisualComponent::setProperty(strCategory, strName, pValue);
+	return EntityComponent::setProperty(strCategory, strName, pValue);
 }
 
 //-----------------------------------------------------------------------

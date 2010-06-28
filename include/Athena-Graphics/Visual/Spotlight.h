@@ -52,7 +52,7 @@ public:
 	static Spotlight* cast(Entities::Component* pComponent);
 
 
-	//_____ Implementation of CVisualComponent __________
+	//_____ Implementation of EntityComponent __________
 public:
 	//-----------------------------------------------------------------------------------
 	/// @brief	Returns the type of the component

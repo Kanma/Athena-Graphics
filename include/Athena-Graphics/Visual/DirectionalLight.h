@@ -8,7 +8,7 @@
 #define _ATHENA_GRAPHICS_DIRECTIONALLIGHT_H_
 
 #include <Athena-Graphics/Prerequisites.h>
-#include <Athena-Graphics/Visual/VisualComponent.h>
+#include <Athena-Graphics/Visual/EntityComponent.h>
 #include <Ogre/OgreLight.h>
 
 
@@ -20,7 +20,7 @@ namespace Visual {
 //---------------------------------------------------------------------------------------
 /// @brief	A visual component that manages a directional light
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL DirectionalLight: public VisualComponent
+class ATHENA_SYMBOL DirectionalLight: public EntityComponent
 {
 	//_____ Construction / Destruction __________
 public:
@@ -53,7 +53,7 @@ public:
 	static DirectionalLight* cast(Entities::Component* pComponent);
 
 
-	//_____ Implementation of CVisualComponent __________
+	//_____ Implementation of EntityComponent __________
 public:
 	//-----------------------------------------------------------------------------------
 	/// @brief	Returns the type of the component

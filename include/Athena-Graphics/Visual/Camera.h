@@ -8,7 +8,7 @@
 #define _ATHENA_GRAPHICS_CAMERA_H_
 
 #include <Athena-Graphics/Prerequisites.h>
-#include <Athena-Graphics/Visual/VisualComponent.h>
+#include <Athena-Graphics/Visual/EntityComponent.h>
 #include <Athena-Graphics/Conversions.h>
 #include <Ogre/OgreRenderTarget.h>
 #include <Ogre/OgreCamera.h>
@@ -22,7 +22,7 @@ namespace Visual {
 //---------------------------------------------------------------------------------------
 /// @brief	A visual component that manages a camera
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Camera: public VisualComponent
+class ATHENA_SYMBOL Camera: public EntityComponent
 {
 	//_____ Construction / Destruction __________
 public:
@@ -55,7 +55,7 @@ public:
 	static Camera* cast(Entities::Component* pComponent);
 
 
-	//_____ Implementation of VisualComponent __________
+	//_____ Implementation of EntityComponent __________
 public:
 	//-----------------------------------------------------------------------------------
 	/// @brief	Returns the type of the component

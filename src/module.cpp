@@ -20,6 +20,7 @@
 #include <Athena-Graphics/Debug/Skeleton.h>
 #include <Athena-Graphics/Debug/Spotlight.h>
 #include <Athena-Entities/ComponentsManager.h>
+#include <Ogre/OgreRoot.h>
 
 using namespace Athena::Entities;
 
@@ -28,9 +29,12 @@ namespace Athena {
 namespace Graphics {
 
 
-void initialize()
+Ogre::Root* initialize(const std::string& strPluginFileName,
+                       const std::string& strOgreConfigFileName,
+		               const std::string& strOgreLogFileName)
 {
-    assert(ComponentsManager::getSingletonPtr);
+    assert(ComponentsManager::getSingletonPtr());
+    assert(!Ogre::Root::getSingletonPtr());
     
     ComponentsManager* pComponentsManager = ComponentsManager::getSingletonPtr();
     
@@ -41,7 +45,7 @@ void initialize()
     pComponentsManager->registerType(Visual::Plane::TYPE,               (ComponentCreationMethod*) &Visual::Plane::create);
     pComponentsManager->registerType(Visual::PointLight::TYPE,          (ComponentCreationMethod*) &Visual::PointLight::create);
     pComponentsManager->registerType(Visual::Spotlight::TYPE,           (ComponentCreationMethod*) &Visual::Spotlight::create);
-    pComponentsManager->registerType(Visual::VisualComponent::TYPE,     (ComponentCreationMethod*) &Visual::VisualComponent::create);
+    pComponentsManager->registerType(Visual::EntityComponent::TYPE,     (ComponentCreationMethod*) &Visual::EntityComponent::create);
 
     // Register the debug components
     pComponentsManager->registerType(Debug::AudioListener::TYPE,        (ComponentCreationMethod*) &Debug::AudioListener::create);
@@ -53,6 +57,8 @@ void initialize()
     pComponentsManager->registerType(Debug::PointLight::TYPE,           (ComponentCreationMethod*) &Debug::PointLight::create);
     pComponentsManager->registerType(Debug::Skeleton::TYPE,             (ComponentCreationMethod*) &Debug::Skeleton::create);
     pComponentsManager->registerType(Debug::Spotlight::TYPE,            (ComponentCreationMethod*) &Debug::Spotlight::create);
+
+    return new Ogre::Root(strPluginFileName, strOgreConfigFileName, strOgreLogFileName);
 }
 
 }

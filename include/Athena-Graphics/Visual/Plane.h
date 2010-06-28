@@ -8,7 +8,7 @@
 #define _ATHENA_GRAPHICS_PLANE_H_
 
 #include <Athena-Graphics/Prerequisites.h>
-#include <Athena-Graphics/Visual/VisualComponent.h>
+#include <Athena-Graphics/Visual/EntityComponent.h>
 #include <Athena-Math/Vector3.h>
 #include <Ogre/OgreEntity.h>
 
@@ -21,7 +21,7 @@ namespace Visual {
 //---------------------------------------------------------------------------------------
 /// @brief	A visual component that manages a plane
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Plane: public VisualComponent
+class ATHENA_SYMBOL Plane: public EntityComponent
 {
 	//_____ Construction / Destruction __________
 public:
@@ -54,7 +54,7 @@ public:
 	static Plane* cast(Entities::Component* pComponent);
 
 
-	//_____ Implementation of CVisualComponent __________
+	//_____ Implementation of EntityComponent __________
 public:
 	//-----------------------------------------------------------------------------------
 	/// @brief	Returns the type of the component

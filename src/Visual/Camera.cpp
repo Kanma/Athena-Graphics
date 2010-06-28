@@ -32,16 +32,16 @@ const std::string	Camera::TYPE	= "Athena/Visual/Camera";
 /***************************** CONSTRUCTION / DESTRUCTION ******************************/
 
 Camera::Camera(const std::string& strName, ComponentsList* pList)
-: VisualComponent(strName, pList), m_pCamera(0)
+: EntityComponent(strName, pList), m_pCamera(0)
 {
-	assert(pSceneManager && "There isn't an Scene manager's instance");
+	assert(getSceneManager() && "There isn't an Scene manager's instance");
 	assert(m_pSceneNode);
 	assert(pList->getEntity());
 
 	try
 	{
 		// Create the camera
-		m_pCamera = pSceneManager->createCamera(m_id.strEntity + ".Visual[" + m_id.strName + "].Camera");
+		m_pCamera = getSceneManager()->createCamera(m_id.strEntity + ".Visual[" + m_id.strName + "].Camera");
 
 		// Attach it to the scene node
 		m_pSceneNode->attachObject(m_pCamera);
@@ -54,7 +54,7 @@ Camera::Camera(const std::string& strName, ComponentsList* pList)
 		// Destroy the camera
 		if (m_pCamera)
 		{
-			pSceneManager->destroyCamera(m_pCamera);
+			getSceneManager()->destroyCamera(m_pCamera);
 			m_pCamera = 0;
 		}
 
@@ -69,7 +69,7 @@ Camera::Camera(const std::string& strName, ComponentsList* pList)
 
 Camera::~Camera()
 {
-	assert(pSceneManager);
+	assert(getSceneManager());
 	assert(m_pSceneNode);
 
 	if (m_pCamera)
@@ -77,7 +77,7 @@ Camera::~Camera()
 		assert(m_pCamera->getParentNode() == m_pSceneNode);
 
 		m_pSceneNode->detachObject(m_pCamera);
-		pSceneManager->destroyCamera(m_pCamera);
+		getSceneManager()->destroyCamera(m_pCamera);
 	}
 }
 
@@ -101,7 +101,7 @@ Camera* Camera::cast(Component* pComponent)
 Utils::PropertiesList* Camera::getProperties() const
 {
 	// Call the base class implementation
-	PropertiesList* pProperties = VisualComponent::getProperties();
+	PropertiesList* pProperties = EntityComponent::getProperties();
 
 	// Create the category belonging to this type
 	pProperties->selectCategory(TYPE, false);
@@ -161,7 +161,7 @@ bool Camera::setProperty(const std::string& strCategory, const std::string& strN
 	if (strCategory == TYPE)
 		return Camera::setProperty(strName, pValue);
 
-    return VisualComponent::setProperty(strCategory, strName, pValue);
+    return EntityComponent::setProperty(strCategory, strName, pValue);
 }
 
 //-----------------------------------------------------------------------

@@ -1,7 +1,6 @@
 # List the source files
 set(SRCS module.cpp
          Conversions.cpp
-         Declarations.cpp
          GraphicTools.cpp
          Line3D.cpp
          LinesList.cpp
@@ -21,11 +20,13 @@ set(SRCS module.cpp
          Debug/Spotlight.cpp
          Visual/Camera.cpp
          Visual/DirectionalLight.cpp
+         Visual/EntityComponent.cpp
          Visual/Object.cpp
          Visual/Plane.cpp
          Visual/PointLight.cpp
          Visual/Spotlight.cpp
          Visual/VisualComponent.cpp
+         Visual/World.cpp
 )
 
 # Precompiler definitions

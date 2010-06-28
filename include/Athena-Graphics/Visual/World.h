@@ -1,16 +1,18 @@
-/** @file	Object.h
+/** @file	World.h
 	@author	Philip Abbet
 
-	Declaration of the class 'Athena::Graphics::Visual::Object'
+	Declaration of the class 'Athena::Graphics::Visual::World'
 */
 
-#ifndef _ATHENA_GRAPHICS_OBJECT_H_
-#define _ATHENA_GRAPHICS_OBJECT_H_
+#ifndef _ATHENA_GRAPHICS_VISUAL_WORLD_H_
+#define _ATHENA_GRAPHICS_VISUAL_WORLD_H_
 
 #include <Athena-Graphics/Prerequisites.h>
-#include <Athena-Graphics/Visual/EntityComponent.h>
-#include <Ogre/OgreEntity.h>
-#include <Ogre/OgreResourceGroupManager.h>
+#include <Athena-Graphics/Visual/VisualComponent.h>
+#include <Athena-Entities/ComponentsList.h>
+#include <Athena-Core/Signals/SignalsList.h>
+#include <Athena-Core/Signals/Declarations.h>
+#include <Ogre/OgreSceneManager.h>
 
 
 namespace Athena {
@@ -19,9 +21,15 @@ namespace Visual {
 
 
 //---------------------------------------------------------------------------------------
-/// @brief	A visual component that contains a mesh
+/// @brief	Represents the visual world of a scene
+///
+/// The Ogre Scene Manager is managed by this component.
+///
+/// There can be only one visual world per scene, and it MUST be a component of the
+/// scene itself (not of an entity). Additionally, the name of the world component will
+/// always be equal to World::DEFAULT_NAME.
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Object: public EntityComponent
+class ATHENA_SYMBOL World: public VisualComponent
 {
 	//_____ Construction / Destruction __________
 public:
@@ -29,12 +37,12 @@ public:
     /// @brief	Constructor
     /// @param	strName		Name of the component
     //-----------------------------------------------------------------------------------
-	Object(const std::string& strName, Entities::ComponentsList* pList);
+	World(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
     /// @brief	Destructor
     //-----------------------------------------------------------------------------------
-	virtual ~Object();
+	virtual ~World();
 
     //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
@@ -43,51 +51,84 @@ public:
     /// @param	pList	List to which the component must be added
     /// @return			The new component
     //-----------------------------------------------------------------------------------
-	static Object* create(const std::string& strName, Entities::ComponentsList* pList);
+	static World* create(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Cast a component to a Object
+    /// @brief	Cast a component to a World
     ///
     /// @param	pComponent	The component
-    /// @return				The component, 0 if it isn't castable to a Object
+    /// @return				The component, 0 if it isn't castable to a World
     //-----------------------------------------------------------------------------------
-	static Object* cast(Component* pComponent);
+	static World* cast(Entities::Component* pComponent);
 
 
-	//_____ Implementation of EntityComponent __________
+	//_____ Implementation of VisualComponent __________
 public:
 	//-----------------------------------------------------------------------------------
 	/// @brief	Returns the type of the component
 	/// @return	The type
 	//-----------------------------------------------------------------------------------
-	virtual const std::string getType() const
-	{
-		return TYPE;
-	}
+	virtual const std::string getType() const { return TYPE; }
 
 
 	//_____ Methods __________
 public:
 	//-----------------------------------------------------------------------------------
-	/// @brief	Returns the Ogre entity used by this component
-	/// @return	The Ogre entity
+	/// @brief	Create an Ogre Scene Manager instance of a given type
+	///
+	/// @remarks    You can use this method to create a Scene Manager instance of a given
+	///             specific type. You may know this type already, or you may have
+	///             discovered it by looking at the results from
+	///             Ogre::Root::getMetaDataIterator().
+	///
+	/// @param  typeName    String identifying a unique SceneManager type
+	/// @return             The Scene Manager, 0 if the type name is unknown
 	//-----------------------------------------------------------------------------------
-	inline Ogre::Entity* getOgreEntity()
+	Ogre::SceneManager* createSceneManager(const std::string& typeName);
+
+	//-----------------------------------------------------------------------------------
+	/// @brief	Create an Ogre Scene Manager instance based on scene type support
+	///
+	/// @remarks    Creates an instance of a Scene Manager which supports the scene types
+	///             identified in the parameter. If more than one type of Scene Manager 
+	///             has been registered as handling that combination of scene types, an
+	///             instance of the last one registered is returned.
+	///
+	/// @note       This method always succeeds, if a specific scene manager is not
+	///             found, the default implementation is always returned.
+	///
+	/// @param  typeMask    A mask containing one or more SceneType flags
+	//-----------------------------------------------------------------------------------
+	Ogre::SceneManager* createSceneManager(Ogre::SceneTypeMask typeMask);
+
+	//-----------------------------------------------------------------------------------
+	/// @brief	Returns the scene manager
+	//-----------------------------------------------------------------------------------
+	virtual Ogre::SceneManager* getSceneManager() const
 	{
-		return m_pEntity;
+		return m_pSceneManager;
 	}
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Load a mesh
+    /// @brief	Sets the ambient light level to be used for the scene
     ///
-    /// @param	strMeshName		The name of the mesh
-    /// @param	strGroupName	The name of the resource group
-    /// @return					'true' if successful
+    /// @param	color	The ambient light color
+    ///
+    /// @remark	This sets the colour and intensity of the ambient light in the scene, i.e.
+    ///         the light which is 'sourceless' and illuminates all objects equally.
+    ///         The colour of an object is affected by a combination of the light in the
+    ///         scene, and the amount of light that object reflects (in this case based
+    ///         on the Material::ambient property).
     //-----------------------------------------------------------------------------------
-	bool loadMesh(const std::string& strMeshName, const std::string& strGroupName =
-				  Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	void setAmbientLight(const Math::Color& color) const;
 
-	
+    //-----------------------------------------------------------------------------------
+    /// @brief	Returns ambient light level to be used for the scene
+    /// @return	The ambient light color
+    //-----------------------------------------------------------------------------------
+	const Math::Color getAmbientLight() const;
+
+
 	//_____ Management of the properties __________
 public:
     //-----------------------------------------------------------------------------------
@@ -133,11 +174,12 @@ public:
 	//_____ Constants __________
 public:
 	static const std::string TYPE;  ///< Name of the type of component
+	static const std::string DEFAULT_NAME;	///< Default name of the world
 
 
 	//_____ Attributes __________
 protected:
-	Ogre::Entity* m_pEntity;
+	Ogre::SceneManager* m_pSceneManager;
 };
 
 }

@@ -35,7 +35,7 @@ const std::string	Spotlight::TYPE	= "Athena/Visual/Spotlight";
 Spotlight::Spotlight(const std::string& strName, ComponentsList* pList)
 : PointLight(strName, pList)
 {
-	assert(pSceneManager && "There isn't an Scene manager's instance");
+	assert(getSceneManager() && "There isn't an Scene manager's instance");
 	assert(m_pSceneNode);
 	assert(m_pLight);
 

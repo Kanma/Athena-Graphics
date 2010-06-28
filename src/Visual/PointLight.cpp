@@ -34,7 +34,7 @@ const std::string	PointLight::TYPE	= "Athena/Visual/PointLight";
 PointLight::PointLight(const std::string& strName, ComponentsList* pList)
 : DirectionalLight(strName, pList)
 {
-	assert(pSceneManager && "There isn't an Scene manager's instance");
+	assert(getSceneManager() && "There isn't an Scene manager's instance");
 	assert(m_pSceneNode);
 	assert(m_pLight);
 

@@ -188,7 +188,7 @@ void Camera::show()
 		}
 
 		const string strBaseName = m_pList->getEntity()->getName() + ".Debug[" + getName() + "]";
-		m_pEntity = pSceneManager->createEntity(strBaseName + ".Mesh", mesh->getName());
+		m_pEntity = getSceneManager()->createEntity(strBaseName + ".Mesh", mesh->getName());
 		m_pSceneNode->attachObject(m_pEntity);
 	}
 }
@@ -200,7 +200,7 @@ void Camera::hide()
 	if (m_pEntity)
 	{
 		m_pSceneNode->detachObject(m_pEntity);
-		pSceneManager->destroyEntity(m_pEntity);
+		getSceneManager()->destroyEntity(m_pEntity);
 		m_pEntity = 0;
 	}
 }

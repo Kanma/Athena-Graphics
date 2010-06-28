@@ -1,16 +1,21 @@
-/** @file	Object.h
+/** @file	EntityComponent.h
 	@author	Philip Abbet
 
-	Declaration of the class 'Athena::Graphics::Visual::Object'
+	Declaration of the class 'Athena::Graphics::Visual::EntityComponent'
 */
 
-#ifndef _ATHENA_GRAPHICS_OBJECT_H_
-#define _ATHENA_GRAPHICS_OBJECT_H_
+#ifndef _ATHENA_GRAPHICS_EntityComponent_H_
+#define _ATHENA_GRAPHICS_EntityComponent_H_
 
 #include <Athena-Graphics/Prerequisites.h>
-#include <Athena-Graphics/Visual/EntityComponent.h>
-#include <Ogre/OgreEntity.h>
-#include <Ogre/OgreResourceGroupManager.h>
+#include <Athena-Graphics/Visual/VisualComponent.h>
+#include <Athena-Entities/ComponentsList.h>
+#include <Athena-Entities/Entity.h>
+#include <Athena-Entities/Scene.h>
+#include <Athena-Core/Signals/SignalsList.h>
+#include <Athena-Core/Signals/Declarations.h>
+#include <Ogre/OgreMovableObject.h>
+#include <Ogre/OgreSceneNode.h>
 
 
 namespace Athena {
@@ -19,9 +24,9 @@ namespace Visual {
 
 
 //---------------------------------------------------------------------------------------
-/// @brief	A visual component that contains a mesh
+/// @brief	Base class for all the visual components of an entity
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Object: public EntityComponent
+class ATHENA_SYMBOL EntityComponent: public VisualComponent
 {
 	//_____ Construction / Destruction __________
 public:
@@ -29,12 +34,12 @@ public:
     /// @brief	Constructor
     /// @param	strName		Name of the component
     //-----------------------------------------------------------------------------------
-	Object(const std::string& strName, Entities::ComponentsList* pList);
+	EntityComponent(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
     /// @brief	Destructor
     //-----------------------------------------------------------------------------------
-	virtual ~Object();
+	virtual ~EntityComponent();
 
     //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
@@ -43,51 +48,110 @@ public:
     /// @param	pList	List to which the component must be added
     /// @return			The new component
     //-----------------------------------------------------------------------------------
-	static Object* create(const std::string& strName, Entities::ComponentsList* pList);
+	static EntityComponent* create(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Cast a component to a Object
+    /// @brief	Cast a component to a EntityComponent
     ///
     /// @param	pComponent	The component
-    /// @return				The component, 0 if it isn't castable to a Object
+    /// @return				The component, 0 if it isn't castable to a EntityComponent
     //-----------------------------------------------------------------------------------
-	static Object* cast(Component* pComponent);
+	static EntityComponent* cast(Entities::Component* pComponent);
 
 
-	//_____ Implementation of EntityComponent __________
+	//_____ Implementation of Component __________
 public:
 	//-----------------------------------------------------------------------------------
 	/// @brief	Returns the type of the component
 	/// @return	The type
 	//-----------------------------------------------------------------------------------
-	virtual const std::string getType() const
-	{
-		return TYPE;
-	}
+	virtual const std::string getType() const { return TYPE; }
 
 
 	//_____ Methods __________
 public:
 	//-----------------------------------------------------------------------------------
-	/// @brief	Returns the Ogre entity used by this component
-	/// @return	The Ogre entity
+	/// @brief	Set if the movable object of the visual component (if any) must cast
+	///         shadows
+	///
+	/// @param	bCastShadows	Indicates if the movable object must cast shadows
 	//-----------------------------------------------------------------------------------
-	inline Ogre::Entity* getOgreEntity()
+	void setCastShadows(bool bCastShadows);
+
+	//-----------------------------------------------------------------------------------
+	/// @brief	Indicates if the movable object of the visual component (if any)  must cast
+	///			shadows
+	///
+	/// @return	'true' if this movable object must cast shadows
+	//-----------------------------------------------------------------------------------
+	inline bool mustCastShadows() const
 	{
-		return m_pEntity;
+		return m_bCastShadows;
 	}
 
-    //-----------------------------------------------------------------------------------
-    /// @brief	Load a mesh
-    ///
-    /// @param	strMeshName		The name of the mesh
-    /// @param	strGroupName	The name of the resource group
-    /// @return					'true' if successful
-    //-----------------------------------------------------------------------------------
-	bool loadMesh(const std::string& strMeshName, const std::string& strGroupName =
-				  Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	//-----------------------------------------------------------------------------------
+	/// @brief	Returns the scene node used by the component
+	/// @return	The scene node
+	//-----------------------------------------------------------------------------------
+	virtual Ogre::SceneNode* getSceneNode() const
+	{
+		return m_pSceneNode;
+	}
 
-	
+protected:
+	void attachObject(Ogre::MovableObject* pObject);
+
+	//-----------------------------------------------------------------------------------
+	/// @brief	Called when the transforms affecting this component have changed
+	///
+	/// Can be called when the component isn't affected by any transforms anymore
+	/// (getTransforms() returns 0).
+	//-----------------------------------------------------------------------------------
+	virtual void onTransformsChanged();
+
+
+	//_____ Visibility __________
+public:
+	//-----------------------------------------------------------------------------------
+	/// @brief	Makes all objects attached to this component become visible / invisible
+	/// @remark	This is a shortcut to calling setVisible() on the objects attached to this
+	///			component
+	/// @param	bVisible	Whether the objects are to be made visible or invisible
+	//-----------------------------------------------------------------------------------
+	inline void setVisible(bool bVisible)
+	{
+		m_pSceneNode->setVisible(bVisible, false);
+		m_bVisible = bVisible;
+	}
+
+	//-----------------------------------------------------------------------------------
+	/// @brief	Inverts the visibility of all objects attached to this component
+	/// @remark	This is a shortcut to calling setVisible(!isVisible()) on the objects
+	///			attached to this component
+	//-----------------------------------------------------------------------------------
+	void flipVisibility()
+	{
+		setVisible(!m_bVisible);
+	}
+
+	//-----------------------------------------------------------------------------------
+	/// @brief	Indicates if the component is visible or hidden
+	/// @return	'true' if the component is visible
+	//-----------------------------------------------------------------------------------
+	inline bool isVisible() const
+	{
+		return m_bVisible;
+	}
+
+
+	//_____ Slots __________
+protected:
+	void onSceneShown(Utils::Variant* pValue);
+	void onSceneHidden(Utils::Variant* pValue);
+	void onEntityEnabled(Utils::Variant* pValue);
+	void onEntityDisabled(Utils::Variant* pValue);
+
+
 	//_____ Management of the properties __________
 public:
     //-----------------------------------------------------------------------------------
@@ -137,7 +201,9 @@ public:
 
 	//_____ Attributes __________
 protected:
-	Ogre::Entity* m_pEntity;
+	bool				m_bVisible;
+	bool				m_bCastShadows;
+	Ogre::SceneNode*	m_pSceneNode;
 };
 
 }

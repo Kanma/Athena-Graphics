@@ -4,16 +4,15 @@
 	Declaration of the class 'Athena::Graphics::Visual::VisualComponent'
 */
 
-#ifndef _ATHENA_GRAPHICS_VISUALCOMPONENT_H_
-#define _ATHENA_GRAPHICS_VISUALCOMPONENT_H_
+#ifndef _ATHENA_GRAPHICS_VISUAL_VisualComponent_H_
+#define _ATHENA_GRAPHICS_VISUAL_VisualComponent_H_
 
 #include <Athena-Graphics/Prerequisites.h>
 #include <Athena-Entities/ComponentsList.h>
 #include <Athena-Entities/Entity.h>
+#include <Athena-Entities/Scene.h>
 #include <Athena-Core/Signals/SignalsList.h>
 #include <Athena-Core/Signals/Declarations.h>
-#include <Ogre/OgreMovableObject.h>
-#include <Ogre/OgreSceneNode.h>
 
 
 namespace Athena {
@@ -22,7 +21,7 @@ namespace Visual {
 
 
 //---------------------------------------------------------------------------------------
-/// @brief	Base class for all the visual components of an entity
+/// @brief	Base class for all the visual components of a scene
 //---------------------------------------------------------------------------------------
 class ATHENA_SYMBOL VisualComponent: public Entities::Component
 {
@@ -57,7 +56,7 @@ public:
 	static VisualComponent* cast(Entities::Component* pComponent);
 
 
-	//_____ Implementation of CComponent __________
+	//_____ Implementation of Component __________
 public:
 	//-----------------------------------------------------------------------------------
 	/// @brief	Returns the type of the component
@@ -69,86 +68,15 @@ public:
 	//_____ Methods __________
 public:
 	//-----------------------------------------------------------------------------------
-	/// @brief	Set if the movable object of the visual component (if any) must cast
-	///         shadows
-	///
-	/// @param	bCastShadows	Indicates if the movable object must cast shadows
+	/// @brief	Returns the visual world of the scene
 	//-----------------------------------------------------------------------------------
-	void setCastShadows(bool bCastShadows);
-
-	//-----------------------------------------------------------------------------------
-	/// @brief	Indicates if the movable object of the visual component (if any)  must cast
-	///			shadows
-	///
-	/// @return	'true' if this movable object must cast shadows
-	//-----------------------------------------------------------------------------------
-	inline bool mustCastShadows() const
-	{
-		return m_bCastShadows;
-	}
+    World* getWorld() const;
 
 	//-----------------------------------------------------------------------------------
 	/// @brief	Returns the scene node used by the component
 	/// @return	The scene node
 	//-----------------------------------------------------------------------------------
-	virtual Ogre::SceneNode* getSceneNode() const
-	{
-		return m_pSceneNode;
-	}
-
-protected:
-	void attachObject(Ogre::MovableObject* pObject);
-
-	//-----------------------------------------------------------------------------------
-	/// @brief	Called when the transforms affecting this component have changed
-	///
-	/// Can be called when the component isn't affected by any transforms anymore
-	/// (getTransforms() returns 0).
-	//-----------------------------------------------------------------------------------
-	virtual void onTransformsChanged();
-
-
-	//_____ Visibility __________
-public:
-	//-----------------------------------------------------------------------------------
-	/// @brief	Makes all objects attached to this component become visible / invisible
-	/// @remark	This is a shortcut to calling setVisible() on the objects attached to this
-	///			component
-	/// @param	bVisible	Whether the objects are to be made visible or invisible
-	//-----------------------------------------------------------------------------------
-	inline void setVisible(bool bVisible)
-	{
-		m_pSceneNode->setVisible(bVisible, false);
-		m_bVisible = bVisible;
-	}
-
-	//-----------------------------------------------------------------------------------
-	/// @brief	Inverts the visibility of all objects attached to this component
-	/// @remark	This is a shortcut to calling setVisible(!isVisible()) on the objects
-	///			attached to this component
-	//-----------------------------------------------------------------------------------
-	void flipVisibility()
-	{
-		setVisible(!m_bVisible);
-	}
-
-	//-----------------------------------------------------------------------------------
-	/// @brief	Indicates if the component is visible or hidden
-	/// @return	'true' if the component is visible
-	//-----------------------------------------------------------------------------------
-	inline bool isVisible() const
-	{
-		return m_bVisible;
-	}
-
-
-
-	//_____ Slots __________
-protected:
-	void onSceneShown(Utils::Variant* pValue);
-	void onSceneHidden(Utils::Variant* pValue);
-	void onEntityEnabled(Utils::Variant* pValue);
-	void onEntityDisabled(Utils::Variant* pValue);
+    Ogre::SceneManager* getSceneManager() const;
 
 
 	//_____ Management of the properties __________
@@ -196,13 +124,6 @@ public:
 	//_____ Constants __________
 public:
 	static const std::string TYPE;  ///< Name of the type of component
-
-
-	//_____ Attributes __________
-protected:
-	bool				m_bVisible;
-	bool				m_bCastShadows;
-	Ogre::SceneNode*	m_pSceneNode;
 };
 
 }

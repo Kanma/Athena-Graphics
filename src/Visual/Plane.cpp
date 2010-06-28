@@ -41,7 +41,7 @@ const std::string	Plane::TYPE = "Athena/Visual/Plane";
 /***************************** CONSTRUCTION / DESTRUCTION ******************************/
 
 Plane::Plane(const std::string& strName, ComponentsList* pList)
-: VisualComponent(strName, pList), m_pEntity(0), m_strMaterial(""),
+: EntityComponent(strName, pList), m_pEntity(0), m_strMaterial(""),
   m_normalVector(Vector3::ZERO), m_distance(0.0f), m_width(0.0f), m_height(0.0f), m_xSegments(1),
   m_ySegments(1), m_bNormals(true), m_iNbTexCoordSet(1), m_uTile(1.0f), m_vTile(1.0f),
   m_upVector(Vector3::UNIT_Y)
@@ -52,7 +52,7 @@ Plane::Plane(const std::string& strName, ComponentsList* pList)
 
 Plane::~Plane()
 {
-	assert(pSceneManager);
+	assert(getSceneManager());
 	assert(m_pSceneNode);
 
 	if (m_pEntity)
@@ -60,7 +60,7 @@ Plane::~Plane()
 		assert(m_pEntity->getParentNode() == m_pSceneNode);
 
 		m_pSceneNode->detachObject(m_pEntity);
-		pSceneManager->destroyEntity(m_pEntity);
+		getSceneManager()->destroyEntity(m_pEntity);
 		m_pEntity = 0;
 		MeshManager::getSingleton().remove(m_id.strEntity + ".Visual[" + m_id.strName + "].Mesh");
 	}
@@ -89,7 +89,7 @@ bool Plane::createPlane(const std::string& strMaterial, const Math::Vector3& nor
 						Math::Real uTile, Math::Real vTile, const Math::Vector3& upVector)
 {
 	// Assertions
-	assert(pSceneManager);
+	assert(getSceneManager());
 	assert(m_pSceneNode);
 
 	// Copy the parameters to the internal attributes
@@ -115,7 +115,7 @@ bool Plane::createPlane(const std::string& strMaterial, const Math::Vector3& nor
 bool Plane::createPlane()
 {
 	// Assertions
-	assert(pSceneManager);
+	assert(getSceneManager());
 	assert(m_pSceneNode);
 
 	try
@@ -124,7 +124,7 @@ bool Plane::createPlane()
 		if (m_pEntity)
 		{
 			m_pSceneNode->detachObject(m_pEntity);
-			pSceneManager->destroyEntity(m_pEntity);
+			getSceneManager()->destroyEntity(m_pEntity);
 			m_pEntity = 0;
 			MeshManager::getSingleton().remove(m_id.strEntity + ".Visual[" + m_id.strName + "].Mesh");
 		}
@@ -142,7 +142,7 @@ bool Plane::createPlane()
 															   Ogre::Plane(toOgre(m_normalVector), m_distance), m_width, m_height,
 															   m_xSegments, m_ySegments, m_bNormals, m_iNbTexCoordSet,
 															   m_uTile, m_vTile, toOgre(m_upVector));
-		m_pEntity = pSceneManager->createEntity(strPrefix + ".Entity", strPrefix + ".Mesh");
+		m_pEntity = getSceneManager()->createEntity(strPrefix + ".Entity", strPrefix + ".Mesh");
 
 		m_pEntity->setCastShadows(false);
 		m_pEntity->setMaterialName(m_strMaterial);
@@ -165,7 +165,7 @@ bool Plane::createPlane()
 Utils::PropertiesList* Plane::getProperties() const
 {
 	// Call the base class implementation
-	PropertiesList* pProperties = VisualComponent::getProperties();
+	PropertiesList* pProperties = EntityComponent::getProperties();
 
 	// Create the category belonging to this type
 	pProperties->selectCategory(TYPE, false);
@@ -222,7 +222,7 @@ bool Plane::setProperty(const std::string& strCategory, const std::string& strNa
 	if (strCategory == TYPE)
 		return Plane::setProperty(strName, pValue);
 
-	return VisualComponent::setProperty(strCategory, strName, pValue);
+	return EntityComponent::setProperty(strCategory, strName, pValue);
 }
 
 //-----------------------------------------------------------------------

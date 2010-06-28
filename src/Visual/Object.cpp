@@ -39,7 +39,7 @@ const std::string Object::TYPE  = "Athena/Visual/Object";
 /***************************** CONSTRUCTION / DESTRUCTION ******************************/
 
 Object::Object(const std::string& strName, ComponentsList* pList)
-: VisualComponent(strName, pList), m_pEntity(0)
+: EntityComponent(strName, pList), m_pEntity(0)
 {
 }
 
@@ -47,7 +47,7 @@ Object::Object(const std::string& strName, ComponentsList* pList)
 
 Object::~Object()
 {
-	assert(pSceneManager);
+	assert(getSceneManager());
 	assert(m_pSceneNode);
 
 	if (m_pEntity)
@@ -55,7 +55,7 @@ Object::~Object()
 		assert(m_pEntity->getParentNode() == m_pSceneNode);
 
 		m_pSceneNode->detachObject(m_pEntity);
-		pSceneManager->destroyEntity(m_pEntity);
+		getSceneManager()->destroyEntity(m_pEntity);
 		m_pEntity = 0;
 	}
 }
@@ -82,7 +82,7 @@ bool Object::loadMesh(const std::string& strMeshName, const std::string& strGrou
 	// Assertions
 	assert(!m_pEntity);
 	assert(!strMeshName.empty());
-	assert(pSceneManager);
+	assert(getSceneManager());
 	assert(m_pSceneNode);
 
 	try
@@ -101,7 +101,7 @@ bool Object::loadMesh(const std::string& strMeshName, const std::string& strGrou
 		}
 
 		// Create an Ogre entity and attach it to the scene node
-		m_pEntity = pSceneManager->createEntity(m_id.strEntity + ".Visual[" + m_id.strName + "].Entity", strMeshName);
+		m_pEntity = getSceneManager()->createEntity(m_id.strEntity + ".Visual[" + m_id.strName + "].Entity", strMeshName);
 		attachObject(m_pEntity);
 	}
 	catch (Exception& ex)
@@ -120,7 +120,7 @@ bool Object::loadMesh(const std::string& strMeshName, const std::string& strGrou
 Utils::PropertiesList* Object::getProperties() const
 {
 	// Call the base class implementation
-	PropertiesList* pProperties = VisualComponent::getProperties();
+	PropertiesList* pProperties = EntityComponent::getProperties();
 
 	// Create the category belonging to this type
 	pProperties->selectCategory(TYPE, false);
@@ -159,7 +159,7 @@ bool Object::setProperty(const std::string& strCategory, const std::string& strN
 	if (strCategory == TYPE)
 		return Object::setProperty(strName, pValue);
 
-    return VisualComponent::setProperty(strCategory, strName, pValue);
+    return EntityComponent::setProperty(strCategory, strName, pValue);
 }
 
 //-----------------------------------------------------------------------

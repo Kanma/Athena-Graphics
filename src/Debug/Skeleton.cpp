@@ -247,7 +247,7 @@ void Skeleton::show()
 	mesh->_setBoundingSphereRadius(refMesh->getBoundingSphereRadius());
 
 	// Create an entity to display the skeleton representation
-	m_pSkeletonEntity = pSceneManager->createEntity(strBaseName + ".Skeleton", mesh->getName());
+	m_pSkeletonEntity = getSceneManager()->createEntity(strBaseName + ".Skeleton", mesh->getName());
 	m_pSkeletonEntity->shareSkeletonInstanceWith(pEntity);
 	m_pSceneNode->attachObject(m_pSkeletonEntity);
 }
@@ -261,7 +261,7 @@ void Skeleton::hide()
 		string strMeshName = m_pSkeletonEntity->getMesh()->getName();
 
 		m_pSceneNode->detachObject(m_pSkeletonEntity);
-		pSceneManager->destroyEntity(m_pSkeletonEntity);
+		getSceneManager()->destroyEntity(m_pSkeletonEntity);
 		m_pSkeletonEntity = 0;
 
 		MeshManager::getSingleton().remove(strMeshName);

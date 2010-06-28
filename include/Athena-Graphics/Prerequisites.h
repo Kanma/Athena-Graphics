@@ -55,26 +55,35 @@ namespace Athena
         {
             class Camera;
             class DirectionalLight;
+            class EntityComponent;
             class Object;
             class Plane;
             class PointLight;
             class Spotlight;
             class VisualComponent;
+            class World;
         }
 
 
     	//------------------------------------------------------------------------------------
     	/// @brief	Initialize the Graphics module
+    	///
+    	/// The Root object of Ogre is created here
+    	///
+    	/// @param strPluginFileName        The file that contains plugins information.
+    	///                                 Defaults to "plugins.cfg", may be left blank to
+    	///                                 ignore.
+    	/// @param strOgreConfigFileName    The file that contains the configuration to be
+    	///                                 loaded. Defaults to "ogre.cfg", may be left blank
+    	///                                 to load nothing.
+		/// @param strOgreLogFileName       The logfile to create, defaults to Ogre.log, may
+		///                                 be left blank if you've already set up LogManager
+		///                                 & Log yourself
+        /// @return                         The Ogre Root
     	//------------------------------------------------------------------------------------
-        extern void initialize();
-
-
-    	/// The Ogre Root
-    	extern ATHENA_SYMBOL Ogre::Root*			pOgreRoot;
-    	/// The Ogre Scene manager
-    	extern ATHENA_SYMBOL Ogre::SceneManager*	pSceneManager;
-    	/// The window
-    	extern ATHENA_SYMBOL Ogre::RenderWindow*	pMainWindow;
+        extern Ogre::Root* initialize(const std::string& strPluginFileName = "plugins.cfg",
+			                          const std::string& strOgreConfigFileName = "ogre.cfg",
+			                          const std::string& strOgreLogFileName = "Ogre.log");
     }
 }
 

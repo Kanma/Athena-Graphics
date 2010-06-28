@@ -274,7 +274,7 @@ void GraphicTools::setPolygonMode(Entities::Entity* pEntity, Ogre::PolygonMode m
 	ComponentsList::tComponentsIterator iter = pEntity->getComponentsIterator();
 	while (iter.hasMoreElements())
 	{
-		VisualComponent* pComponent = VisualComponent::cast(iter.getNext());
+		EntityComponent* pComponent = EntityComponent::cast(iter.getNext());
 		if (pComponent)
 		{
 			SceneNode::ObjectIterator iter = pComponent->getSceneNode()->getAttachedObjectIterator();
@@ -332,7 +332,7 @@ void GraphicTools::resetMaterials(Entities::Entity* pEntity)
 	ComponentsList::tComponentsIterator iter = pEntity->getComponentsIterator();
 	while (iter.hasMoreElements())
 	{
-		VisualComponent* pComponent = VisualComponent::cast(iter.getNext());
+		EntityComponent* pComponent = EntityComponent::cast(iter.getNext());
 		if (pComponent)
 		{
 			SceneNode::ObjectIterator iter = pComponent->getSceneNode()->getAttachedObjectIterator();
