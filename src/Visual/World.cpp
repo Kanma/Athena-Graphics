@@ -58,7 +58,7 @@ World::~World()
 	assert(m_pList);
 	assert(m_pList->getScene());
 
-    delete m_pSceneManager;
+    Ogre::Root::getSingletonPtr()->destroySceneManager(m_pSceneManager);
 
     m_pList->getScene()->_resetMainComponent(COMP_VISUAL);
 }
@@ -105,7 +105,6 @@ Ogre::SceneManager* World::createSceneManager(Ogre::SceneTypeMask typeMask)
 {
     // Assertions
     assert(!m_pSceneManager);
-    assert(!typeName.empty());
     assert(Ogre::Root::getSingletonPtr());
 
     m_pSceneManager = Ogre::Root::getSingletonPtr()->createSceneManager(typeMask, m_id.strName);

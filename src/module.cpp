@@ -11,6 +11,7 @@
 #include <Athena-Graphics/Visual/Plane.h>
 #include <Athena-Graphics/Visual/PointLight.h>
 #include <Athena-Graphics/Visual/Spotlight.h>
+#include <Athena-Graphics/Visual/World.h>
 #include <Athena-Graphics/Debug/AudioListener.h>
 #include <Athena-Graphics/Debug/AudioSource.h>
 #include <Athena-Graphics/Debug/Axes.h>
@@ -41,11 +42,13 @@ Ogre::Root* initialize(const std::string& strPluginFileName,
     // Register the visual components
     pComponentsManager->registerType(Visual::Camera::TYPE,              (ComponentCreationMethod*) &Visual::Camera::create);
     pComponentsManager->registerType(Visual::DirectionalLight::TYPE,    (ComponentCreationMethod*) &Visual::DirectionalLight::create);
+    pComponentsManager->registerType(Visual::EntityComponent::TYPE,     (ComponentCreationMethod*) &Visual::EntityComponent::create);
     pComponentsManager->registerType(Visual::Object::TYPE,              (ComponentCreationMethod*) &Visual::Object::create);
     pComponentsManager->registerType(Visual::Plane::TYPE,               (ComponentCreationMethod*) &Visual::Plane::create);
     pComponentsManager->registerType(Visual::PointLight::TYPE,          (ComponentCreationMethod*) &Visual::PointLight::create);
     pComponentsManager->registerType(Visual::Spotlight::TYPE,           (ComponentCreationMethod*) &Visual::Spotlight::create);
-    pComponentsManager->registerType(Visual::EntityComponent::TYPE,     (ComponentCreationMethod*) &Visual::EntityComponent::create);
+    pComponentsManager->registerType(Visual::VisualComponent::TYPE,     (ComponentCreationMethod*) &Visual::VisualComponent::create);
+    pComponentsManager->registerType(Visual::World::TYPE,               (ComponentCreationMethod*) &Visual::World::create);
 
     // Register the debug components
     pComponentsManager->registerType(Debug::AudioListener::TYPE,        (ComponentCreationMethod*) &Debug::AudioListener::create);
