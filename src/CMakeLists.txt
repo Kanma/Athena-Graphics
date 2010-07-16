@@ -55,4 +55,8 @@ if (NOT ATHENA_GRAPHICS_STATIC)
 
 else()
     add_library(Athena-Graphics STATIC ${SRCS})
+
+    if (NOT WIN32)
+        set_target_properties(Athena-Graphics PROPERTIES COMPILE_FLAGS "-fPIC")
+    endif()
 endif()
