@@ -880,7 +880,7 @@ Ogre::VertexData* MeshBuilder::createVertexData()
 					fBuffer[0] = iterVertex->texCoord[iter->usIndex].x;
 					fBuffer[1] = iterVertex->texCoord[iter->usIndex].y;
 					fBuffer[2] = iterVertex->texCoord[iter->usIndex].z;
-					vbuffer->writeData(offset, VertexElement::getTypeSize(iter->type), iterVertex->blendingIndices);
+					vbuffer->writeData(offset, VertexElement::getTypeSize(iter->type), fBuffer);
 					break;
 				}
 
