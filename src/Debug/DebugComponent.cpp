@@ -122,6 +122,8 @@ void DebugComponent::onTransformsChanged()
 		m_pSceneNode->setOrientation(Quaternion::IDENTITY);
 		m_pSceneNode->setScale(Vector3::UNIT_SCALE);
 	}
+
+    Component::onTransformsChanged();
 }
 
 

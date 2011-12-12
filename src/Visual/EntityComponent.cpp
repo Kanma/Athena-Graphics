@@ -153,6 +153,8 @@ void EntityComponent::onTransformsChanged()
 		m_pSceneNode->setOrientation(Ogre::Quaternion::IDENTITY);
 		m_pSceneNode->setScale(Ogre::Vector3::UNIT_SCALE);
 	}
+
+    VisualComponent::onTransformsChanged();
 }
 
 

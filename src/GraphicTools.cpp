@@ -271,7 +271,7 @@ void GraphicTools::setPolygonMode(Entities::Entity* pEntity, Ogre::PolygonMode m
 	assert(!strMaterialsSuffix.empty());
 
 	// Iterate through the visual parts
-	ComponentsList::tComponentsIterator iter = pEntity->getComponentsIterator();
+	Component::tComponentsIterator iter = pEntity->getComponentsIterator();
 	while (iter.hasMoreElements())
 	{
 		EntityComponent* pComponent = EntityComponent::cast(iter.getNext());
@@ -329,7 +329,7 @@ void GraphicTools::resetMaterials(Entities::Entity* pEntity)
 	assert(pEntity);
 
 	// Iterate through the visual parts
-	ComponentsList::tComponentsIterator iter = pEntity->getComponentsIterator();
+	Component::tComponentsIterator iter = pEntity->getComponentsIterator();
 	while (iter.hasMoreElements())
 	{
 		EntityComponent* pComponent = EntityComponent::cast(iter.getNext());

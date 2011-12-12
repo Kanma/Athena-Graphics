@@ -76,9 +76,9 @@ void Spotlight::setSpotlightSource(Visual::Spotlight* pPart)
 		bShown = true;
 	}
 
-	m_pSpotlightSource = pPart; // ? pPart : Visual::Spotlight::cast(getTransforms()));
+	m_pSpotlightSource = pPart;
 
-	if (bShown)
+	if (bShown && m_pSpotlightSource)
 		show();
 }
 
@@ -228,6 +228,20 @@ void Spotlight::hide()
 			m_lines.erase(m_lines.begin());
 		}
 	}
+}
+
+
+/**************************** REFERERS / REFEREES MANAGEMENT ***************************/
+
+void Spotlight::onComponentDestroyed(Component* pReferee)
+{
+    // Assertions
+    assert(pReferee);
+
+    if (m_pSpotlightSource == pReferee)
+        hide();
+
+    DebugComponent::onComponentDestroyed(pReferee);
 }
 
 

@@ -282,9 +282,9 @@ void Skeleton::setSkeletonSource(Visual::Object* pPart)
 		bShown = true;
 	}
 
-	m_pSkeletonSource = pPart; // ? pPart : Object::cast(getTransforms()));
+	m_pSkeletonSource = pPart;
 
-	if (bShown)
+	if (bShown && m_pSkeletonSource)
 		show();
 }
 
@@ -363,6 +363,20 @@ void Skeleton::_addFace(const Math::Vector3& point1, const Math::Vector3& point2
 	pBuilder->normal(normal);
 
 	pBuilder->triangle(usNbVertices, usNbVertices + 1, usNbVertices + 2);
+}
+
+
+/**************************** REFERERS / REFEREES MANAGEMENT ***************************/
+
+void Skeleton::onComponentDestroyed(Component* pReferee)
+{
+    // Assertions
+    assert(pReferee);
+
+    if (m_pSkeletonSource == pReferee)
+        hide();
+
+    DebugComponent::onComponentDestroyed(pReferee);
 }
 
 

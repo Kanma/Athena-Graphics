@@ -88,6 +88,17 @@ public:
 	}
 
 
+    //_____ Referers / Referees management __________
+protected:
+	//-----------------------------------------------------------------------------------
+	/// @brief	Called when a component this one is referring to is destroyed
+	///
+	/// @remark	If you override it in your component, don't forget to call the base class
+	///			implementation!
+	//-----------------------------------------------------------------------------------
+	virtual void onComponentDestroyed(Component* pReferee);
+
+
 	//_____ Management of the properties __________
 public:
     //-----------------------------------------------------------------------------------
