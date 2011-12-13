@@ -37,11 +37,6 @@ public:
 	DebugComponent(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Destructor
-    //-----------------------------------------------------------------------------------
-	virtual ~DebugComponent();
-
-    //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
     ///
     /// @param	strName	Name of the component
@@ -57,6 +52,12 @@ public:
     /// @return				The component, 0 if it isn't castable to a DebugComponent
     //-----------------------------------------------------------------------------------
 	static DebugComponent* cast(Entities::Component* pComponent);
+
+protected:
+    //-----------------------------------------------------------------------------------
+    /// @brief	Destructor
+    //-----------------------------------------------------------------------------------
+	virtual ~DebugComponent();
 
 
 	//_____ Implementation of Component __________

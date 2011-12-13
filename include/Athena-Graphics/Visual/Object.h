@@ -32,11 +32,6 @@ public:
 	Object(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Destructor
-    //-----------------------------------------------------------------------------------
-	virtual ~Object();
-
-    //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
     ///
     /// @param	strName	Name of the component
@@ -52,6 +47,12 @@ public:
     /// @return				The component, 0 if it isn't castable to a Object
     //-----------------------------------------------------------------------------------
 	static Object* cast(Component* pComponent);
+
+protected:
+    //-----------------------------------------------------------------------------------
+    /// @brief	Destructor
+    //-----------------------------------------------------------------------------------
+	virtual ~Object();
 
 
 	//_____ Implementation of EntityComponent __________

@@ -33,11 +33,6 @@ public:
 	Camera(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Destructor
-    //-----------------------------------------------------------------------------------
-	virtual ~Camera();
-
-    //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
     ///
     /// @param	strName	Name of the component
@@ -53,6 +48,12 @@ public:
     /// @return				The component, 0 if it isn't castable to a Camera
     //-----------------------------------------------------------------------------------
 	static Camera* cast(Entities::Component* pComponent);
+
+protected:
+    //-----------------------------------------------------------------------------------
+    /// @brief	Destructor
+    //-----------------------------------------------------------------------------------
+	virtual ~Camera();
 
 
 	//_____ Implementation of EntityComponent __________

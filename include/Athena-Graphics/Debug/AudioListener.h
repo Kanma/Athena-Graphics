@@ -30,11 +30,6 @@ public:
 	AudioListener(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Destructor
-    //-----------------------------------------------------------------------------------
-	virtual ~AudioListener();
-
-    //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
     ///
     /// @param	strName	Name of the component
@@ -50,6 +45,12 @@ public:
     /// @return				The component, 0 if it isn't castable to a Camera
     //-----------------------------------------------------------------------------------
 	static AudioListener* cast(Entities::Component* pComponent);
+
+protected:
+    //-----------------------------------------------------------------------------------
+    /// @brief	Destructor
+    //-----------------------------------------------------------------------------------
+	virtual ~AudioListener();
 
 
 	//_____ Implementation of CDebugComponent __________

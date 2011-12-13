@@ -31,11 +31,6 @@ public:
 	DirectionalLight(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Destructor
-    //-----------------------------------------------------------------------------------
-	virtual ~DirectionalLight();
-
-    //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
     ///
     /// @param	strName	Name of the component
@@ -51,6 +46,12 @@ public:
     /// @return				The component, 0 if it isn't castable to a DirectionalLight
     //-----------------------------------------------------------------------------------
 	static DirectionalLight* cast(Entities::Component* pComponent);
+
+protected:
+    //-----------------------------------------------------------------------------------
+    /// @brief	Destructor
+    //-----------------------------------------------------------------------------------
+	virtual ~DirectionalLight();
 
 
 	//_____ Implementation of EntityComponent __________

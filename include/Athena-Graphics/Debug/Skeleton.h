@@ -33,11 +33,6 @@ public:
 	Skeleton(const std::string& strName, Entities::ComponentsList* pList);
 	
     //-----------------------------------------------------------------------------------
-    /// @brief	Destructor
-    //-----------------------------------------------------------------------------------
-	virtual ~Skeleton();
-
-    //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
     ///
     /// @param	strName	Name of the component
@@ -53,6 +48,12 @@ public:
     /// @return				The component, 0 if it isn't castable to a Skeleton
     //-----------------------------------------------------------------------------------
 	static Skeleton* cast(Entities::Component* pComponent);
+
+protected:
+    //-----------------------------------------------------------------------------------
+    /// @brief	Destructor
+    //-----------------------------------------------------------------------------------
+	virtual ~Skeleton();
 
 
 	//_____ Methods __________

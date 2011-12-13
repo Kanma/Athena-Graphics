@@ -34,11 +34,6 @@ public:
 	VisualComponent(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Destructor
-    //-----------------------------------------------------------------------------------
-	virtual ~VisualComponent();
-
-    //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
     ///
     /// @param	strName	Name of the component
@@ -54,6 +49,12 @@ public:
     /// @return				The component, 0 if it isn't castable to a VisualComponent
     //-----------------------------------------------------------------------------------
 	static VisualComponent* cast(Entities::Component* pComponent);
+
+protected:
+    //-----------------------------------------------------------------------------------
+    /// @brief	Destructor
+    //-----------------------------------------------------------------------------------
+	virtual ~VisualComponent();
 
 
 	//_____ Implementation of Component __________

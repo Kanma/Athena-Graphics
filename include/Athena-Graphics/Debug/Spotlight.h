@@ -34,11 +34,6 @@ public:
 	Spotlight(const std::string& strName, Entities::ComponentsList* pList);
 	
     //-----------------------------------------------------------------------------------
-    /// @brief	Destructor
-    //-----------------------------------------------------------------------------------
-	virtual ~Spotlight();
-
-    //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
     ///
     /// @param	strName	Name of the component
@@ -54,6 +49,12 @@ public:
     /// @return				The component, 0 if it isn't castable to a Spotlight
     //-----------------------------------------------------------------------------------
 	static Spotlight* cast(Entities::Component* pComponent);
+
+protected:
+    //-----------------------------------------------------------------------------------
+    /// @brief	Destructor
+    //-----------------------------------------------------------------------------------
+	virtual ~Spotlight();
 
 
 	//_____ Methods __________

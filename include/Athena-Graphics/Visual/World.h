@@ -40,11 +40,6 @@ public:
 	World(const std::string& strName, Entities::ComponentsList* pList);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Destructor
-    //-----------------------------------------------------------------------------------
-	virtual ~World();
-
-    //-----------------------------------------------------------------------------------
     /// @brief	Create a new component (Component creation method)
     ///
     /// @param	strName	Name of the component
@@ -60,6 +55,12 @@ public:
     /// @return				The component, 0 if it isn't castable to a World
     //-----------------------------------------------------------------------------------
 	static World* cast(Entities::Component* pComponent);
+
+protected:
+    //-----------------------------------------------------------------------------------
+    /// @brief	Destructor
+    //-----------------------------------------------------------------------------------
+	virtual ~World();
 
 
 	//_____ Implementation of VisualComponent __________
