@@ -76,10 +76,21 @@ void Spotlight::setSpotlightSource(Visual::Spotlight* pPart)
 		bShown = true;
 	}
 
+    if (m_pSpotlightSource)
+    {
+        removeLinkTo(m_pSpotlightSource);
+        m_pSpotlightSource = 0;
+    }
+
 	m_pSpotlightSource = pPart;
 
-	if (bShown && m_pSpotlightSource)
-		show();
+    if (m_pSpotlightSource)
+	{
+        addLinkTo(m_pSpotlightSource);
+
+        if (bShown)
+    		show();
+	}
 }
 
 //-----------------------------------------------------------------------
@@ -231,17 +242,20 @@ void Spotlight::hide()
 }
 
 
-/**************************** REFERERS / REFEREES MANAGEMENT ***************************/
+/*********************************** LINKS MANAGEMENT **********************************/
 
-void Spotlight::onComponentDestroyed(Component* pReferee)
+void Spotlight::mustUnlinkComponent(Component* pComponent)
 {
     // Assertions
-    assert(pReferee);
+    assert(pComponent);
 
-    if (m_pSpotlightSource == pReferee)
+    if (m_pSpotlightSource == pComponent)
+    {
         hide();
+        m_pSpotlightSource = 0;
+    }
 
-    DebugComponent::onComponentDestroyed(pReferee);
+    DebugComponent::mustUnlinkComponent(pComponent);
 }
 
 

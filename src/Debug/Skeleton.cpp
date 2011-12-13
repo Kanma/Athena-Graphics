@@ -282,10 +282,21 @@ void Skeleton::setSkeletonSource(Visual::Object* pPart)
 		bShown = true;
 	}
 
+    if (m_pSkeletonSource)
+    {
+        removeLinkTo(m_pSkeletonSource);
+        m_pSkeletonSource = 0;
+    }
+
 	m_pSkeletonSource = pPart;
 
-	if (bShown && m_pSkeletonSource)
-		show();
+    if (m_pSkeletonSource)
+	{
+        addLinkTo(m_pSkeletonSource);
+
+        if (bShown)
+    		show();
+	}
 }
 
 //-----------------------------------------------------------------------
@@ -366,17 +377,20 @@ void Skeleton::_addFace(const Math::Vector3& point1, const Math::Vector3& point2
 }
 
 
-/**************************** REFERERS / REFEREES MANAGEMENT ***************************/
+/*********************************** LINKS MANAGEMENT **********************************/
 
-void Skeleton::onComponentDestroyed(Component* pReferee)
+void Skeleton::mustUnlinkComponent(Component* pComponent)
 {
     // Assertions
-    assert(pReferee);
+    assert(pComponent);
 
-    if (m_pSkeletonSource == pReferee)
+    if (m_pSkeletonSource == pComponent)
+    {
         hide();
+        m_pSkeletonSource = 0;
+    }
 
-    DebugComponent::onComponentDestroyed(pReferee);
+    DebugComponent::mustUnlinkComponent(pComponent);
 }
 
 
