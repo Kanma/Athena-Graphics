@@ -9,22 +9,22 @@
 	url = git://github.com/Kanma/Athena-Entities.git
 [submodule "dependencies/UnitTest++"]
 	path = dependencies/UnitTest++
-	url = git://github.com/Kanma/Athena-Dependencies-UnitTest-cpp.git
+	url = git://github.com/Kanma/UnitTest-cpp.git
 [submodule "dependencies/zlib"]
 	path = dependencies/zlib
-	url = git://github.com/Kanma/Athena-Dependencies-zlib.git
+	url = git://github.com/Kanma/zlib.git
 [submodule "dependencies/zziplib"]
 	path = dependencies/zziplib
-	url = git://github.com/Kanma/Athena-Dependencies-zziplib.git
+	url = git://github.com/Kanma/zziplib.git
 [submodule "dependencies/freetype"]
 	path = dependencies/freetype
-	url = git://github.com/Kanma/Athena-Dependencies-FreeType.git
-[submodule "dependencies/freeimage"]
-	path = dependencies/freeimage
-	url = git://github.com/Kanma/Athena-Dependencies-FreeImage.git
-[submodule "dependencies/ogre"]
-	path = dependencies/ogre
-	url = git://github.com/Kanma/Athena-Dependencies-Ogre.git
-[submodule "dependencies/xmake"]
-	path = dependencies/xmake
+	url = git://github.com/Kanma/FreeType.git
+[submodule "dependencies/FreeImage"]
+	path = dependencies/FreeImage
+	url = git://github.com/Kanma/FreeImage.git
+[submodule "dependencies/Ogre"]
+	path = dependencies/Ogre
+	url = git://github.com/Kanma/Ogre.git
+[submodule "dependencies/XMake"]
+	path = dependencies/XMake
 	url = git://github.com/Kanma/XMake.git

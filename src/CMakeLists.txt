@@ -29,34 +29,28 @@ set(SRCS module.cpp
          Visual/World.cpp
 )
 
-# Precompiler definitions
-add_definitions(-DATHENA_EXPORTS)
 
 # List the include paths
-xmake_include_directories(ATHENA_GRAPHICS)
+set(INCLUDE_PATHS "${ATHENA_GRAPHICS_SOURCE_DIR}/include"
+                  "${XMAKE_BINARY_DIR}/include")
+
+include_directories(${INCLUDE_PATHS})
+
+xmake_import_search_paths(ATHENA_ENTITIES)
+xmake_import_search_paths(OGRE)
+
 
 # Declaration of the library
 if (NOT ATHENA_GRAPHICS_STATIC)
-    add_library(Athena-Graphics SHARED ${SRCS})
-    xmake_target_link_libraries(Athena-Graphics ATHENA_ENTITIES)
-
-    if (XMAKE_OGRE_FRAMEWORK)
-        set_target_properties(Athena-Graphics PROPERTIES LINK_FLAGS "${XMAKE_OGRE_LINK_FLAGS} -Wl,-rpath,@loader_path/.,-rpath,@loader_path/../Frameworks")
-    endif()
-
-    # Set the INSTALL_PATH so that the dynamic library can be local
-    set_target_properties(Athena-Graphics PROPERTIES BUILD_WITH_INSTALL_RPATH ON
-                                                     INSTALL_NAME_DIR "@rpath"
-    )
-
-    if (UNIX)
-        set_target_properties(Athena-Graphics PROPERTIES INSTALL_RPATH ".")
-    endif()
-
+    xmake_create_dynamic_library(ATHENA_GRAPHICS Athena-Graphics 1.0.0 1.0.0 ${SRCS})
 else()
-    add_library(Athena-Graphics STATIC ${SRCS})
-
-    if (NOT WIN32)
-        set_target_properties(Athena-Graphics PROPERTIES COMPILE_FLAGS "-fPIC")
-    endif()
+    xmake_create_static_library(ATHENA_GRAPHICS Athena-Graphics ${SRCS})
 endif()
+
+xmake_project_link(ATHENA_GRAPHICS ATHENA_ENTITIES OGRE)
+
+xmake_add_to_list_property(ATHENA_GRAPHICS COMPILE_DEFINITIONS "ATHENA_EXPORTS")
+
+
+# Exportations
+xmake_export_include_paths(ATHENA_GRAPHICS ${INCLUDE_PATHS})
