@@ -1,7 +1,7 @@
-/**	@file	Conversions.cpp
-	@author	Philip Abbet
+/** @file   Conversions.cpp
+    @author Philip Abbet
 
-	Implementation of the conversion functions between Athena and Ogre types
+    Implementation of the conversion functions between Athena and Ogre types
 */
 
 #include <Athena-Graphics/Conversions.h>

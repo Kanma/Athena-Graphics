@@ -1,7 +1,7 @@
-/** @file	SceneRenderTargetListener.h
-	@author	Philip Abbet
+/** @file   SceneRenderTargetListener.h
+    @author Philip Abbet
 
-	Declaration of the class 'Athena::Graphics::SceneRenderTargetListener'
+    Declaration of the class 'Athena::Graphics::SceneRenderTargetListener'
 */
 
 #ifndef _ATHENA_GRAPHICS_SCENERENDERTARGETLISTENER_H_
@@ -15,53 +15,53 @@ namespace Athena {
 namespace Graphics {
 
 //---------------------------------------------------------------------------------------
-/// @brief	Represents a RenderTargetListener specialized in the managment of a Scene in
-///			only one RenderTarget
+/// @brief  Represents a RenderTargetListener specialized in the managment of a Scene in
+///         only one RenderTarget
 ///
 /// The purpose of this class is to manage the visibility of a scene in an application
 /// that uses more than one RenderTarget, and where only one RenderTarget must display
 /// the scene.
 //---------------------------------------------------------------------------------------
 class ATHENA_GRAPHICS_SYMBOL SceneRenderTargetListener: public Ogre::RenderTargetListener
-{ 
-	//_____ Construction / Destruction __________
+{
+    //_____ Construction / Destruction __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Constructor
+    /// @brief  Constructor
     ///
     /// @param  pRenderTarget   The render target
     /// @param  pScene          The scene that must be shown in the render target
     //-----------------------------------------------------------------------------------
-	SceneRenderTargetListener(Ogre::RenderTarget* pRenderTarget, Entities::Scene* pScene);
+    SceneRenderTargetListener(Ogre::RenderTarget* pRenderTarget, Entities::Scene* pScene);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Destructor
+    /// @brief  Destructor
     //-----------------------------------------------------------------------------------
-	virtual ~SceneRenderTargetListener();
+    virtual ~SceneRenderTargetListener();
 
-	
-	//_____ Overrides for SimpleRenderable __________
+
+    //_____ Overrides for SimpleRenderable __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Called just before the RenderTarget is about to be rendered into
+    /// @brief  Called just before the RenderTarget is about to be rendered into
     ///
-    /// @param	evt	Event
+    /// @param  evt Event
     //-----------------------------------------------------------------------------------
-	virtual void preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt);
+    virtual void preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Called just after the RenderTarget has been rendered to
+    /// @brief  Called just after the RenderTarget has been rendered to
     ///
-    /// @param	evt	Event
+    /// @param  evt Event
     //-----------------------------------------------------------------------------------
-	virtual void postRenderTargetUpdate(const Ogre::RenderTargetEvent& evt);
+    virtual void postRenderTargetUpdate(const Ogre::RenderTargetEvent& evt);
 
 
-	//_____ Attributes __________
+    //_____ Attributes __________
 private:
-	Ogre::RenderTarget*	m_pRenderTarget;	///< The RenderTarget which must render the scene
-	Entities::Scene*	m_pScene;			///< The scene
-}; 
+    Ogre::RenderTarget* m_pRenderTarget;    ///< The RenderTarget which must render the scene
+    Entities::Scene*    m_pScene;           ///< The scene
+};
 
 }
 }

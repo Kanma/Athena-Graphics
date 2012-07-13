@@ -1,7 +1,7 @@
-/**	@file	VisualComponent.cpp
-	@author	Philip Abbet
+/** @file   VisualComponent.cpp
+    @author Philip Abbet
 
-	Implementation of the class 'Athena::Graphics::Visual::VisualComponent'
+    Implementation of the class 'Athena::Graphics::Visual::VisualComponent'
 */
 
 #include <Athena-Graphics/Visual/VisualComponent.h>
@@ -32,11 +32,11 @@ const std::string VisualComponent::TYPE = "Athena/Visual/VisualComponent";
 VisualComponent::VisualComponent(const std::string& strName, ComponentsList* pList)
 : Component(strName, pList)
 {
-	// Assertions
-	assert(m_pList);
-	assert(m_pList->getScene() || m_pList->getEntity());
+    // Assertions
+    assert(m_pList);
+    assert(m_pList->getScene() || m_pList->getEntity());
 
-	m_id.type = COMP_VISUAL;
+    m_id.type = COMP_VISUAL;
 }
 
 //-----------------------------------------------------------------------
@@ -49,14 +49,14 @@ VisualComponent::~VisualComponent()
 
 VisualComponent* VisualComponent::create(const std::string& strName, ComponentsList* pList)
 {
-	return new VisualComponent(strName, pList);
+    return new VisualComponent(strName, pList);
 }
 
 //-----------------------------------------------------------------------
 
 VisualComponent* VisualComponent::cast(Component* pComponent)
 {
-	return dynamic_cast<VisualComponent*>(pComponent);
+    return dynamic_cast<VisualComponent*>(pComponent);
 }
 
 
@@ -79,7 +79,7 @@ Ogre::SceneManager* VisualComponent::getSceneManager() const
     World* pWorld = getWorld();
     if (pWorld)
         return pWorld->getSceneManager();
-    
+
     return 0;
 }
 
@@ -88,41 +88,41 @@ Ogre::SceneManager* VisualComponent::getSceneManager() const
 
 Utils::PropertiesList* VisualComponent::getProperties() const
 {
-	// Call the base class implementation
-	PropertiesList* pProperties = Component::getProperties();
+    // Call the base class implementation
+    PropertiesList* pProperties = Component::getProperties();
 
-	// Create the category belonging to this type
-	pProperties->selectCategory(TYPE, false);
+    // Create the category belonging to this type
+    pProperties->selectCategory(TYPE, false);
 
-	// Returns the list
-	return pProperties;
+    // Returns the list
+    return pProperties;
 }
 
 //-----------------------------------------------------------------------
 
 bool VisualComponent::setProperty(const std::string& strCategory, const std::string& strName,
-							      Utils::Variant* pValue)
+                                  Utils::Variant* pValue)
 {
-	assert(!strCategory.empty());
-	assert(!strName.empty());
-	assert(pValue);
+    assert(!strCategory.empty());
+    assert(!strName.empty());
+    assert(pValue);
 
-	if (strCategory == TYPE)
-		return VisualComponent::setProperty(strName, pValue);
+    if (strCategory == TYPE)
+        return VisualComponent::setProperty(strName, pValue);
 
-	return Component::setProperty(strCategory, strName, pValue);
+    return Component::setProperty(strCategory, strName, pValue);
 }
 
 //-----------------------------------------------------------------------
 
 bool VisualComponent::setProperty(const std::string& strName, Utils::Variant* pValue)
 {
-	// Assertions
-	assert(!strName.empty());
-	assert(pValue);
+    // Assertions
+    assert(!strName.empty());
+    assert(pValue);
 
-	// Destroy the value
-	delete pValue;
+    // Destroy the value
+    delete pValue;
 
-	return true;
+    return true;
 }

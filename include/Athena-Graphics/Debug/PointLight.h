@@ -1,7 +1,7 @@
-/** @file	PointLight.h
-	@author	Philip Abbet
+/** @file   PointLight.h
+    @author Philip Abbet
 
-	Declaration of the class 'Athena::Graphics::Debug::PointLight'
+    Declaration of the class 'Athena::Graphics::Debug::PointLight'
 */
 
 #ifndef _ATHENA_GRAPHICS_DEBUG_POINTLIGHT_H_
@@ -17,87 +17,87 @@ namespace Debug {
 
 
 //---------------------------------------------------------------------------------------
-/// @brief	Debug component that display a point light symbol
+/// @brief  Debug component that display a point light symbol
 //---------------------------------------------------------------------------------------
 class ATHENA_GRAPHICS_SYMBOL PointLight: public DebugComponent
 {
-	//_____ Construction / Destruction __________
+    //_____ Construction / Destruction __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Constructor
-    /// @param	strName		Name of the component
+    /// @brief  Constructor
+    /// @param  strName     Name of the component
     //-----------------------------------------------------------------------------------
-	PointLight(const std::string& strName, Entities::ComponentsList* pList);
-	
+    PointLight(const std::string& strName, Entities::ComponentsList* pList);
+
     //-----------------------------------------------------------------------------------
-    /// @brief	Create a new component (Component creation method)
+    /// @brief  Create a new component (Component creation method)
     ///
-    /// @param	strName	Name of the component
-    /// @param	pList	List to which the component must be added
-    /// @return			The new component
+    /// @param  strName Name of the component
+    /// @param  pList   List to which the component must be added
+    /// @return         The new component
     //-----------------------------------------------------------------------------------
-	static PointLight* create(const std::string& strName, Entities::ComponentsList* pList);
-	
+    static PointLight* create(const std::string& strName, Entities::ComponentsList* pList);
+
     //-----------------------------------------------------------------------------------
-    /// @brief	Cast a component to a PointLight
+    /// @brief  Cast a component to a PointLight
     ///
-    /// @param	pComponent	The component
-    /// @return				The component, 0 if it isn't castable to a PointLight
+    /// @param  pComponent  The component
+    /// @return             The component, 0 if it isn't castable to a PointLight
     //-----------------------------------------------------------------------------------
-	static PointLight* cast(Entities::Component* pComponent);
+    static PointLight* cast(Entities::Component* pComponent);
 
 protected:
     //-----------------------------------------------------------------------------------
-    /// @brief	Destructor
+    /// @brief  Destructor
     //-----------------------------------------------------------------------------------
-	virtual ~PointLight();
+    virtual ~PointLight();
 
 
-	//_____ Implementation of DebugComponent __________
+    //_____ Implementation of DebugComponent __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Show the light symbol
+    /// @brief  Show the light symbol
     //-----------------------------------------------------------------------------------
-	virtual void show();
-	
+    virtual void show();
+
     //-----------------------------------------------------------------------------------
-    /// @brief	Hide the light symbol
+    /// @brief  Hide the light symbol
     //-----------------------------------------------------------------------------------
-	virtual void hide();
+    virtual void hide();
 
-	//-----------------------------------------------------------------------------------
-	/// @brief	Returns the type of the component
-	/// @return	The type
-	//-----------------------------------------------------------------------------------
-	virtual const std::string getType() const
-	{
-		return TYPE;
-	}
+    //-----------------------------------------------------------------------------------
+    /// @brief  Returns the type of the component
+    /// @return The type
+    //-----------------------------------------------------------------------------------
+    virtual const std::string getType() const
+    {
+        return TYPE;
+    }
 
 
-	//_____ Management of the properties __________
+    //_____ Management of the properties __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Returns a list containing the properties of the component
+    /// @brief  Returns a list containing the properties of the component
     ///
     /// Used in the serialization mecanism of the components
-    /// @remark	Must be overriden by each component type. Each implementation must first call
-    ///			its base class one, and add a new category (named after the component's type)
-    ///			AT THE BEGINNING of the obtained list, containing the properties related to
-    ///			this type.
-    /// @return	The list of properties
+    /// @remark Must be overriden by each component type. Each implementation must first call
+    ///         its base class one, and add a new category (named after the component's type)
+    ///         AT THE BEGINNING of the obtained list, containing the properties related to
+    ///         this type.
+    /// @return The list of properties
     //-----------------------------------------------------------------------------------
-	virtual Utils::PropertiesList* getProperties() const;
+    virtual Utils::PropertiesList* getProperties() const;
 
 
-	//_____ Constants __________
+    //_____ Constants __________
 public:
-	static const std::string TYPE;	///< Name of the type of component
+    static const std::string TYPE;  ///< Name of the type of component
 
 
-	//_____ Attributes __________
+    //_____ Attributes __________
 protected:
-	std::vector<Line3D*> m_lines;	///< Lines used to represents the light
+    std::vector<Line3D*> m_lines;   ///< Lines used to represents the light
 };
 
 }
