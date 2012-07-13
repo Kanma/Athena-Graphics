@@ -74,8 +74,8 @@ public:
     World* getWorld() const;
 
     //-----------------------------------------------------------------------------------
-    /// @brief  Returns the scene node used by the component
-    /// @return The scene node
+    /// @brief  Returns the scene manager used by the component
+    /// @return The scene manager
     //-----------------------------------------------------------------------------------
     Ogre::SceneManager* getSceneManager() const;
 

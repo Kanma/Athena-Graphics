@@ -23,7 +23,7 @@ namespace Graphics {
 //---------------------------------------------------------------------------------------
 /// @brief  Utility class used to simplify the creation of a manual mesh
 ///
-/// This class is designed to be more powerfull than the Ogre::ManualObject one (which
+/// This class is designed to be more powerful than the Ogre::ManualObject one (which
 /// doesn't support animated object for instance), but still easier to use than the raw
 /// Hardware Buffers approch.
 ///
