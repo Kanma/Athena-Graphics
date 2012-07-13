@@ -1,5 +1,10 @@
+# File generation
+configure_file(${ATHENA_GRAPHICS_SOURCE_DIR}/src/module.cpp.in
+               ${XMAKE_BINARY_DIR}/generated/Athena-Graphics/module.cpp)
+
+
 # List the source files
-set(SRCS module.cpp
+set(SRCS ${XMAKE_BINARY_DIR}/generated/Athena-Graphics/module.cpp
          Conversions.cpp
          GraphicTools.cpp
          Line3D.cpp
@@ -42,7 +47,10 @@ xmake_import_search_paths(OGRE)
 
 # Declaration of the library
 if (NOT ATHENA_GRAPHICS_STATIC)
-    xmake_create_dynamic_library(ATHENA_GRAPHICS Athena-Graphics 1.0.0 1.0.0 ${SRCS})
+    xmake_create_dynamic_library(ATHENA_GRAPHICS Athena-Graphics
+                                 "${ATHENA_GRAPHICS_VERSION_MAJOR}.${ATHENA_GRAPHICS_VERSION_MINOR}.${ATHENA_GRAPHICS_VERSION_PATCH}"
+                                 "${ATHENA_GRAPHICS_VERSION_MAJOR}.${ATHENA_GRAPHICS_VERSION_MINOR}.${ATHENA_GRAPHICS_VERSION_PATCH}"
+                                 ${SRCS})
 else()
     xmake_create_static_library(ATHENA_GRAPHICS Athena-Graphics ${SRCS})
 endif()

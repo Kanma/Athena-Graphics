@@ -21,7 +21,7 @@ namespace Graphics {
 /// This implementation is a static one: you should add all the points of the line first,
 /// and then call the drawLines() method. Once drawn, a line isn't modifiable anymore.
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Line3D: public Ogre::SimpleRenderable 
+class ATHENA_GRAPHICS_SYMBOL Line3D: public Ogre::SimpleRenderable 
 { 
 	//_____ Construction / Destruction __________
 public:

@@ -20,7 +20,7 @@ namespace Visual {
 //---------------------------------------------------------------------------------------
 /// @brief	A visual component that manages a directional light
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL DirectionalLight: public EntityComponent
+class ATHENA_GRAPHICS_SYMBOL DirectionalLight: public EntityComponent
 {
 	//_____ Construction / Destruction __________
 public:

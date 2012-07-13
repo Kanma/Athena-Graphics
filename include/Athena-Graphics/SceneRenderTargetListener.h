@@ -22,7 +22,7 @@ namespace Graphics {
 /// that uses more than one RenderTarget, and where only one RenderTarget must display
 /// the scene.
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL SceneRenderTargetListener: public Ogre::RenderTargetListener
+class ATHENA_GRAPHICS_SYMBOL SceneRenderTargetListener: public Ogre::RenderTargetListener
 { 
 	//_____ Construction / Destruction __________
 public:

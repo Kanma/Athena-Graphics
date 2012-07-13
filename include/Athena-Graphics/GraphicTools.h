@@ -18,7 +18,7 @@ namespace Graphics {
 //---------------------------------------------------------------------------------------
 /// @brief	Utility class containing graphics-related tools
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL GraphicTools
+class ATHENA_GRAPHICS_SYMBOL GraphicTools
 { 
 	//_____ Methods __________
 public:

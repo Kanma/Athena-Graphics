@@ -19,7 +19,7 @@ namespace Debug {
 //---------------------------------------------------------------------------------------
 /// @brief	Debug component that display a directional light symbol
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL DirectionalLight: public DebugComponent
+class ATHENA_GRAPHICS_SYMBOL DirectionalLight: public DebugComponent
 {
 	//_____ Construction / Destruction __________
 public:

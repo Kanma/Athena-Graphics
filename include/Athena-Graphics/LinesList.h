@@ -20,7 +20,7 @@ namespace Graphics {
 /// This implementation is a static one: you should add all the lines first,
 /// and then call the drawLines method. Once drawn, a list isn't modifiable anymore.
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL LinesList: public Ogre::SimpleRenderable 
+class ATHENA_GRAPHICS_SYMBOL LinesList: public Ogre::SimpleRenderable 
 { 
 	//_____ Construction / Destruction __________
 public:

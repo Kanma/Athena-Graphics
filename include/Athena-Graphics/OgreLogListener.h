@@ -18,7 +18,7 @@ namespace Graphics {
 /// @brief	Listener for the log system of Ogre, that redirects the log messages from
 ///         Ogre to the Athena log system
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL OgreLogListener: public Ogre::LogListener
+class ATHENA_GRAPHICS_SYMBOL OgreLogListener: public Ogre::LogListener
 {
 	//_____ Construction / Destruction __________
 public:

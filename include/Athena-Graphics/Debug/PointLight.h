@@ -19,7 +19,7 @@ namespace Debug {
 //---------------------------------------------------------------------------------------
 /// @brief	Debug component that display a point light symbol
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL PointLight: public DebugComponent
+class ATHENA_GRAPHICS_SYMBOL PointLight: public DebugComponent
 {
 	//_____ Construction / Destruction __________
 public:

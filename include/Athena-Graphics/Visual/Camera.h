@@ -22,7 +22,7 @@ namespace Visual {
 //---------------------------------------------------------------------------------------
 /// @brief	A visual component that manages a camera
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Camera: public EntityComponent
+class ATHENA_GRAPHICS_SYMBOL Camera: public EntityComponent
 {
 	//_____ Construction / Destruction __________
 public:

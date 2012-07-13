@@ -19,7 +19,7 @@ namespace Debug {
 //---------------------------------------------------------------------------------------
 /// @brief	Debug component that display an audio listener symbol
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL AudioListener: public DebugComponent
+class ATHENA_GRAPHICS_SYMBOL AudioListener: public DebugComponent
 {
 	//_____ Construction / Destruction __________
 public:

@@ -18,7 +18,7 @@ namespace Graphics {
 //---------------------------------------------------------------------------------------
 /// @brief	Utility class used to modify a mesh
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL MeshTransformer
+class ATHENA_GRAPHICS_SYMBOL MeshTransformer
 { 
 	//_____ Construction / Destruction __________
 public:

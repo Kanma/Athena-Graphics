@@ -26,7 +26,7 @@ namespace Visual {
 //---------------------------------------------------------------------------------------
 /// @brief	Base class for all the visual components of an entity
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL EntityComponent: public VisualComponent
+class ATHENA_GRAPHICS_SYMBOL EntityComponent: public VisualComponent
 {
 	//_____ Construction / Destruction __________
 public:

@@ -21,7 +21,7 @@ namespace Visual {
 //---------------------------------------------------------------------------------------
 /// @brief	A visual component that contains a mesh
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Object: public EntityComponent
+class ATHENA_GRAPHICS_SYMBOL Object: public EntityComponent
 {
 	//_____ Construction / Destruction __________
 public:

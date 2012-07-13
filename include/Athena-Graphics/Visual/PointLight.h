@@ -19,7 +19,7 @@ namespace Visual {
 //---------------------------------------------------------------------------------------
 /// @brief	A visual component that manages a point light
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL PointLight: public DirectionalLight
+class ATHENA_GRAPHICS_SYMBOL PointLight: public DirectionalLight
 {
 	//_____ Construction / Destruction __________
 public:

@@ -23,7 +23,7 @@ namespace Visual {
 //---------------------------------------------------------------------------------------
 /// @brief	Base class for all the visual components of a scene
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL VisualComponent: public Entities::Component
+class ATHENA_GRAPHICS_SYMBOL VisualComponent: public Entities::Component
 {
 	//_____ Construction / Destruction __________
 public:

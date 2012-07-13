@@ -19,7 +19,7 @@ namespace Visual {
 //---------------------------------------------------------------------------------------
 /// @brief	A visual component that manages a spotlight
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Spotlight: public PointLight
+class ATHENA_GRAPHICS_SYMBOL Spotlight: public PointLight
 {
 	//_____ Construction / Destruction __________
 public:

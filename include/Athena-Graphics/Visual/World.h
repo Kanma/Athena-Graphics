@@ -29,7 +29,7 @@ namespace Visual {
 /// scene itself (not of an entity). Additionally, the name of the world component will
 /// always be equal to World::DEFAULT_NAME.
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL World: public VisualComponent
+class ATHENA_GRAPHICS_SYMBOL World: public VisualComponent
 {
 	//_____ Construction / Destruction __________
 public:

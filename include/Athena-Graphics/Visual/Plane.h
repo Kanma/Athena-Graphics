@@ -21,7 +21,7 @@ namespace Visual {
 //---------------------------------------------------------------------------------------
 /// @brief	A visual component that manages a plane
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Plane: public EntityComponent
+class ATHENA_GRAPHICS_SYMBOL Plane: public EntityComponent
 {
 	//_____ Construction / Destruction __________
 public:

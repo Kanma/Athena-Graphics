@@ -29,7 +29,7 @@ namespace Graphics {
 ///
 /// The design of the class is inspired by the one of Ogre::ManualObject.
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL MeshBuilder
+class ATHENA_GRAPHICS_SYMBOL MeshBuilder
 { 
 	//_____ Construction / Destruction __________
 public:

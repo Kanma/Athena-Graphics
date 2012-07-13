@@ -19,7 +19,7 @@ namespace Debug {
 //---------------------------------------------------------------------------------------
 /// @brief	Debug component that display a camera symbol
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Camera: public DebugComponent
+class ATHENA_GRAPHICS_SYMBOL Camera: public DebugComponent
 {
 	//_____ Construction / Destruction __________
 public:

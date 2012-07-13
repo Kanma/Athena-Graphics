@@ -22,7 +22,7 @@ namespace Debug {
 /// The skeleton is retrieved from the assigned 'skeleton source' component. If none is
 /// supplied, the transforms origin (if any) is used (if it has a skeleton).
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Skeleton: public DebugComponent
+class ATHENA_GRAPHICS_SYMBOL Skeleton: public DebugComponent
 {
 	//_____ Construction / Destruction __________
 public:

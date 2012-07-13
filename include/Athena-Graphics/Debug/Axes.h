@@ -19,7 +19,7 @@ namespace Debug {
 //---------------------------------------------------------------------------------------
 /// @brief	Debug component that display the local axes of the entity
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Axes: public DebugComponent
+class ATHENA_GRAPHICS_SYMBOL Axes: public DebugComponent
 {
 	//_____ Construction / Destruction __________
 public:

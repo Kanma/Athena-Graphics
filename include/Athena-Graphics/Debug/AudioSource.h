@@ -19,7 +19,7 @@ namespace Debug {
 //---------------------------------------------------------------------------------------
 /// @brief	Debug component that display an audio source symbol
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL AudioSource: public DebugComponent
+class ATHENA_GRAPHICS_SYMBOL AudioSource: public DebugComponent
 {
 	//_____ Construction / Destruction __________
 public:

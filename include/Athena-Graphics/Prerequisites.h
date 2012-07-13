@@ -1,6 +1,6 @@
 /** @file   Prerequisites.h
     @author Philip Abbet
-    
+
     Declaration of the types of the Athena-Graphics module
 */
 
@@ -10,6 +10,18 @@
 #include <Athena-Entities/Prerequisites.h>
 #include <Athena-Graphics/Config.h>
 #include <Ogre/OgrePrerequisites.h>
+
+
+/// Used to export symbols from the library
+#if (ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32) && !ATHENA_GRAPHICS_STATIC
+#    ifdef ATHENA_GRAPHICS_EXPORTS
+#        define ATHENA_GRAPHICS_SYMBOL  __declspec(dllexport)
+#    else
+#        define ATHENA_GRAPHICS_SYMBOL  __declspec(dllimport)
+#    endif
+#else
+#    define ATHENA_GRAPHICS_SYMBOL
+#endif
 
 
 //----------------------------------------------------------------------------------------
@@ -84,6 +96,10 @@ namespace Athena
         extern Ogre::Root* initialize(const std::string& strPluginFileName = "plugins.cfg",
 			                          const std::string& strOgreConfigFileName = "ogre.cfg",
 			                          const std::string& strOgreLogFileName = "Ogre.log");
+
+
+
+        ATHENA_GRAPHICS_SYMBOL extern const char* VERSION;
     }
 }
 

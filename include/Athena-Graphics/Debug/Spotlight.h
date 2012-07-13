@@ -23,7 +23,7 @@ namespace Debug {
 /// spotlight. If none is supplied, the transforms origin (if any) is used (if it is a
 /// spotlight).
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Spotlight: public DebugComponent
+class ATHENA_GRAPHICS_SYMBOL Spotlight: public DebugComponent
 {
 	//_____ Construction / Destruction __________
 public:

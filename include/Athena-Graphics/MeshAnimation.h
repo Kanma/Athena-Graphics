@@ -19,7 +19,7 @@ namespace Graphics {
 //----------------------------------------------------------------------------------------
 /// @brief	Contains all the infos about an animation of a mesh
 //----------------------------------------------------------------------------------------
-class ATHENA_SYMBOL MeshAnimation: public Entities::ComponentAnimation
+class ATHENA_GRAPHICS_SYMBOL MeshAnimation: public Entities::ComponentAnimation
 {
 	//_____ Construction / Destruction __________
 public:

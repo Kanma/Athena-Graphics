@@ -26,7 +26,7 @@ namespace Debug {
 //---------------------------------------------------------------------------------------
 /// @brief	Base class for all the debug components of an entity
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL DebugComponent: public Entities::Component
+class ATHENA_GRAPHICS_SYMBOL DebugComponent: public Entities::Component
 {
 	//_____ Construction / Destruction __________
 public:
