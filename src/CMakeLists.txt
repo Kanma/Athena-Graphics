@@ -34,6 +34,10 @@ set(SRCS ${XMAKE_BINARY_DIR}/generated/Athena-Graphics/module.cpp
          Visual/World.cpp
 )
 
+if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
+    set(SRCS ${SRCS} Scripting.cpp)
+endif()
+
 
 # List the include paths
 set(INCLUDE_PATHS "${ATHENA_GRAPHICS_SOURCE_DIR}/include"
@@ -43,6 +47,10 @@ include_directories(${INCLUDE_PATHS})
 
 xmake_import_search_paths(ATHENA_ENTITIES)
 xmake_import_search_paths(OGRE)
+
+if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
+    xmake_import_search_paths(ATHENA_SCRIPTING)
+endif()
 
 
 # Declaration of the library
@@ -58,6 +66,10 @@ else()
 endif()
 
 xmake_project_link(ATHENA_GRAPHICS ATHENA_ENTITIES OGRE)
+
+if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
+    xmake_project_link(ATHENA_GRAPHICS ATHENA_SCRIPTING)
+endif()
 
 
 # Exportations

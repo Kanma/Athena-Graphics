@@ -16,6 +16,21 @@ using namespace Athena::Graphics;
 
 /*********************************** EXTERNAL FUNCTIONS *********************************/
 
+extern bool bind_Visual_VisualComponent(v8::Handle<Object> parent);
+
+
+/*************************************** FUNCTIONS *************************************/
+
+bool init_visual_submodule(v8::Handle<Object> parent, const std::string& modulePath)
+{
+    HandleScope handle_scope;
+
+    v8::Handle<Object> ns = Object::New();
+    parent->Set(String::New("Visual"), ns);
+
+    return bind_Visual_VisualComponent(ns);
+}
+
 
 /****************************** INITIALISATION OF THE MODULE ****************************/
 
@@ -39,6 +54,6 @@ extern "C" {
 
         parent->Set(String::New("VERSION"), String::New(Athena::Graphics::VERSION));
 
-        return true;
+        return init_visual_submodule(parent, modulePath);
     }
 }
