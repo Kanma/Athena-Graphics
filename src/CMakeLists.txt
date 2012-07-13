@@ -51,13 +51,13 @@ if (NOT ATHENA_GRAPHICS_STATIC)
                                  "${ATHENA_GRAPHICS_VERSION_MAJOR}.${ATHENA_GRAPHICS_VERSION_MINOR}.${ATHENA_GRAPHICS_VERSION_PATCH}"
                                  "${ATHENA_GRAPHICS_VERSION_MAJOR}.${ATHENA_GRAPHICS_VERSION_MINOR}.${ATHENA_GRAPHICS_VERSION_PATCH}"
                                  ${SRCS})
+
+    xmake_add_to_list_property(ATHENA_GRAPHICS COMPILE_DEFINITIONS "ATHENA_GRAPHICS_EXPORTS")
 else()
     xmake_create_static_library(ATHENA_GRAPHICS Athena-Graphics ${SRCS})
 endif()
 
 xmake_project_link(ATHENA_GRAPHICS ATHENA_ENTITIES OGRE)
-
-xmake_add_to_list_property(ATHENA_GRAPHICS COMPILE_DEFINITIONS "ATHENA_EXPORTS")
 
 
 # Exportations
