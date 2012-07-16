@@ -74,6 +74,8 @@ namespace Graphics {
     namespace Visual {
 
         IMPLEMENT_CONVERSIONS(VisualComponent)
+        IMPLEMENT_CONVERSIONS(World)
+
     }
 
 }

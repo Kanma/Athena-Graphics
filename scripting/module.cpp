@@ -17,6 +17,7 @@ using namespace Athena::Graphics;
 /*********************************** EXTERNAL FUNCTIONS *********************************/
 
 extern bool bind_Visual_VisualComponent(v8::Handle<Object> parent);
+extern bool bind_Visual_World(v8::Handle<Object> parent);
 
 
 /*************************************** FUNCTIONS *************************************/
@@ -28,7 +29,8 @@ bool init_visual_submodule(v8::Handle<Object> parent, const std::string& moduleP
     v8::Handle<Object> ns = Object::New();
     parent->Set(String::New("Visual"), ns);
 
-    return bind_Visual_VisualComponent(ns);
+    return bind_Visual_VisualComponent(ns) &&
+           bind_Visual_World(ns);
 }
 
 

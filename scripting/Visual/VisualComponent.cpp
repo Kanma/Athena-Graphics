@@ -47,15 +47,15 @@ v8::Handle<Value> VisualComponent_New(const Arguments& args)
 
 /************************************** PROPERTIES *************************************/
 
-// v8::Handle<Value> VisualComponent_GetWorld(Local<String> property, const AccessorInfo &info)
-// {
-//     HandleScope handle_scope;
-//
-//     VisualComponent* ptr = GetPtr(info.This());
-//     assert(ptr);
-//
-//     return handle_scope.Close(toJavaScript(ptr->getWorld()));
-// }
+v8::Handle<Value> VisualComponent_GetWorld(Local<String> property, const AccessorInfo &info)
+{
+    HandleScope handle_scope;
+
+    VisualComponent* ptr = GetPtr(info.This());
+    assert(ptr);
+
+    return handle_scope.Close(toJavaScript(ptr->getWorld()));
+}
 
 
 /************************************ BINDING FUNCTION **********************************/
@@ -76,7 +76,7 @@ bool bind_Visual_VisualComponent(v8::Handle<v8::Object> parent)
         component->Inherit(pManager->getClassTemplate("Athena.Entities.Component"));
 
         // Attributes
-        // AddAttribute(component, "world", VisualComponent_GetWorld, 0);
+        AddAttribute(component, "world", VisualComponent_GetWorld, 0);
 
         pManager->declareClassTemplate("Athena.Graphics.Visual.VisualComponent", component);
 
