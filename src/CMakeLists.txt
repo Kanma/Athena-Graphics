@@ -57,7 +57,7 @@ endif()
 
 xmake_project_link(ATHENA_GRAPHICS ATHENA_ENTITIES OGRE)
 
-xmake_add_to_list_property(ATHENA_GRAPHICS COMPILE_DEFINITIONS "ATHENA_EXPORTS")
+xmake_add_to_list_property(ATHENA_GRAPHICS COMPILE_DEFINITIONS "ATHENA_GRAPHICS_EXPORTS")
 
 
 # Exportations
