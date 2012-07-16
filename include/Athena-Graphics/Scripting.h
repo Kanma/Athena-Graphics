@@ -17,6 +17,22 @@ namespace Graphics {
     namespace Visual {
 
         //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ EntityComponent wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL EntityComponent* fromJSEntityComponent(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript EntityComponent (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSEntityComponent();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript EntityComponent around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(EntityComponent* pEntityComponent);
+
+
+        //------------------------------------------------------------------------------------
         /// @brief  Retrieve the C++ VisualComponent wrapped by a JavaScript one
         //------------------------------------------------------------------------------------
         ATHENA_GRAPHICS_SYMBOL VisualComponent* fromJSVisualComponent(v8::Handle<v8::Value> value);
