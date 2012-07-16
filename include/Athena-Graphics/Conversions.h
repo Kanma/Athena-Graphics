@@ -33,40 +33,40 @@
 namespace Athena {
 namespace Graphics {
 
-    Ogre::Vector2 toOgre(const Math::Vector2& v);
-    Ogre::Vector3 toOgre(const Math::Vector3& v);
-    Ogre::Vector4 toOgre(const Math::Vector4& v);
+    Ogre::Vector2 ATHENA_GRAPHICS_SYMBOL toOgre(const Math::Vector2& v);
+    Ogre::Vector3 ATHENA_GRAPHICS_SYMBOL toOgre(const Math::Vector3& v);
+    Ogre::Vector4 ATHENA_GRAPHICS_SYMBOL toOgre(const Math::Vector4& v);
 
-    Ogre::Quaternion toOgre(const Math::Quaternion& q);
-    Ogre::ColourValue toOgre(const Math::Color& c);
-    Ogre::AxisAlignedBox toOgre(const Math::AxisAlignedBox& b);
+    Ogre::Quaternion ATHENA_GRAPHICS_SYMBOL toOgre(const Math::Quaternion& q);
+    Ogre::ColourValue ATHENA_GRAPHICS_SYMBOL toOgre(const Math::Color& c);
+    Ogre::AxisAlignedBox ATHENA_GRAPHICS_SYMBOL toOgre(const Math::AxisAlignedBox& b);
 
-    Ogre::Matrix3 toOgre(const Math::Matrix3& m);
-    Ogre::Matrix4 toOgre(const Math::Matrix4& m);
+    Ogre::Matrix3 ATHENA_GRAPHICS_SYMBOL toOgre(const Math::Matrix3& m);
+    Ogre::Matrix4 ATHENA_GRAPHICS_SYMBOL toOgre(const Math::Matrix4& m);
 
-    Ogre::Radian toOgre(const Math::Radian& a);
-    Ogre::Degree toOgre(const Math::Degree& a);
+    Ogre::Radian ATHENA_GRAPHICS_SYMBOL toOgre(const Math::Radian& a);
+    Ogre::Degree ATHENA_GRAPHICS_SYMBOL toOgre(const Math::Degree& a);
 
-    Ogre::Plane toOgre(const Math::Plane& p);
-    Ogre::Sphere toOgre(const Math::Sphere& s);
+    Ogre::Plane ATHENA_GRAPHICS_SYMBOL toOgre(const Math::Plane& p);
+    Ogre::Sphere ATHENA_GRAPHICS_SYMBOL toOgre(const Math::Sphere& s);
 
 
-    Math::Vector2 fromOgre(const Ogre::Vector2& v);
-    Math::Vector3 fromOgre(const Ogre::Vector3& v);
-    Math::Vector4 fromOgre(const Ogre::Vector4& v);
+    Math::Vector2 ATHENA_GRAPHICS_SYMBOL fromOgre(const Ogre::Vector2& v);
+    Math::Vector3 ATHENA_GRAPHICS_SYMBOL fromOgre(const Ogre::Vector3& v);
+    Math::Vector4 ATHENA_GRAPHICS_SYMBOL fromOgre(const Ogre::Vector4& v);
 
-    Math::Quaternion fromOgre(const Ogre::Quaternion& q);
-    Math::Color fromOgre(const Ogre::ColourValue& c);
-    Math::AxisAlignedBox fromOgre(const Ogre::AxisAlignedBox& b);
+    Math::Quaternion ATHENA_GRAPHICS_SYMBOL fromOgre(const Ogre::Quaternion& q);
+    Math::Color ATHENA_GRAPHICS_SYMBOL fromOgre(const Ogre::ColourValue& c);
+    Math::AxisAlignedBox ATHENA_GRAPHICS_SYMBOL fromOgre(const Ogre::AxisAlignedBox& b);
 
-    Math::Matrix3 fromOgre(const Ogre::Matrix3& m);
-    Math::Matrix4 fromOgre(const Ogre::Matrix4& m);
+    Math::Matrix3 ATHENA_GRAPHICS_SYMBOL fromOgre(const Ogre::Matrix3& m);
+    Math::Matrix4 ATHENA_GRAPHICS_SYMBOL fromOgre(const Ogre::Matrix4& m);
 
-    Math::Radian fromOgre(const Ogre::Radian& a);
-    Math::Degree fromOgre(const Ogre::Degree& a);
+    Math::Radian ATHENA_GRAPHICS_SYMBOL fromOgre(const Ogre::Radian& a);
+    Math::Degree ATHENA_GRAPHICS_SYMBOL fromOgre(const Ogre::Degree& a);
 
-    Math::Plane fromOgre(const Ogre::Plane& p);
-    Math::Sphere fromOgre(const Ogre::Sphere& s);
+    Math::Plane ATHENA_GRAPHICS_SYMBOL fromOgre(const Ogre::Plane& p);
+    Math::Sphere ATHENA_GRAPHICS_SYMBOL fromOgre(const Ogre::Sphere& s);
 
 }
 }
