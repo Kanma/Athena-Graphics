@@ -33,6 +33,22 @@ namespace Graphics {
 
 
         //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ Object wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL Object* fromJSObject(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript Object (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSObject();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript Object around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(Object* pObject);
+
+
+        //------------------------------------------------------------------------------------
         /// @brief  Retrieve the C++ VisualComponent wrapped by a JavaScript one
         //------------------------------------------------------------------------------------
         ATHENA_GRAPHICS_SYMBOL VisualComponent* fromJSVisualComponent(v8::Handle<v8::Value> value);

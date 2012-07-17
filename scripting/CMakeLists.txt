@@ -6,6 +6,7 @@ xmake_import_search_paths(ATHENA_GRAPHICS)
 # List the source files
 set(SRCS module.cpp
          Visual/EntityComponent.cpp
+         Visual/Object.cpp
          Visual/VisualComponent.cpp
          Visual/World.cpp
 )
@@ -20,6 +21,6 @@ xmake_create_dynamic_library(ATHENA_GRAPHICS_SCRIPTING_MODULE Athena-Graphics-Sc
                             "${ATHENA_GRAPHICS_VERSION_MAJOR}.${ATHENA_GRAPHICS_VERSION_MINOR}.${ATHENA_GRAPHICS_VERSION_PATCH}"
                              ${SRCS})
 
-xmake_project_link(ATHENA_GRAPHICS_SCRIPTING_MODULE ATHENA_GRAPHICS ATHENA_SCRIPTING)
+xmake_project_link(ATHENA_GRAPHICS_SCRIPTING_MODULE ATHENA_GRAPHICS ATHENA_SCRIPTING OGRE)
 
 create_scripting_module(ATHENA_GRAPHICS_SCRIPTING_MODULE "Athena.Graphics" "${JS_SRCS}")
