@@ -41,7 +41,7 @@ v8::Handle<Value> Object_New(const Arguments& args)
 
     else
     {
-        return ThrowException(String::New("Invalid parameters, valid syntax:\nObject(name, components_list)\nObject(<C++ world>)"));
+        return ThrowException(String::New("Invalid parameters, valid syntax:\nObject(name, components_list)\nObject(<C++ object>)"));
     }
 }
 
