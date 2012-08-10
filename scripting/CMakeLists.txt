@@ -10,6 +10,7 @@ set(SRCS module.cpp
          Visual/EntityComponent.cpp
          Visual/Object.cpp
          Visual/Plane.cpp
+         Visual/PointLight.cpp
          Visual/VisualComponent.cpp
          Visual/World.cpp
 )
