@@ -8,6 +8,7 @@ set(SRCS module.cpp
          Visual/Camera.cpp
          Visual/EntityComponent.cpp
          Visual/Object.cpp
+         Visual/Plane.cpp
          Visual/VisualComponent.cpp
          Visual/World.cpp
 )
