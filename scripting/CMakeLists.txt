@@ -5,6 +5,7 @@ xmake_import_search_paths(ATHENA_GRAPHICS)
 
 # List the source files
 set(SRCS module.cpp
+         Debug/AudioListener.cpp
          Debug/Axes.cpp
          Debug/Camera.cpp
          Debug/DebugComponent.cpp

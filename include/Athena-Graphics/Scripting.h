@@ -18,6 +18,22 @@ namespace Graphics {
     namespace Debug {
 
         //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ AudioListener wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL AudioListener* fromJSAudioListener(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript AudioListener (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSAudioListener();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript AudioListener around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(AudioListener* pAudioListener);
+
+
+        //------------------------------------------------------------------------------------
         /// @brief  Retrieve the C++ Axes wrapped by a JavaScript one
         //------------------------------------------------------------------------------------
         ATHENA_GRAPHICS_SYMBOL Axes* fromJSAxes(v8::Handle<v8::Value> value);

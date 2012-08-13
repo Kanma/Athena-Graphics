@@ -73,6 +73,7 @@ namespace Graphics {
 
     namespace Debug {
 
+        IMPLEMENT_CONVERSIONS(AudioListener)
         IMPLEMENT_CONVERSIONS(Axes)
         IMPLEMENT_CONVERSIONS(Camera)
         IMPLEMENT_CONVERSIONS(DebugComponent)
