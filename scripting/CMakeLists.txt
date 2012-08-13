@@ -9,6 +9,7 @@ set(SRCS module.cpp
          Debug/Camera.cpp
          Debug/DebugComponent.cpp
          Debug/DirectionalLight.cpp
+         Debug/PointLight.cpp
          Visual/Camera.cpp
          Visual/DirectionalLight.cpp
          Visual/EntityComponent.cpp
