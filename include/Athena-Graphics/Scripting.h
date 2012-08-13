@@ -14,7 +14,123 @@
 namespace Athena {
 namespace Graphics {
 
+
+    namespace Debug {
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ Axes wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL Axes* fromJSAxes(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript Axes (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSAxes();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript Axes around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(Axes* pAxes);
+
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ Camera wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL Camera* fromJSCamera(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript Camera (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSCamera();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript Camera around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(Camera* pCamera);
+
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ DebugComponent wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL DebugComponent* fromJSDebugComponent(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript DebugComponent (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSDebugComponent();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript DebugComponent around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(DebugComponent* pDebugComponent);
+
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ DirectionalLight wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL DirectionalLight* fromJSDirectionalLight(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript DirectionalLight (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSDirectionalLight();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript DirectionalLight around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(DirectionalLight* pDirectionalLight);
+
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ PointLight wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL PointLight* fromJSPointLight(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript PointLight (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSPointLight();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript PointLight around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(PointLight* pPointLight);
+    }
+
+
     namespace Visual {
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ Camera wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL Camera* fromJSCamera(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript Camera (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSCamera();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript Camera around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(Camera* pCamera);
+
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ DirectionalLight wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL DirectionalLight* fromJSDirectionalLight(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript DirectionalLight (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSDirectionalLight();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript DirectionalLight around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(DirectionalLight* pDirectionalLight);
+
 
         //------------------------------------------------------------------------------------
         /// @brief  Retrieve the C++ EntityComponent wrapped by a JavaScript one
@@ -46,6 +162,54 @@ namespace Graphics {
         /// @brief  Wrap a new JavaScript Object around a C++ one
         //------------------------------------------------------------------------------------
         v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(Object* pObject);
+
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ Plane wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL Plane* fromJSPlane(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript Plane (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSPlane();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript Plane around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(Plane* pPlane);
+
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ PointLight wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL PointLight* fromJSPointLight(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript PointLight (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSPointLight();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript PointLight around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(PointLight* pPointLight);
+
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ Spotlight wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL Spotlight* fromJSSpotlight(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript Spotlight (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSSpotlight();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript Spotlight around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(Spotlight* pSpotlight);
 
 
         //------------------------------------------------------------------------------------

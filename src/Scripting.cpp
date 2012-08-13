@@ -71,10 +71,26 @@ v8::Handle<v8::Value> toJavaScript(CLASS_NAME* pObject)                         
 namespace Athena {
 namespace Graphics {
 
+    namespace Debug {
+
+        IMPLEMENT_CONVERSIONS(Axes)
+        IMPLEMENT_CONVERSIONS(Camera)
+        IMPLEMENT_CONVERSIONS(DebugComponent)
+        IMPLEMENT_CONVERSIONS(DirectionalLight)
+        IMPLEMENT_CONVERSIONS(PointLight)
+
+    }
+
+
     namespace Visual {
 
+        IMPLEMENT_CONVERSIONS(Camera)
+        IMPLEMENT_CONVERSIONS(DirectionalLight)
         IMPLEMENT_CONVERSIONS(EntityComponent)
         IMPLEMENT_CONVERSIONS(Object)
+        IMPLEMENT_CONVERSIONS(Plane)
+        IMPLEMENT_CONVERSIONS(PointLight)
+        IMPLEMENT_CONVERSIONS(Spotlight)
         IMPLEMENT_CONVERSIONS(VisualComponent)
         IMPLEMENT_CONVERSIONS(World)
 
