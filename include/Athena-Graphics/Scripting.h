@@ -34,6 +34,22 @@ namespace Graphics {
 
 
         //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ AudioSource wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL AudioSource* fromJSAudioSource(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript AudioSource (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSAudioSource();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript AudioSource around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(AudioSource* pAudioSource);
+
+
+        //------------------------------------------------------------------------------------
         /// @brief  Retrieve the C++ Axes wrapped by a JavaScript one
         //------------------------------------------------------------------------------------
         ATHENA_GRAPHICS_SYMBOL Axes* fromJSAxes(v8::Handle<v8::Value> value);

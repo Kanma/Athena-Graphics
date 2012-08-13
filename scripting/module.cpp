@@ -19,6 +19,7 @@ using namespace Athena::Graphics;
 /*********************************** EXTERNAL FUNCTIONS *********************************/
 
 extern bool bind_Debug_AudioListener(v8::Handle<Object> parent);
+extern bool bind_Debug_AudioSource(v8::Handle<Object> parent);
 extern bool bind_Debug_Axes(v8::Handle<Object> parent);
 extern bool bind_Debug_Camera(v8::Handle<Object> parent);
 extern bool bind_Debug_DebugComponent(v8::Handle<Object> parent);
@@ -78,6 +79,7 @@ bool init_debug_submodule(v8::Handle<Object> parent, const std::string& modulePa
 
     return bind_Debug_DebugComponent(ns) &&
            bind_Debug_AudioListener(ns) &&
+           bind_Debug_AudioSource(ns) &&
            bind_Debug_Axes(ns) &&
            bind_Debug_Camera(ns) &&
            bind_Debug_DirectionalLight(ns) &&
