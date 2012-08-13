@@ -95,6 +95,22 @@ namespace Graphics {
         /// @brief  Wrap a new JavaScript PointLight around a C++ one
         //------------------------------------------------------------------------------------
         v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(PointLight* pPointLight);
+
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ Spotlight wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL Spotlight* fromJSSpotlight(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript Spotlight (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSSpotlight();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript Spotlight around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(Spotlight* pSpotlight);
     }
 
 
