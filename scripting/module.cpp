@@ -18,6 +18,8 @@ using namespace Athena::Graphics;
 
 /*********************************** EXTERNAL FUNCTIONS *********************************/
 
+extern bool bind_Debug_DebugComponent(v8::Handle<Object> parent);
+
 extern bool bind_Visual_Camera(v8::Handle<Object> parent);
 extern bool bind_Visual_DirectionalLight(v8::Handle<Object> parent);
 extern bool bind_Visual_EntityComponent(v8::Handle<Object> parent);
@@ -58,6 +60,17 @@ bool init_ogre_module(v8::Handle<Object> globals)
     ns->Set(String::New("PT_PERSPECTIVE"),  Uint32::New(Ogre::PT_PERSPECTIVE));
 
     return true;
+}
+
+
+bool init_debug_submodule(v8::Handle<Object> parent, const std::string& modulePath)
+{
+    HandleScope handle_scope;
+
+    v8::Handle<Object> ns = Object::New();
+    parent->Set(String::New("Debug"), ns);
+
+    return bind_Debug_DebugComponent(ns);
 }
 
 
@@ -103,6 +116,7 @@ extern "C" {
         parent->Set(String::New("VERSION"), String::New(Athena::Graphics::VERSION));
 
         return init_ogre_module(context->Global()) &&
+               init_debug_submodule(parent, modulePath) &&
                init_visual_submodule(parent, modulePath);
     }
 }
