@@ -60,6 +60,11 @@ public:
         m_fScale = fScale;
     }
 
+    inline float getScale() const
+    {
+        return m_fScale;
+    }
+
 
     //_____ Implementation of DebugComponent __________
 public:
