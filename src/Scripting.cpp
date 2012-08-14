@@ -80,6 +80,7 @@ namespace Graphics {
         IMPLEMENT_CONVERSIONS(DebugComponent)
         IMPLEMENT_CONVERSIONS(DirectionalLight)
         IMPLEMENT_CONVERSIONS(PointLight)
+        IMPLEMENT_CONVERSIONS(Skeleton)
         IMPLEMENT_CONVERSIONS(Spotlight)
 
     }

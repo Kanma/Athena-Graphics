@@ -130,6 +130,22 @@ namespace Graphics {
 
 
         //------------------------------------------------------------------------------------
+        /// @brief  Retrieve the C++ Skeleton wrapped by a JavaScript one
+        //------------------------------------------------------------------------------------
+        ATHENA_GRAPHICS_SYMBOL Skeleton* fromJSSkeleton(v8::Handle<v8::Value> value);
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Create a new JavaScript Skeleton (wrapping a new C++ one)
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Object> ATHENA_GRAPHICS_SYMBOL createJSSkeleton();
+
+        //------------------------------------------------------------------------------------
+        /// @brief  Wrap a new JavaScript Skeleton around a C++ one
+        //------------------------------------------------------------------------------------
+        v8::Handle<v8::Value> ATHENA_GRAPHICS_SYMBOL toJavaScript(Skeleton* pSkeleton);
+
+
+        //------------------------------------------------------------------------------------
         /// @brief  Retrieve the C++ Spotlight wrapped by a JavaScript one
         //------------------------------------------------------------------------------------
         ATHENA_GRAPHICS_SYMBOL Spotlight* fromJSSpotlight(v8::Handle<v8::Value> value);
