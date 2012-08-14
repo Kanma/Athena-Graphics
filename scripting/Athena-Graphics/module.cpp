@@ -40,36 +40,6 @@ extern bool bind_Visual_World(v8::Handle<Object> parent);
 
 /*************************************** FUNCTIONS *************************************/
 
-bool init_ogre_module(v8::Handle<Object> globals)
-{
-    HandleScope handle_scope;
-
-    v8::Handle<Object> ns = Object::New();
-    globals->Set(String::New("Ogre"), ns);
-
-    ns->Set(String::New("VERSION"), String::New("OGRE_VERSION_MAJOR.OGRE_VERSION_MINOR.OGRE_VERSION_PATCH"));
-
-    // PolygonMode
-    ns->Set(String::New("PM_POINTS"),    Uint32::New(Ogre::PM_POINTS));
-    ns->Set(String::New("PM_WIREFRAME"), Uint32::New(Ogre::PM_WIREFRAME));
-    ns->Set(String::New("PM_SOLID"),     Uint32::New(Ogre::PM_SOLID));
-
-    // FrustumPlane
-    ns->Set(String::New("FRUSTUM_PLANE_NEAR"),   Uint32::New(Ogre::FRUSTUM_PLANE_NEAR));
-    ns->Set(String::New("FRUSTUM_PLANE_FAR"),    Uint32::New(Ogre::FRUSTUM_PLANE_FAR));
-    ns->Set(String::New("FRUSTUM_PLANE_LEFT"),   Uint32::New(Ogre::FRUSTUM_PLANE_LEFT));
-    ns->Set(String::New("FRUSTUM_PLANE_RIGHT"),  Uint32::New(Ogre::FRUSTUM_PLANE_RIGHT));
-    ns->Set(String::New("FRUSTUM_PLANE_TOP"),    Uint32::New(Ogre::FRUSTUM_PLANE_TOP));
-    ns->Set(String::New("FRUSTUM_PLANE_BOTTOM"), Uint32::New(Ogre::FRUSTUM_PLANE_BOTTOM));
-
-    // ProjectionType
-    ns->Set(String::New("PT_ORTHOGRAPHIC"), Uint32::New(Ogre::PT_ORTHOGRAPHIC));
-    ns->Set(String::New("PT_PERSPECTIVE"),  Uint32::New(Ogre::PT_PERSPECTIVE));
-
-    return true;
-}
-
-
 bool init_debug_submodule(v8::Handle<Object> parent, const std::string& modulePath)
 {
     HandleScope handle_scope;
@@ -127,10 +97,12 @@ extern "C" {
         if (ns->Get(String::New("Entities"))->IsUndefined())
             ScriptingManager::getSingletonPtr()->import("Athena.Entities", Context::GetCurrent());
 
+        if (context->Global()->Get(String::New("Ogre"))->IsUndefined())
+            ScriptingManager::getSingletonPtr()->import("Ogre", Context::GetCurrent());
+
         parent->Set(String::New("VERSION"), String::New(Athena::Graphics::VERSION));
 
-        return init_ogre_module(context->Global()) &&
-               init_debug_submodule(parent, modulePath) &&
+        return init_debug_submodule(parent, modulePath) &&
                init_visual_submodule(parent, modulePath);
     }
 }
