@@ -39,4 +39,7 @@ xmake_project_link(ATHENA_GRAPHICS_SCRIPTING_MODULE ATHENA_GRAPHICS ATHENA_SCRIP
 
 create_scripting_module(ATHENA_GRAPHICS_SCRIPTING_MODULE "Athena.Graphics" "${JS_SRCS}")
 
+# Disable some warnings in Visual Studio
+xmake_disable_vs_warning(ATHENA_GRAPHICS_SCRIPTING_MODULE 4244 NO)
+
 add_dependencies(Athena-Graphics-Scripting-module Ogre-Scripting-module)
