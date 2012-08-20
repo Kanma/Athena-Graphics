@@ -1,7 +1,7 @@
-/** @file	Spotlight.h
-	@author	Philip Abbet
+/** @file   Spotlight.h
+    @author Philip Abbet
 
-	Declaration of the class 'Athena::Graphics::Debug::Spotlight'
+    Declaration of the class 'Athena::Graphics::Debug::Spotlight'
 */
 
 #ifndef _ATHENA_GRAPHICS_DEBUG_SPOTLIGHT_H_
@@ -17,140 +17,140 @@ namespace Debug {
 
 
 //---------------------------------------------------------------------------------------
-/// @brief	Debug component that display a spotlight symbol
+/// @brief  Debug component that display a spotlight symbol
 ///
 /// If a 'spotlight source' is assigned, this component will also displays the cones of the
 /// spotlight. If none is supplied, the transforms origin (if any) is used (if it is a
 /// spotlight).
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL Spotlight: public DebugComponent
+class ATHENA_GRAPHICS_SYMBOL Spotlight: public DebugComponent
 {
-	//_____ Construction / Destruction __________
+    //_____ Construction / Destruction __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Constructor
-    /// @param	strName		Name of the component
+    /// @brief  Constructor
+    /// @param  strName     Name of the component
     //-----------------------------------------------------------------------------------
-	Spotlight(const std::string& strName, Entities::ComponentsList* pList);
-	
+    Spotlight(const std::string& strName, Entities::ComponentsList* pList);
+
     //-----------------------------------------------------------------------------------
-    /// @brief	Create a new component (Component creation method)
+    /// @brief  Create a new component (Component creation method)
     ///
-    /// @param	strName	Name of the component
-    /// @param	pList	List to which the component must be added
-    /// @return			The new component
+    /// @param  strName Name of the component
+    /// @param  pList   List to which the component must be added
+    /// @return         The new component
     //-----------------------------------------------------------------------------------
-	static Spotlight* create(const std::string& strName, Entities::ComponentsList* pList);
-	
+    static Spotlight* create(const std::string& strName, Entities::ComponentsList* pList);
+
     //-----------------------------------------------------------------------------------
-    /// @brief	Cast a component to a Spotlight
+    /// @brief  Cast a component to a Spotlight
     ///
-    /// @param	pComponent	The component
-    /// @return				The component, 0 if it isn't castable to a Spotlight
+    /// @param  pComponent  The component
+    /// @return             The component, 0 if it isn't castable to a Spotlight
     //-----------------------------------------------------------------------------------
-	static Spotlight* cast(Entities::Component* pComponent);
+    static Spotlight* cast(Entities::Component* pComponent);
 
 protected:
     //-----------------------------------------------------------------------------------
-    /// @brief	Destructor
+    /// @brief  Destructor
     //-----------------------------------------------------------------------------------
-	virtual ~Spotlight();
+    virtual ~Spotlight();
 
 
-	//_____ Methods __________
+    //_____ Methods __________
 public:
-	void setSpotlightSource(Visual::Spotlight* pSource);
+    void setSpotlightSource(Visual::Spotlight* pSource);
 
-	inline Visual::Spotlight* getSpotlightSource() const
-	{
-		return m_pSpotlightSource;
-	}
+    inline Visual::Spotlight* getSpotlightSource() const
+    {
+        return m_pSpotlightSource;
+    }
 
 
-	//_____ Implementation of DebugComponent __________
+    //_____ Implementation of DebugComponent __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Show the light symbol
+    /// @brief  Show the light symbol
     //-----------------------------------------------------------------------------------
-	virtual void show();
-	
-    //-----------------------------------------------------------------------------------
-    /// @brief	Hide the light symbol
-    //-----------------------------------------------------------------------------------
-	virtual void hide();
+    virtual void show();
 
-	//-----------------------------------------------------------------------------------
-	/// @brief	Returns the type of the component
-	/// @return	The type
-	//-----------------------------------------------------------------------------------
-	virtual const std::string getType() const
-	{
-		return TYPE;
-	}
+    //-----------------------------------------------------------------------------------
+    /// @brief  Hide the light symbol
+    //-----------------------------------------------------------------------------------
+    virtual void hide();
+
+    //-----------------------------------------------------------------------------------
+    /// @brief  Returns the type of the component
+    /// @return The type
+    //-----------------------------------------------------------------------------------
+    virtual const std::string getType() const
+    {
+        return TYPE;
+    }
 
 
     //_____ Links management __________
 protected:
-	//-----------------------------------------------------------------------------------
-	/// @brief	Called when a component this one is linked to must be unlinked
-	///
-	/// @remark	If you override it in your component, don't forget to call the base class
-	///			implementation!
-	//-----------------------------------------------------------------------------------
-	virtual void mustUnlinkComponent(Component* pComponent);
+    //-----------------------------------------------------------------------------------
+    /// @brief  Called when a component this one is linked to must be unlinked
+    ///
+    /// @remark If you override it in your component, don't forget to call the base class
+    ///         implementation!
+    //-----------------------------------------------------------------------------------
+    virtual void mustUnlinkComponent(Component* pComponent);
 
 
-	//_____ Management of the properties __________
+    //_____ Management of the properties __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Returns a list containing the properties of the component
+    /// @brief  Returns a list containing the properties of the component
     ///
     /// Used in the serialization mecanism of the components
-    /// @remark	Must be overriden by each component type. Each implementation must first call
-    ///			its base class one, and add a new category (named after the component's type)
-    ///			AT THE BEGINNING of the obtained list, containing the properties related to
-    ///			this type.
-    /// @return	The list of properties
+    /// @remark Must be overriden by each component type. Each implementation must first call
+    ///         its base class one, and add a new category (named after the component's type)
+    ///         AT THE BEGINNING of the obtained list, containing the properties related to
+    ///         this type.
+    /// @return The list of properties
     //-----------------------------------------------------------------------------------
-	virtual Utils::PropertiesList* getProperties() const;
+    virtual Utils::PropertiesList* getProperties() const;
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Set the value of a property of the component
+    /// @brief  Set the value of a property of the component
     ///
     /// Used in the deserialization mecanism of the parts
-    ///	@param	strCategory		The category of the property
-    ///	@param	strName			The name of the property
-    ///	@param	pValue			The value of the property
-    ///	@return					'true' if the property was used, 'false' if a required object
-    ///							is missing
-    /// @remark	Must be overriden by each component type. Each implementation must test if the
-    ///			property's category is the one of the component's type, and if so process the
-    ///			property's value. Otherwise, it must call its base class implementation.
+    /// @param  strCategory     The category of the property
+    /// @param  strName         The name of the property
+    /// @param  pValue          The value of the property
+    /// @return                 'true' if the property was used, 'false' if a required object
+    ///                         is missing
+    /// @remark Must be overriden by each component type. Each implementation must test if the
+    ///         property's category is the one of the component's type, and if so process the
+    ///         property's value. Otherwise, it must call its base class implementation.
     //-----------------------------------------------------------------------------------
-	virtual bool setProperty(const std::string& strCategory, const std::string& strName,
-							 Utils::Variant* pValue);
+    virtual bool setProperty(const std::string& strCategory, const std::string& strName,
+                             Utils::Variant* pValue);
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Set the value of a property of the component
+    /// @brief  Set the value of a property of the component
     ///
     /// Used in the deserialization mecanism of the parts
-    ///	@param	strName		The name of the property
-    ///	@param	pValue		The value of the property
-    ///	@return				'true' if the property was used, 'false' if a required object
-    ///						is missing
+    /// @param  strName     The name of the property
+    /// @param  pValue      The value of the property
+    /// @return             'true' if the property was used, 'false' if a required object
+    ///                     is missing
     //-----------------------------------------------------------------------------------
-	bool setProperty(const std::string& strName, Utils::Variant* pValue);
+    bool setProperty(const std::string& strName, Utils::Variant* pValue);
 
 
-	//_____ Constants __________
+    //_____ Constants __________
 public:
-	static const std::string TYPE;	///< Name of the type of component
+    static const std::string TYPE;  ///< Name of the type of component
 
 
-	//_____ Attributes __________
+    //_____ Attributes __________
 protected:
-	std::vector<Line3D*>    m_lines;			///< Lines used to represents the light
-	Visual::Spotlight*		m_pSpotlightSource;	///< The spotlight source
+    std::vector<Line3D*>    m_lines;            ///< Lines used to represents the light
+    Visual::Spotlight*      m_pSpotlightSource; ///< The spotlight source
 };
 
 }

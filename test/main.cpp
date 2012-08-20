@@ -11,12 +11,12 @@ using namespace Athena::Utils;
 int main(int argc, char** argv)
 {
     Math::Vector3 v(10.0, 20.0, 30.0);
-    
+
     Ogre::Vector3 v2 = toOgre(v);
 
     Ogre::Polygon p;
-    
+
     Describable d;
-    
+
     return 0;
 }

@@ -1,7 +1,7 @@
-/**	@file	World.cpp
-	@author	Philip Abbet
+/** @file   World.cpp
+    @author Philip Abbet
 
-	Implementation of the class 'Athena::Graphics::Visual::World'
+    Implementation of the class 'Athena::Graphics::Visual::World'
 */
 
 #include <Athena-Graphics/Visual/World.h>
@@ -26,7 +26,7 @@ using namespace std;
 /************************************** CONSTANTS **************************************/
 
 /// Context used for logging
-static const char*  __CONTEXT__	        = "Visual/World";
+static const char*  __CONTEXT__         = "Visual/World";
 
 /// Default name for the world components
 const std::string World::DEFAULT_NAME   = "VisualWorld";
@@ -40,13 +40,13 @@ const std::string   World::TYPE         = "Athena/Visual/World";
 World::World(const std::string& strName, ComponentsList* pList)
 : VisualComponent(DEFAULT_NAME, pList), m_pSceneManager(0)
 {
-	// Assertions
-	assert(m_pList);
-	assert(m_pList->getScene());
+    // Assertions
+    assert(m_pList);
+    assert(m_pList->getScene());
     assert(!m_pList->getEntity());
 
-	m_id.type = COMP_VISUAL;
-	
+    m_id.type = COMP_VISUAL;
+
     m_pList->getScene()->_setMainComponent(this);
 }
 
@@ -54,9 +54,9 @@ World::World(const std::string& strName, ComponentsList* pList)
 
 World::~World()
 {
-	// Assertions
-	assert(m_pList);
-	assert(m_pList->getScene());
+    // Assertions
+    assert(m_pList);
+    assert(m_pList->getScene());
 
     Ogre::Root::getSingletonPtr()->destroySceneManager(m_pSceneManager);
 
@@ -67,14 +67,14 @@ World::~World()
 
 World* World::create(const std::string& strName, ComponentsList* pList)
 {
-	return new World(strName, pList);
+    return new World(strName, pList);
 }
 
 //-----------------------------------------------------------------------
 
 World* World::cast(Component* pComponent)
 {
-	return dynamic_cast<World*>(pComponent);
+    return dynamic_cast<World*>(pComponent);
 }
 
 
@@ -134,76 +134,76 @@ const Math::Color World::getAmbientLight() const
 
 Utils::PropertiesList* World::getProperties() const
 {
-	// Call the base class implementation
-	PropertiesList* pProperties = VisualComponent::getProperties();
+    // Call the base class implementation
+    PropertiesList* pProperties = VisualComponent::getProperties();
 
-	// Create the category belonging to this type
-	pProperties->selectCategory(TYPE, false);
+    // Create the category belonging to this type
+    pProperties->selectCategory(TYPE, false);
 
     if (m_pSceneManager)
     {
         // Scene Manager type
-	    pProperties->set("scenemanager", new Variant(m_pSceneManager->getTypeName()));
+        pProperties->set("scenemanager", new Variant(m_pSceneManager->getTypeName()));
 
-	    // Ambient light
-	    pProperties->set("ambientlight", new Variant(getAmbientLight()));
-    }	
+        // Ambient light
+        pProperties->set("ambientlight", new Variant(getAmbientLight()));
+    }
 
-	// Returns the list
-	return pProperties;
+    // Returns the list
+    return pProperties;
 }
 
 //-----------------------------------------------------------------------
 
 bool World::setProperty(const std::string& strCategory, const std::string& strName,
-							      Utils::Variant* pValue)
+                                  Utils::Variant* pValue)
 {
-	assert(!strCategory.empty());
-	assert(!strName.empty());
-	assert(pValue);
+    assert(!strCategory.empty());
+    assert(!strName.empty());
+    assert(pValue);
 
-	if (strCategory == TYPE)
-		return World::setProperty(strName, pValue);
+    if (strCategory == TYPE)
+        return World::setProperty(strName, pValue);
 
-	return VisualComponent::setProperty(strCategory, strName, pValue);
+    return VisualComponent::setProperty(strCategory, strName, pValue);
 }
 
 //-----------------------------------------------------------------------
 
 bool World::setProperty(const std::string& strName, Utils::Variant* pValue)
 {
-	// Assertions
-	assert(!strName.empty());
-	assert(pValue);
+    // Assertions
+    assert(!strName.empty());
+    assert(pValue);
 
     // Declarations
     bool bUsed = true;
 
     // Scene Manager type
-	if (strName == "scenemanager")
-	{
-		if (!m_pSceneManager)
-			createSceneManager(pValue->toString());
-		else
+    if (strName == "scenemanager")
+    {
+        if (!m_pSceneManager)
+            createSceneManager(pValue->toString());
+        else
             bUsed = false;
-	}
+    }
 
     // Ambient light
-	else if (strName == "ambientlight")
-	{
-		if (m_pSceneManager)
-			setAmbientLight(pValue->toColor());
-		else
+    else if (strName == "ambientlight")
+    {
+        if (m_pSceneManager)
+            setAmbientLight(pValue->toColor());
+        else
             bUsed = false;
-	}
-	
-	else
-	{
+    }
+
+    else
+    {
         bUsed = false;
-	}
+    }
 
-	// Destroy the value
-	delete pValue;
+    // Destroy the value
+    delete pValue;
 
-	return bUsed;
+    return bUsed;
 }

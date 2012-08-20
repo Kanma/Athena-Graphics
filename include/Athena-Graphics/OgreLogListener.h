@@ -1,7 +1,7 @@
-/**	@file	OgreLogListener.h
-	@author	Philip Abbet
+/** @file   OgreLogListener.h
+    @author Philip Abbet
 
-	Declaration of the class 'Athena::Graphics::OgreLogListener'
+    Declaration of the class 'Athena::Graphics::OgreLogListener'
 */
 
 #ifndef _ATHENA_GRAPHICS_OGRELOGLISTENER_H_
@@ -15,37 +15,37 @@ namespace Athena {
 namespace Graphics {
 
 //---------------------------------------------------------------------------------------
-/// @brief	Listener for the log system of Ogre, that redirects the log messages from
+/// @brief  Listener for the log system of Ogre, that redirects the log messages from
 ///         Ogre to the Athena log system
 //---------------------------------------------------------------------------------------
-class ATHENA_SYMBOL OgreLogListener: public Ogre::LogListener
+class ATHENA_GRAPHICS_SYMBOL OgreLogListener: public Ogre::LogListener
 {
-	//_____ Construction / Destruction __________
+    //_____ Construction / Destruction __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Constructor
+    /// @brief  Constructor
     //-----------------------------------------------------------------------------------
-	OgreLogListener();
+    OgreLogListener();
 
     //-----------------------------------------------------------------------------------
-    /// @brief	Destructor
+    /// @brief  Destructor
     //-----------------------------------------------------------------------------------
-	virtual ~OgreLogListener();
+    virtual ~OgreLogListener();
 
 
-	//_____ Implementation of Ogre::LogListener __________
+    //_____ Implementation of Ogre::LogListener __________
 public:
     //-----------------------------------------------------------------------------------
-    /// @brief	Overriden from Ogre::LogListener
+    /// @brief  Overriden from Ogre::LogListener
     ///
     /// Called by the Ogre's LogManager each time a message is logged by it
-    /// @param	name		Name of the log
-    /// @param	message		Message to log
-    /// @param	lml			Log message level
-    /// @param	maskDebug	
+    /// @param  name        Name of the log
+    /// @param  message     Message to log
+    /// @param  lml         Log message level
+    /// @param  maskDebug
     //-----------------------------------------------------------------------------------
-	virtual void messageLogged(const Ogre::String& message, Ogre::LogMessageLevel lml,
-							   bool maskDebug, const Ogre::String& logName);
+    virtual void messageLogged(const Ogre::String& message, Ogre::LogMessageLevel lml,
+                               bool maskDebug, const Ogre::String& logName);
 };
 
 }
