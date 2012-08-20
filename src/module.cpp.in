@@ -22,6 +22,7 @@
 #include <Athena-Graphics/Debug/PointLight.h>
 #include <Athena-Graphics/Debug/Skeleton.h>
 #include <Athena-Graphics/Debug/Spotlight.h>
+#include <Athena-Graphics/Scripting.h>
 #include <Athena-Entities/ComponentsManager.h>
 #include <Ogre/OgreRoot.h>
 
@@ -44,26 +45,26 @@ namespace Graphics {
         ComponentsManager* pComponentsManager = ComponentsManager::getSingletonPtr();
 
         // Register the visual components
-        pComponentsManager->registerType(Visual::Camera::TYPE,              (ComponentCreationMethod*) &Visual::Camera::create);
-        pComponentsManager->registerType(Visual::DirectionalLight::TYPE,    (ComponentCreationMethod*) &Visual::DirectionalLight::create);
-        pComponentsManager->registerType(Visual::EntityComponent::TYPE,     (ComponentCreationMethod*) &Visual::EntityComponent::create);
-        pComponentsManager->registerType(Visual::Object::TYPE,              (ComponentCreationMethod*) &Visual::Object::create);
-        pComponentsManager->registerType(Visual::Plane::TYPE,               (ComponentCreationMethod*) &Visual::Plane::create);
-        pComponentsManager->registerType(Visual::PointLight::TYPE,          (ComponentCreationMethod*) &Visual::PointLight::create);
-        pComponentsManager->registerType(Visual::Spotlight::TYPE,           (ComponentCreationMethod*) &Visual::Spotlight::create);
-        pComponentsManager->registerType(Visual::VisualComponent::TYPE,     (ComponentCreationMethod*) &Visual::VisualComponent::create);
-        pComponentsManager->registerType(Visual::World::TYPE,               (ComponentCreationMethod*) &Visual::World::create);
+        pComponentsManager->registerType<Visual::Camera>();
+        pComponentsManager->registerType<Visual::DirectionalLight>();
+        pComponentsManager->registerType<Visual::EntityComponent>();
+        pComponentsManager->registerType<Visual::Object>();
+        pComponentsManager->registerType<Visual::Plane>();
+        pComponentsManager->registerType<Visual::PointLight>();
+        pComponentsManager->registerType<Visual::Spotlight>();
+        pComponentsManager->registerType<Visual::VisualComponent>();
+        pComponentsManager->registerType<Visual::World>();
 
         // Register the debug components
-        pComponentsManager->registerType(Debug::AudioListener::TYPE,        (ComponentCreationMethod*) &Debug::AudioListener::create);
-        pComponentsManager->registerType(Debug::AudioSource::TYPE,          (ComponentCreationMethod*) &Debug::AudioSource::create);
-        pComponentsManager->registerType(Debug::Axes::TYPE,                 (ComponentCreationMethod*) &Debug::Axes::create);
-        pComponentsManager->registerType(Debug::Camera::TYPE,               (ComponentCreationMethod*) &Debug::Camera::create);
-        pComponentsManager->registerType(Debug::DebugComponent::TYPE,       (ComponentCreationMethod*) &Debug::DebugComponent::create);
-        pComponentsManager->registerType(Debug::DirectionalLight::TYPE,     (ComponentCreationMethod*) &Debug::DirectionalLight::create);
-        pComponentsManager->registerType(Debug::PointLight::TYPE,           (ComponentCreationMethod*) &Debug::PointLight::create);
-        pComponentsManager->registerType(Debug::Skeleton::TYPE,             (ComponentCreationMethod*) &Debug::Skeleton::create);
-        pComponentsManager->registerType(Debug::Spotlight::TYPE,            (ComponentCreationMethod*) &Debug::Spotlight::create);
+        pComponentsManager->registerType<Debug::AudioListener>();
+        pComponentsManager->registerType<Debug::AudioSource>();
+        pComponentsManager->registerType<Debug::Axes>();
+        pComponentsManager->registerType<Debug::Camera>();
+        pComponentsManager->registerType<Debug::DebugComponent>();
+        pComponentsManager->registerType<Debug::DirectionalLight>();
+        pComponentsManager->registerType<Debug::PointLight>();
+        pComponentsManager->registerType<Debug::Skeleton>();
+        pComponentsManager->registerType<Debug::Spotlight>();
 
         return new Ogre::Root(strPluginFileName, strOgreConfigFileName, strOgreLogFileName);
     }
