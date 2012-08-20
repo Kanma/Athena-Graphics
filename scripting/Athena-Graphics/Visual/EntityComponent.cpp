@@ -38,10 +38,7 @@ v8::Handle<Value> EntityComponent_New(const Arguments& args)
         return SetObjectPtr(args.This(), pComponent, &NoOpWeakCallback);
     }
 
-    else
-    {
-        return ThrowException(String::New("Invalid parameters, valid syntax:\nEntityComponent(name, components_list)\nEntityComponent(<C++ component>)"));
-    }
+    return ThrowException(String::New("Invalid parameters, valid syntax:\nEntityComponent(name, components_list)\nEntityComponent(<C++ component>)"));
 }
 
 

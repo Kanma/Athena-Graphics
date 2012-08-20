@@ -38,10 +38,7 @@ v8::Handle<Value> DebugComponent_New(const Arguments& args)
         return SetObjectPtr(args.This(), pComponent, &NoOpWeakCallback);
     }
 
-    else
-    {
-        return ThrowException(String::New("Invalid parameters, valid syntax:\nDebugComponent(name, components_list)\nDebugComponent(<C++ component>)"));
-    }
+    return ThrowException(String::New("Invalid parameters, valid syntax:\nDebugComponent(name, components_list)\nDebugComponent(<C++ component>)"));
 }
 
 

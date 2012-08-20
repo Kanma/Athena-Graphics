@@ -38,10 +38,7 @@ v8::Handle<Value> VisualComponent_New(const Arguments& args)
         return SetObjectPtr(args.This(), pComponent, &NoOpWeakCallback);
     }
 
-    else
-    {
-        return ThrowException(String::New("Invalid parameters, valid syntax:\nVisualComponent(name, components_list)\nVisualComponent(<C++ component>)"));
-    }
+    return ThrowException(String::New("Invalid parameters, valid syntax:\nVisualComponent(name, components_list)\nVisualComponent(<C++ component>)"));
 }
 
 

@@ -40,10 +40,7 @@ v8::Handle<Value> PointLight_New(const Arguments& args)
         return SetObjectPtr(args.This(), pComponent, &NoOpWeakCallback);
     }
 
-    else
-    {
-        return ThrowException(String::New("Invalid parameters, valid syntax:\nPointLight(name, components_list)\nPointLight(<C++ light>)"));
-    }
+    return ThrowException(String::New("Invalid parameters, valid syntax:\nPointLight(name, components_list)\nPointLight(<C++ light>)"));
 }
 
 

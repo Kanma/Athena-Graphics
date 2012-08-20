@@ -38,10 +38,7 @@ v8::Handle<Value> Debug_AudioListener_New(const Arguments& args)
         return SetObjectPtr(args.This(), pComponent, &NoOpWeakCallback);
     }
 
-    else
-    {
-        return ThrowException(String::New("Invalid parameters, valid syntax:\nAudioListener(name, components_list)\nAudioListener(<C++ component>)"));
-    }
+    return ThrowException(String::New("Invalid parameters, valid syntax:\nAudioListener(name, components_list)\nAudioListener(<C++ component>)"));
 }
 
 

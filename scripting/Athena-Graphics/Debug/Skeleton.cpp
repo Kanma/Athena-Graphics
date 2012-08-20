@@ -39,10 +39,7 @@ v8::Handle<Value> Debug_Skeleton_New(const Arguments& args)
         return SetObjectPtr(args.This(), pComponent, &NoOpWeakCallback);
     }
 
-    else
-    {
-        return ThrowException(String::New("Invalid parameters, valid syntax:\nSkeleton(name, components_list)\nSkeleton(<C++ component>)"));
-    }
+    return ThrowException(String::New("Invalid parameters, valid syntax:\nSkeleton(name, components_list)\nSkeleton(<C++ component>)"));
 }
 
 

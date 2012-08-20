@@ -39,10 +39,7 @@ v8::Handle<Value> Object_New(const Arguments& args)
         return SetObjectPtr(args.This(), pComponent, &NoOpWeakCallback);
     }
 
-    else
-    {
-        return ThrowException(String::New("Invalid parameters, valid syntax:\nObject(name, components_list)\nObject(<C++ object>)"));
-    }
+    return ThrowException(String::New("Invalid parameters, valid syntax:\nObject(name, components_list)\nObject(<C++ object>)"));
 }
 
 

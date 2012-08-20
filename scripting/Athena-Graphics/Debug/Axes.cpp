@@ -38,10 +38,7 @@ v8::Handle<Value> Axes_New(const Arguments& args)
         return SetObjectPtr(args.This(), pComponent, &NoOpWeakCallback);
     }
 
-    else
-    {
-        return ThrowException(String::New("Invalid parameters, valid syntax:\nAxes(name, components_list)\nAxes(<C++ component>)"));
-    }
+    return ThrowException(String::New("Invalid parameters, valid syntax:\nAxes(name, components_list)\nAxes(<C++ component>)"));
 }
 
 

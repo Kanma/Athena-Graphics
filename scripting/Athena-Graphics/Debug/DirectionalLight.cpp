@@ -38,10 +38,7 @@ v8::Handle<Value> Debug_DirectionalLight_New(const Arguments& args)
         return SetObjectPtr(args.This(), pComponent, &NoOpWeakCallback);
     }
 
-    else
-    {
-        return ThrowException(String::New("Invalid parameters, valid syntax:\nDirectionalLight(name, components_list)\nDirectionalLight(<C++ component>)"));
-    }
+    return ThrowException(String::New("Invalid parameters, valid syntax:\nDirectionalLight(name, components_list)\nDirectionalLight(<C++ component>)"));
 }
 
 

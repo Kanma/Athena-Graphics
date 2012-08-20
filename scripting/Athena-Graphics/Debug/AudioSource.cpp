@@ -38,10 +38,7 @@ v8::Handle<Value> Debug_AudioSource_New(const Arguments& args)
         return SetObjectPtr(args.This(), pComponent, &NoOpWeakCallback);
     }
 
-    else
-    {
-        return ThrowException(String::New("Invalid parameters, valid syntax:\nAudioSource(name, components_list)\nAudioSource(<C++ component>)"));
-    }
+    return ThrowException(String::New("Invalid parameters, valid syntax:\nAudioSource(name, components_list)\nAudioSource(<C++ component>)"));
 }
 
 

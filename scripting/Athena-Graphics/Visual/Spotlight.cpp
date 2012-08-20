@@ -40,10 +40,7 @@ v8::Handle<Value> Spotlight_New(const Arguments& args)
         return SetObjectPtr(args.This(), pComponent, &NoOpWeakCallback);
     }
 
-    else
-    {
-        return ThrowException(String::New("Invalid parameters, valid syntax:\nSpotlight(name, components_list)\nSpotlight(<C++ light>)"));
-    }
+    return ThrowException(String::New("Invalid parameters, valid syntax:\nSpotlight(name, components_list)\nSpotlight(<C++ light>)"));
 }
 
 

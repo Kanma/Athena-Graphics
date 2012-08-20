@@ -40,10 +40,7 @@ v8::Handle<Value> Camera_New(const Arguments& args)
         return SetObjectPtr(args.This(), pComponent, &NoOpWeakCallback);
     }
 
-    else
-    {
-        return ThrowException(String::New("Invalid parameters, valid syntax:\nCamera(name, components_list)\nCamera(<C++ camera>)"));
-    }
+    return ThrowException(String::New("Invalid parameters, valid syntax:\nCamera(name, components_list)\nCamera(<C++ camera>)"));
 }
 
 
