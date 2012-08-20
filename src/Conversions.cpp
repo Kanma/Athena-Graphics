@@ -1,7 +1,7 @@
-/**	@file	Conversions.cpp
-	@author	Philip Abbet
+/** @file   Conversions.cpp
+    @author Philip Abbet
 
-	Implementation of the conversion functions between Athena and Ogre types
+    Implementation of the conversion functions between Athena and Ogre types
 */
 
 #include <Athena-Graphics/Conversions.h>
@@ -178,14 +178,14 @@ Math::Degree fromOgre(const Ogre::Degree& a)
 
 //-----------------------------------------------------------------------
 
-Math::Plane toOgre(const Ogre::Plane& p)
+Math::Plane fromOgre(const Ogre::Plane& p)
 {
     return Math::Plane(fromOgre(p.normal), -p.d);
 }
 
 //-----------------------------------------------------------------------
 
-Math::Sphere toOgre(const Ogre::Sphere& s)
+Math::Sphere fromOgre(const Ogre::Sphere& s)
 {
     return Math::Sphere(fromOgre(s.getCenter()), s.getRadius());
 }

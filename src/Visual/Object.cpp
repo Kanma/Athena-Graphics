@@ -1,7 +1,7 @@
-/**	@file	Object.cpp
-	@author	Philip Abbet
+/** @file   Object.cpp
+    @author Philip Abbet
 
-	Implementation of the class 'Athena::Graphics::Visual::Object'
+    Implementation of the class 'Athena::Graphics::Visual::Object'
 */
 
 #include <Athena-Graphics/Visual/Object.h>
@@ -30,7 +30,7 @@ using Ogre::SubEntity;
 /************************************** CONSTANTS **************************************/
 
 /// Context used for logging
-static const char* __CONTEXT__	= "Visual/Object";
+static const char* __CONTEXT__  = "Visual/Object";
 
 ///< Name of the type of component
 const std::string Object::TYPE  = "Athena/Visual/Object";
@@ -47,31 +47,31 @@ Object::Object(const std::string& strName, ComponentsList* pList)
 
 Object::~Object()
 {
-	assert(getSceneManager());
-	assert(m_pSceneNode);
+    assert(getSceneManager());
+    assert(m_pSceneNode);
 
-	if (m_pEntity)
-	{
-		assert(m_pEntity->getParentNode() == m_pSceneNode);
+    if (m_pEntity)
+    {
+        assert(m_pEntity->getParentNode() == m_pSceneNode);
 
-		m_pSceneNode->detachObject(m_pEntity);
-		getSceneManager()->destroyEntity(m_pEntity);
-		m_pEntity = 0;
-	}
+        m_pSceneNode->detachObject(m_pEntity);
+        getSceneManager()->destroyEntity(m_pEntity);
+        m_pEntity = 0;
+    }
 }
 
 //-----------------------------------------------------------------------
 
 Object* Object::create(const std::string& strName, ComponentsList* pList)
 {
-	return new Object(strName, pList);
+    return new Object(strName, pList);
 }
 
 //-----------------------------------------------------------------------
 
 Object* Object::cast(Component* pComponent)
 {
-	return dynamic_cast<Object*>(pComponent);
+    return dynamic_cast<Object*>(pComponent);
 }
 
 
@@ -79,39 +79,39 @@ Object* Object::cast(Component* pComponent)
 
 bool Object::loadMesh(const std::string& strMeshName, const std::string& strGroupName)
 {
-	// Assertions
-	assert(!m_pEntity);
-	assert(!strMeshName.empty());
-	assert(getSceneManager());
-	assert(m_pSceneNode);
+    // Assertions
+    assert(!m_pEntity);
+    assert(!strMeshName.empty());
+    assert(getSceneManager());
+    assert(m_pSceneNode);
 
-	try
-	{
-		// Retrieve the mesh
-		MeshPtr mesh = MeshManager::getSingletonPtr()->getByName(strMeshName);
-		if (mesh.isNull())
-		{
-			mesh = MeshManager::getSingletonPtr()->load(strMeshName, strGroupName);
-			if (mesh.isNull())
-			{
-				ATHENA_LOG_ERROR("Failed to load the mesh '" + strMeshName + "' on the entity '" +
-								 m_id.strName + "', reason: file not found");
-				return false;
-			}
-		}
+    try
+    {
+        // Retrieve the mesh
+        MeshPtr mesh = MeshManager::getSingletonPtr()->getByName(strMeshName);
+        if (mesh.isNull())
+        {
+            mesh = MeshManager::getSingletonPtr()->load(strMeshName, strGroupName);
+            if (mesh.isNull())
+            {
+                ATHENA_LOG_ERROR("Failed to load the mesh '" + strMeshName + "' on the entity '" +
+                                 m_id.strName + "', reason: file not found");
+                return false;
+            }
+        }
 
-		// Create an Ogre entity and attach it to the scene node
-		m_pEntity = getSceneManager()->createEntity(m_id.strEntity + ".Visual[" + m_id.strName + "].Entity", strMeshName);
-		attachObject(m_pEntity);
-	}
-	catch (Exception& ex)
-	{
-		ATHENA_LOG_ERROR("Failed to load the mesh '" + strMeshName + "' on the entity '" +
-						 m_id.strName + "', reason: " + ex.getFullDescription());
-		return false;
-	}
+        // Create an Ogre entity and attach it to the scene node
+        m_pEntity = getSceneManager()->createEntity(m_id.strEntity + ".Visual[" + m_id.strName + "].Entity", strMeshName);
+        attachObject(m_pEntity);
+    }
+    catch (Exception& ex)
+    {
+        ATHENA_LOG_ERROR("Failed to load the mesh '" + strMeshName + "' on the entity '" +
+                         m_id.strName + "', reason: " + ex.getFullDescription());
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
 
@@ -119,45 +119,45 @@ bool Object::loadMesh(const std::string& strMeshName, const std::string& strGrou
 
 Utils::PropertiesList* Object::getProperties() const
 {
-	// Call the base class implementation
-	PropertiesList* pProperties = EntityComponent::getProperties();
+    // Call the base class implementation
+    PropertiesList* pProperties = EntityComponent::getProperties();
 
-	// Create the category belonging to this type
-	pProperties->selectCategory(TYPE, false);
+    // Create the category belonging to this type
+    pProperties->selectCategory(TYPE, false);
 
-	if (m_pEntity)
-	{
-		// Mesh
-		pProperties->set("mesh", new Variant(m_pEntity->getMesh()->getName()));
+    if (m_pEntity)
+    {
+        // Mesh
+        pProperties->set("mesh", new Variant(m_pEntity->getMesh()->getName()));
 
-		// Subentities
-		for (unsigned int i = 0; i < m_pEntity->getNumSubEntities(); ++i)
-		{
-			SubEntity* pSubEntity = m_pEntity->getSubEntity(i);
+        // Subentities
+        for (unsigned int i = 0; i < m_pEntity->getNumSubEntities(); ++i)
+        {
+            SubEntity* pSubEntity = m_pEntity->getSubEntity(i);
 
-			Variant* pStruct = new Variant(Variant::STRUCT);
-			pStruct->setField("index", new Variant(i));
-			pStruct->setField("material", new Variant(pSubEntity->getMaterialName()));
-			pStruct->setField("visible", new Variant(pSubEntity->isVisible()));
-			pProperties->set("subEntity", pStruct);
-		}
-	}
+            Variant* pStruct = new Variant(Variant::STRUCT);
+            pStruct->setField("index", new Variant(i));
+            pStruct->setField("material", new Variant(pSubEntity->getMaterialName()));
+            pStruct->setField("visible", new Variant(pSubEntity->isVisible()));
+            pProperties->set("subEntity", pStruct);
+        }
+    }
 
-	// Returns the list
-	return pProperties;
+    // Returns the list
+    return pProperties;
 }
 
 //-----------------------------------------------------------------------
 
 bool Object::setProperty(const std::string& strCategory, const std::string& strName,
-						 Utils::Variant* pValue)
+                         Utils::Variant* pValue)
 {
-	assert(!strCategory.empty());
-	assert(!strName.empty());
-	assert(pValue);
+    assert(!strCategory.empty());
+    assert(!strName.empty());
+    assert(pValue);
 
-	if (strCategory == TYPE)
-		return Object::setProperty(strName, pValue);
+    if (strCategory == TYPE)
+        return Object::setProperty(strName, pValue);
 
     return EntityComponent::setProperty(strCategory, strName, pValue);
 }
@@ -166,35 +166,35 @@ bool Object::setProperty(const std::string& strCategory, const std::string& strN
 
 bool Object::setProperty(const std::string& strName, Utils::Variant* pValue)
 {
-	// Assertions
-	assert(!strName.empty());
-	assert(pValue);
+    // Assertions
+    assert(!strName.empty());
+    assert(pValue);
 
-	// Declarations
-	bool bUsed = true;
+    // Declarations
+    bool bUsed = true;
 
-	// Mesh
-	if (strName == "mesh")
-	{
-		loadMesh(pValue->toString());
-	}
-	else if (m_pEntity)
-	{
-		// Sub-entities
-		if (strName == "subEntity")
-		{
-			SubEntity* pSubEntity = m_pEntity->getSubEntity(pValue->getField("index")->toUInt());
-			pSubEntity->setMaterialName(pValue->getField("material")->toString());
-			pSubEntity->setVisible(pValue->getField("visible")->toBool());
-		}
-	}
-	else
-	{
-		bUsed = false;
-	}
+    // Mesh
+    if (strName == "mesh")
+    {
+        loadMesh(pValue->toString());
+    }
+    else if (m_pEntity)
+    {
+        // Sub-entities
+        if (strName == "subEntity")
+        {
+            SubEntity* pSubEntity = m_pEntity->getSubEntity(pValue->getField("index")->toUInt());
+            pSubEntity->setMaterialName(pValue->getField("material")->toString());
+            pSubEntity->setVisible(pValue->getField("visible")->toBool());
+        }
+    }
+    else
+    {
+        bUsed = false;
+    }
 
-	// Destroy the value
-	delete pValue;
+    // Destroy the value
+    delete pValue;
 
-	return bUsed;
+    return bUsed;
 }

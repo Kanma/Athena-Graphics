@@ -1,7 +1,7 @@
-/**	@file	MeshAnimation.cpp
-	@author	Philip Abbet
+/** @file   MeshAnimation.cpp
+    @author Philip Abbet
 
-	Implementation of the class 'Athena::Graphics::MeshAnimation'
+    Implementation of the class 'Athena::Graphics::MeshAnimation'
 */
 
 // Athena's includes
@@ -19,7 +19,7 @@ using namespace std;
 MeshAnimation::MeshAnimation(Ogre::AnimationState* pAnimationState)
 : m_pAnimationState(pAnimationState)
 {
-	assert(pAnimationState);
+    assert(pAnimationState);
 }
 
 //-----------------------------------------------------------------------

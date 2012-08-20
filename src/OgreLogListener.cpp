@@ -1,7 +1,7 @@
-/**	@file	OgreLogListener.cpp
-	@author	Philip Abbet
+/** @file   OgreLogListener.cpp
+    @author Philip Abbet
 
-	Implementation of the class 'Athena::Graphics::OgreLogListener'
+    Implementation of the class 'Athena::Graphics::OgreLogListener'
 */
 
 #include <Athena-Graphics/OgreLogListener.h>
@@ -35,7 +35,7 @@ OgreLogListener::~OgreLogListener()
 /************************* IMPLEMENTATION OF Ogre::LogListener *************************/
 
 void OgreLogListener::messageLogged(const Ogre::String& message, Ogre::LogMessageLevel lml,
-								    bool maskDebug, const Ogre::String& logName)
+                                    bool maskDebug, const Ogre::String& logName)
 {
-	ATHENA_LOG_EVENT(message); 
+    ATHENA_LOG_EVENT(message);
 }

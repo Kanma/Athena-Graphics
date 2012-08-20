@@ -1,7 +1,7 @@
-/**	@file	DebugComponent.cpp
-	@author	Philip Abbet
+/** @file   DebugComponent.cpp
+    @author Philip Abbet
 
-	Implementation of the class 'Athena::Graphics::Debug::DebugComponent'
+    Implementation of the class 'Athena::Graphics::Debug::DebugComponent'
 */
 
 #include <Athena-Graphics/Debug/DebugComponent.h>
@@ -33,73 +33,73 @@ const std::string DebugComponent::TYPE = "Athena/Debug/DebugComponent";
 DebugComponent::DebugComponent(const std::string& strName, ComponentsList* pList)
 : Component(strName, pList), m_pSceneNode(0)
 {
-	// Assertions
-	assert(getSceneManager());
-	assert(m_pList);
-	assert(m_pList->getEntity());
-	assert(m_pList->getEntity()->getSignalsList());
-	assert(m_pList->getEntity()->getTransforms());
+    // Assertions
+    assert(getSceneManager());
+    assert(m_pList);
+    assert(m_pList->getEntity());
+    assert(m_pList->getEntity()->getSignalsList());
+    assert(m_pList->getEntity()->getTransforms());
 
-	m_id.type = COMP_DEBUG;
+    m_id.type = COMP_DEBUG;
 
-	// Create a scene node
-	m_pSceneNode = getSceneManager()->createSceneNode();
+    // Create a scene node
+    m_pSceneNode = getSceneManager()->createSceneNode();
 
-	// Use the transforms of the entity by default
-	setTransforms(0);
+    // Use the transforms of the entity by default
+    setTransforms(0);
 
-	// Register to the 'Scene shown' and 'Scene hidden' signals
-	SignalsList* pSignals = m_pList->getEntity()->getScene()->getSignalsList();
-	pSignals->connect(SIGNAL_SCENE_SHOWN, this, &DebugComponent::onSceneShown);
-	pSignals->connect(SIGNAL_SCENE_HIDDEN, this, &DebugComponent::onSceneHidden);
+    // Register to the 'Scene shown' and 'Scene hidden' signals
+    SignalsList* pSignals = m_pList->getEntity()->getScene()->getSignalsList();
+    pSignals->connect(SIGNAL_SCENE_SHOWN, this, &DebugComponent::onSceneShown);
+    pSignals->connect(SIGNAL_SCENE_HIDDEN, this, &DebugComponent::onSceneHidden);
 
-	// Register to the 'Entity enabled' and 'Entity disabled' signals
-	pSignals = m_pList->getEntity()->getSignalsList();
-	pSignals->connect(SIGNAL_ENTITY_ENABLED, this, &DebugComponent::onEntityEnabled);
-	pSignals->connect(SIGNAL_ENTITY_DISABLED, this, &DebugComponent::onEntityDisabled);
+    // Register to the 'Entity enabled' and 'Entity disabled' signals
+    pSignals = m_pList->getEntity()->getSignalsList();
+    pSignals->connect(SIGNAL_ENTITY_ENABLED, this, &DebugComponent::onEntityEnabled);
+    pSignals->connect(SIGNAL_ENTITY_DISABLED, this, &DebugComponent::onEntityDisabled);
 
-	// If the scene is already shown, simulates a signal event
-	if (m_pList->getEntity()->getScene()->isShown())
-		onSceneShown(0);
+    // If the scene is already shown, simulates a signal event
+    if (m_pList->getEntity()->getScene()->isShown())
+        onSceneShown(0);
 }
 
 //-----------------------------------------------------------------------
 
 DebugComponent::~DebugComponent()
 {
-	// Assertions
-	assert(getSceneManager());
-	assert(m_pSceneNode);
-	assert(m_pList);
-	assert(m_pList->getEntity());
-	assert(m_pList->getEntity()->getSignalsList());
+    // Assertions
+    assert(getSceneManager());
+    assert(m_pSceneNode);
+    assert(m_pList);
+    assert(m_pList->getEntity());
+    assert(m_pList->getEntity()->getSignalsList());
 
-	// Unregister from the 'Entity attached' and 'Entity detached' signals
-	SignalsList* pSignals = m_pList->getEntity()->getSignalsList();
-	pSignals->disconnect(SIGNAL_ENTITY_ENABLED, this, &DebugComponent::onEntityEnabled);
-	pSignals->disconnect(SIGNAL_ENTITY_DISABLED, this, &DebugComponent::onEntityDisabled);
+    // Unregister from the 'Entity attached' and 'Entity detached' signals
+    SignalsList* pSignals = m_pList->getEntity()->getSignalsList();
+    pSignals->disconnect(SIGNAL_ENTITY_ENABLED, this, &DebugComponent::onEntityEnabled);
+    pSignals->disconnect(SIGNAL_ENTITY_DISABLED, this, &DebugComponent::onEntityDisabled);
 
-	// Unregister from the 'Scene shown' and 'Scene hidden' signals
-	pSignals = m_pList->getEntity()->getScene()->getSignalsList();
-	pSignals->disconnect(SIGNAL_SCENE_SHOWN, this, &DebugComponent::onSceneShown);
-	pSignals->disconnect(SIGNAL_SCENE_HIDDEN, this, &DebugComponent::onSceneHidden);
+    // Unregister from the 'Scene shown' and 'Scene hidden' signals
+    pSignals = m_pList->getEntity()->getScene()->getSignalsList();
+    pSignals->disconnect(SIGNAL_SCENE_SHOWN, this, &DebugComponent::onSceneShown);
+    pSignals->disconnect(SIGNAL_SCENE_HIDDEN, this, &DebugComponent::onSceneHidden);
 
-	// Destroy the scene node
-	getSceneManager()->destroySceneNode(m_pSceneNode->getName());
+    // Destroy the scene node
+    getSceneManager()->destroySceneNode(m_pSceneNode->getName());
 }
 
 //-----------------------------------------------------------------------
 
 DebugComponent* DebugComponent::create(const std::string& strName, ComponentsList* pList)
 {
-	return new DebugComponent(strName, pList);
+    return new DebugComponent(strName, pList);
 }
 
 //-----------------------------------------------------------------------
 
 DebugComponent* DebugComponent::cast(Component* pComponent)
 {
-	return dynamic_cast<DebugComponent*>(pComponent);
+    return dynamic_cast<DebugComponent*>(pComponent);
 }
 
 
@@ -107,21 +107,21 @@ DebugComponent* DebugComponent::cast(Component* pComponent)
 
 void DebugComponent::onTransformsChanged()
 {
-	// Assertions
-	assert(m_pSceneNode);
+    // Assertions
+    assert(m_pSceneNode);
 
-	if (getTransforms())
-	{
-		m_pSceneNode->setPosition(toOgre(getTransforms()->getWorldPosition()));
-		m_pSceneNode->setOrientation(toOgre(getTransforms()->getWorldOrientation()));
-		m_pSceneNode->setScale(toOgre(getTransforms()->getWorldScale()));
-	}
-	else
-	{
-		m_pSceneNode->setPosition(Vector3::ZERO);
-		m_pSceneNode->setOrientation(Quaternion::IDENTITY);
-		m_pSceneNode->setScale(Vector3::UNIT_SCALE);
-	}
+    if (getTransforms())
+    {
+        m_pSceneNode->setPosition(toOgre(getTransforms()->getWorldPosition()));
+        m_pSceneNode->setOrientation(toOgre(getTransforms()->getWorldOrientation()));
+        m_pSceneNode->setScale(toOgre(getTransforms()->getWorldScale()));
+    }
+    else
+    {
+        m_pSceneNode->setPosition(Vector3::ZERO);
+        m_pSceneNode->setOrientation(Quaternion::IDENTITY);
+        m_pSceneNode->setScale(Vector3::UNIT_SCALE);
+    }
 
     Component::onTransformsChanged();
 }
@@ -131,58 +131,58 @@ void DebugComponent::onTransformsChanged()
 
 void DebugComponent::onSceneShown(Utils::Variant* pValue)
 {
-	// Assertions
-	assert(m_pSceneNode);
-	assert(m_pList);
-	assert(m_pList->getEntity());
-	assert(m_pList->getEntity()->getScene());
-	assert(m_pList->getEntity()->getScene()->isShown());
+    // Assertions
+    assert(m_pSceneNode);
+    assert(m_pList);
+    assert(m_pList->getEntity());
+    assert(m_pList->getEntity()->getScene());
+    assert(m_pList->getEntity()->getScene()->isShown());
 
-	if (m_pList->getEntity()->isEnabled())
-		onEntityEnabled(0);
+    if (m_pList->getEntity()->isEnabled())
+        onEntityEnabled(0);
 }
 
 //-----------------------------------------------------------------------
 
 void DebugComponent::onSceneHidden(Utils::Variant* pValue)
 {
-	// Assertions
-	assert(m_pSceneNode);
-	assert(m_pList);
-	assert(m_pList->getEntity());
-	assert(m_pList->getEntity()->getScene());
-	assert(!m_pList->getEntity()->getScene()->isShown());
+    // Assertions
+    assert(m_pSceneNode);
+    assert(m_pList);
+    assert(m_pList->getEntity());
+    assert(m_pList->getEntity()->getScene());
+    assert(!m_pList->getEntity()->getScene()->isShown());
 
-	if (m_pList->getEntity()->isEnabled())
-		getSceneManager()->getRootSceneNode()->removeChild(m_pSceneNode);
+    if (m_pList->getEntity()->isEnabled())
+        getSceneManager()->getRootSceneNode()->removeChild(m_pSceneNode);
 }
 
 //-----------------------------------------------------------------------
 
 void DebugComponent::onEntityEnabled(Utils::Variant* pValue)
 {
-	// Assertions
-	assert(m_pSceneNode);
-	assert(!m_pSceneNode->getParent());
-	assert(m_pList);
-	assert(m_pList->getEntity());
-	assert(m_pList->getEntity()->isEnabled());
+    // Assertions
+    assert(m_pSceneNode);
+    assert(!m_pSceneNode->getParent());
+    assert(m_pList);
+    assert(m_pList->getEntity());
+    assert(m_pList->getEntity()->isEnabled());
 
-	getSceneManager()->getRootSceneNode()->addChild(m_pSceneNode);
+    getSceneManager()->getRootSceneNode()->addChild(m_pSceneNode);
 }
 
 //-----------------------------------------------------------------------
 
 void DebugComponent::onEntityDisabled(Utils::Variant* pValue)
 {
-	// Assertions
-	assert(m_pSceneNode);
-	assert(m_pSceneNode->getParent());
-	assert(m_pList);
-	assert(m_pList->getEntity());
-	assert(!m_pList->getEntity()->isEnabled());
+    // Assertions
+    assert(m_pSceneNode);
+    assert(m_pSceneNode->getParent());
+    assert(m_pList);
+    assert(m_pList->getEntity());
+    assert(!m_pList->getEntity()->isEnabled());
 
-	getSceneManager()->getRootSceneNode()->removeChild(m_pSceneNode);
+    getSceneManager()->getRootSceneNode()->removeChild(m_pSceneNode);
 }
 
 
@@ -190,12 +190,12 @@ void DebugComponent::onEntityDisabled(Utils::Variant* pValue)
 
 Utils::PropertiesList* DebugComponent::getProperties() const
 {
-	// Call the base class implementation
-	PropertiesList* pProperties = Component::getProperties();
+    // Call the base class implementation
+    PropertiesList* pProperties = Component::getProperties();
 
-	// Create the category belonging to this type
-	pProperties->selectCategory(TYPE, false);
+    // Create the category belonging to this type
+    pProperties->selectCategory(TYPE, false);
 
-	// Returns the list
-	return pProperties;
+    // Returns the list
+    return pProperties;
 }

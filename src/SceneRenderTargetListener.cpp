@@ -1,7 +1,7 @@
-/**	@file	SceneRenderTargetListener.cpp
-	@author	Philip Abbet
+/** @file   SceneRenderTargetListener.cpp
+    @author Philip Abbet
 
-	Implementation of the class 'Athena::Graphics::SceneRenderTargetListener'
+    Implementation of the class 'Athena::Graphics::SceneRenderTargetListener'
 */
 
 #include <Athena-Graphics/SceneRenderTargetListener.h>
@@ -18,33 +18,33 @@ using namespace std;
 /***************************** CONSTRUCTION / DESTRUCTION ******************************/
 
 SceneRenderTargetListener::SceneRenderTargetListener(Ogre::RenderTarget* pRenderTarget,
-													 Scene* pScene)
+                                                     Scene* pScene)
 : m_pRenderTarget(pRenderTarget), m_pScene(pScene)
 {
-	assert(m_pRenderTarget);
-	assert(m_pScene);
+    assert(m_pRenderTarget);
+    assert(m_pScene);
 
-	m_pRenderTarget->addListener(this);
+    m_pRenderTarget->addListener(this);
 }
 
 //-----------------------------------------------------------------------
 
 SceneRenderTargetListener::~SceneRenderTargetListener()
 {
-	m_pRenderTarget->removeListener(this);
+    m_pRenderTarget->removeListener(this);
 }
 
 
 /************************************* OPERATIONS **************************************/
 
-void SceneRenderTargetListener::preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt) 
+void SceneRenderTargetListener::preRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
 {
-	m_pScene->show();
+    m_pScene->show();
 }
 
 //-----------------------------------------------------------------------
 
-void SceneRenderTargetListener::postRenderTargetUpdate(const Ogre::RenderTargetEvent& evt) 
+void SceneRenderTargetListener::postRenderTargetUpdate(const Ogre::RenderTargetEvent& evt)
 {
-	m_pScene->hide();
+    m_pScene->hide();
 }
