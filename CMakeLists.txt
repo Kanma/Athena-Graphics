@@ -29,9 +29,9 @@ endif()
 # Library version
 
 set(ATHENA_GRAPHICS_VERSION_MAJOR 1)
-set(ATHENA_GRAPHICS_VERSION_MINOR 2)
-set(ATHENA_GRAPHICS_VERSION_PATCH 0)
-set(ATHENA_GRAPHICS_VERSION_SUFFIX " (Dev)")
+set(ATHENA_GRAPHICS_VERSION_MINOR 1)
+set(ATHENA_GRAPHICS_VERSION_PATCH 1)
+set(ATHENA_GRAPHICS_VERSION_SUFFIX "")
 
 
 ##########################################################################################
