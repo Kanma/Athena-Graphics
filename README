@@ -1,7 +1,7 @@
 ********************************************************************************
 *                                                                              *
 *                               Athena-Graphics                                *
-*                                Version 1.1.0                                 *
+*                                Version 1.1.1                                 *
 *                    http://github.com/Kanma/Athena-Graphics                   *
 *                                                                              *
 ********************************************************************************
@@ -23,6 +23,49 @@ http://www.ogre3d.org).
 
 The use of this module is optional, you can choose to implement your own
 components instead.
+
+
+---------------------------------------
+- Dependencies
+---------------------------------------
+
+Athena-Graphics requires the following dependencies:
+
+   - XMake
+   - Athena-Math
+   - Athena-Core
+   - Athena-Entities
+   - FreeImage
+   - freetype
+   - Ogre
+   - UnitTest++
+   - zlib
+   - zziplib
+
+They are provided as GIT submodules of this repository and will be compiled
+automatically during the compilation of Athena-Entities.
+
+To download them, do:
+
+    somewhere$ cd <path/to/the/source/of/Athena-Graphics>
+    Athena-Graphics$ git submodule init
+    Athena-Graphics$ git submodule update
+
+
+---------------------------------------
+- Compilation
+---------------------------------------
+
+(Note: you'll need to install CMake to compile Athena-Graphics)
+
+To compile Athena-Graphics (and all its dependencies), do:
+
+    somewhere$ mkdir build
+    somewhere$ cd build
+    build$ cmake <path/to/the/source/of/Athena-Graphics>
+    build$ make
+
+The library will be put in build/bin/
 
 
 ---------------------------------------

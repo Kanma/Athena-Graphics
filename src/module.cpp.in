@@ -22,9 +22,12 @@
 #include <Athena-Graphics/Debug/PointLight.h>
 #include <Athena-Graphics/Debug/Skeleton.h>
 #include <Athena-Graphics/Debug/Spotlight.h>
-#include <Athena-Graphics/Scripting.h>
 #include <Athena-Entities/ComponentsManager.h>
 #include <Ogre/OgreRoot.h>
+
+#if ATHENA_GRAPHICS_SCRIPTING
+    #include <Athena-Graphics/Scripting.h>
+#endif
 
 using namespace Athena::Entities;
 
