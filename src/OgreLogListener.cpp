@@ -35,7 +35,8 @@ OgreLogListener::~OgreLogListener()
 /************************* IMPLEMENTATION OF Ogre::LogListener *************************/
 
 void OgreLogListener::messageLogged(const Ogre::String& message, Ogre::LogMessageLevel lml,
-                                    bool maskDebug, const Ogre::String& logName)
+                                    bool maskDebug, const Ogre::String& logName,
+                                    bool &skipThisMessage)
 {
     ATHENA_LOG_EVENT(message);
 }

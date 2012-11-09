@@ -14,6 +14,7 @@
 #include <Athena-Math/Color.h>
 #include <Athena-Math/AxisAlignedBox.h>
 #include <Ogre/OgreMesh.h>
+#include <Ogre/OgreRenderOperation.h>
 #include <Ogre/OgreResourceGroupManager.h>
 
 
