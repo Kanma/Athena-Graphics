@@ -13,7 +13,7 @@
 
 
 /// Used to export symbols from the library
-#if (ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32) && !ATHENA_GRAPHICS_STATIC
+#if (ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32)
 #    ifdef ATHENA_GRAPHICS_EXPORTS
 #        define ATHENA_GRAPHICS_SYMBOL  __declspec(dllexport)
 #    else

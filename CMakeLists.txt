@@ -2,14 +2,6 @@ cmake_minimum_required(VERSION 2.6)
 project(ATHENA_GRAPHICS)
 
 ##########################################################################################
-# Settings
-
-if (NOT DEFINED ATHENA_GRAPHICS_STATIC)
-    set(ATHENA_GRAPHICS_STATIC OFF CACHE BOOL "Build Athena-Graphics as a static library")
-endif()
-
-
-##########################################################################################
 # Library version
 
 set(ATHENA_GRAPHICS_VERSION_MAJOR 1)

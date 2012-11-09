@@ -88,16 +88,12 @@ endif()
 
 
 # Declaration of the library
-if (NOT ATHENA_GRAPHICS_STATIC)
-    xmake_create_dynamic_library(ATHENA_GRAPHICS Athena-Graphics
-                                 "${ATHENA_GRAPHICS_VERSION_MAJOR}.${ATHENA_GRAPHICS_VERSION_MINOR}.${ATHENA_GRAPHICS_VERSION_PATCH}"
-                                 "${ATHENA_GRAPHICS_VERSION_MAJOR}.${ATHENA_GRAPHICS_VERSION_MINOR}.${ATHENA_GRAPHICS_VERSION_PATCH}"
-                                 ${HEADERS} ${SRCS})
+xmake_create_dynamic_library(ATHENA_GRAPHICS Athena-Graphics
+                             "${ATHENA_GRAPHICS_VERSION_MAJOR}.${ATHENA_GRAPHICS_VERSION_MINOR}.${ATHENA_GRAPHICS_VERSION_PATCH}"
+                             "${ATHENA_GRAPHICS_VERSION_MAJOR}.${ATHENA_GRAPHICS_VERSION_MINOR}.${ATHENA_GRAPHICS_VERSION_PATCH}"
+                             ${HEADERS} ${SRCS})
 
-    xmake_add_to_list_property(ATHENA_GRAPHICS COMPILE_DEFINITIONS "ATHENA_GRAPHICS_EXPORTS")
-else()
-    xmake_create_static_library(ATHENA_GRAPHICS Athena-Graphics ${HEADERS} ${SRCS})
-endif()
+xmake_add_to_list_property(ATHENA_GRAPHICS COMPILE_DEFINITIONS "ATHENA_GRAPHICS_EXPORTS")
 
 xmake_project_link(ATHENA_GRAPHICS ATHENA_ENTITIES OGRE)
 
