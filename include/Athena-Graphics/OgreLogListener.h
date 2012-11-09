@@ -39,13 +39,18 @@ public:
     /// @brief  Overriden from Ogre::LogListener
     ///
     /// Called by the Ogre's LogManager each time a message is logged by it
-    /// @param  name        Name of the log
-    /// @param  message     Message to log
-    /// @param  lml         Log message level
-    /// @param  maskDebug
+    /// @param  name            Name of the log
+    /// @param  message         Message to log
+    /// @param  lml             Log message level
+    /// @param  maskDebug       If we are printing to the console or not
+    /// @param logName          The name of this log (so you can have several listeners
+    ///                         for different logs, and identify them)
+    /// @retval skipThisMessage If set to true by the messageLogged() implementation,
+    ///                         the message will not be logged
     //-----------------------------------------------------------------------------------
     virtual void messageLogged(const Ogre::String& message, Ogre::LogMessageLevel lml,
-                               bool maskDebug, const Ogre::String& logName);
+                               bool maskDebug, const Ogre::String& logName,
+                               bool &skipThisMessage);
 };
 
 }

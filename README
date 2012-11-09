@@ -1,7 +1,7 @@
 ********************************************************************************
 *                                                                              *
 *                               Athena-Graphics                                *
-*                                Version 1.1.1                                 *
+*                                Version 1.1.2                                 *
 *                    http://github.com/Kanma/Athena-Graphics                   *
 *                                                                              *
 ********************************************************************************
@@ -25,6 +25,13 @@ The use of this module is optional, you can choose to implement your own
 components instead.
 
 
+This module can be used as a standalone library, or combined with the rest of
+the Athena Game Framework (http://github.com/Kanma/Athena-Framework).
+
+Additionally, when the Athena-Scripting (http://github.com/Kanma/Athena-Scripting)
+module is built alongside this one, Athena-Graphics will be usable from JavaScript.
+
+
 ---------------------------------------
 - Dependencies
 ---------------------------------------
@@ -43,7 +50,7 @@ Athena-Graphics requires the following dependencies:
    - zziplib
 
 They are provided as GIT submodules of this repository and will be compiled
-automatically during the compilation of Athena-Entities.
+automatically during the compilation of Athena-Graphics.
 
 To download them, do:
 
