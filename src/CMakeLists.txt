@@ -95,6 +95,10 @@ xmake_create_dynamic_library(ATHENA_GRAPHICS Athena-Graphics
 
 xmake_add_to_list_property(ATHENA_GRAPHICS COMPILE_DEFINITIONS "ATHENA_GRAPHICS_EXPORTS")
 
+if (APPLE)
+    xmake_add_to_property(ATHENA_GRAPHICS LINK_FLAGS "-framework CoreFoundation")
+endif()
+
 xmake_project_link(ATHENA_GRAPHICS ATHENA_ENTITIES OGRE)
 
 if (DEFINED ATHENA_SCRIPTING_ENABLED AND ATHENA_SCRIPTING_ENABLED)
