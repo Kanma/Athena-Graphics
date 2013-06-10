@@ -95,7 +95,7 @@ namespace Athena
         ///                                     "zip": [ "zip_file1", "zip_file2" ]
         ///                                 }
         ///                             ]
-        ///                         }        
+        ///                         }
         /// @return                 The Ogre Root
         //--------------------------------------------------------------------------------
         extern Ogre::Root* initialize(const rapidjson::Value& configuration);
@@ -111,6 +111,37 @@ namespace Athena
         /// @return                 The Ogre Root
         //--------------------------------------------------------------------------------
         extern Ogre::Root* initialize(const std::string& strConfigurationFileName);
+
+
+        //--------------------------------------------------------------------------------
+        /// @brief  Use an existing window as a render window
+        /// @param  existingwindowhandle    Handle of the existing window
+        /// @param  strName                 Name of the window
+        /// @param  width                   Width of the window
+        /// @param  height                  Height of the window
+        /// @param  fullscreen              Indicates if the rendering must be done on the full
+        ///                                 screen
+        /// @return                         The render window, 0 if failed
+        //--------------------------------------------------------------------------------
+        Ogre::RenderWindow* createRenderWindow(size_t existingwindowhandle,
+                                               const std::string& strName,
+                                               int width, int height,
+                                               bool fullscreen);
+
+        //--------------------------------------------------------------------------------
+        /// @brief  Create a render window
+        /// @param  strName                 Name of the window
+        /// @param  strTitle                Title of the window
+        /// @param  width                   Width of the window
+        /// @param  height                  Height of the window
+        /// @param  fullscreen              Indicates if the rendering must be done on the
+        ///                                 full screen
+        /// @return                         The render window, 0 if failed
+        //--------------------------------------------------------------------------------
+        Ogre::RenderWindow* createRenderWindow(const std::string& strName,
+                                               const std::string& strTitle,
+                                               int width, int height,
+                                               bool fullscreen);
 
 
         ATHENA_GRAPHICS_SYMBOL extern const char* VERSION;

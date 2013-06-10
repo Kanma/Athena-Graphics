@@ -25,7 +25,9 @@
 #include <Athena-Entities/ComponentsManager.h>
 #include <Athena-Core/Data/Serialization.h>
 #include <Athena-Core/Log/LogManager.h>
+#include <Athena-Core/Utils/StringConverter.h>
 #include <Ogre/OgreRoot.h>
+#include <Ogre/OgreRenderWindow.h>
 
 #if ATHENA_GRAPHICS_SCRIPTING
     #include <Athena-Graphics/Scripting.h>
@@ -33,6 +35,7 @@
 
 using namespace Athena::Entities;
 using namespace Athena::Log;
+using namespace Athena::Utils;
 
 
 #if ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
@@ -70,7 +73,7 @@ namespace Graphics {
 
     const char* VERSION = "@ATHENA_GRAPHICS_VERSION_MAJOR@.@ATHENA_GRAPHICS_VERSION_MINOR@.@ATHENA_GRAPHICS_VERSION_PATCH@@ATHENA_GRAPHICS_VERSION_SUFFIX@";
 
-    //---------------------------------------------------
+    //---------------------------------------------------------------------
 
     Ogre::Root* initialize(const std::string& strConfigurationFileName)
     {
@@ -89,7 +92,7 @@ namespace Graphics {
         return initialize(document);
     }
 
-    //---------------------------------------------------
+    //---------------------------------------------------------------------
 
     Ogre::Root* initialize(const rapidjson::Value& configuration)
     {
@@ -219,6 +222,62 @@ namespace Graphics {
         }
 
         return pRoot;
+    }
+
+    //---------------------------------------------------------------------
+
+    Ogre::RenderWindow* createRenderWindow(size_t existingwindowhandle,
+                                           const std::string& strName,
+                                           int width, int height, bool fullscreen)
+    {
+        // Assertions
+        assert(Ogre::Root::getSingletonPtr());
+        assert(Ogre::ResourceGroupManager::getSingletonPtr());
+
+        // Declarations
+        Ogre::NameValuePairList miscParams;
+        Ogre::RenderWindow*     pWindow;
+
+        miscParams["externalWindowHandle"] = StringConverter::toString(existingwindowhandle);
+
+        #if ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
+            miscParams["macAPI"] = "cocoa";
+        #endif
+
+        pWindow = Ogre::Root::getSingletonPtr()->createRenderWindow(strName, width, height, fullscreen, &miscParams);
+
+        // Initialise the resources, parse scripts, etc
+        Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+        return pWindow;
+    }
+
+    //---------------------------------------------------------------------
+
+    Ogre::RenderWindow* createRenderWindow(const std::string& strName,
+                                           const std::string& strTitle,
+                                           int width, int height, bool fullscreen)
+    {
+        // Assertions
+        assert(Ogre::Root::getSingletonPtr());
+        assert(Ogre::ResourceGroupManager::getSingletonPtr());
+
+        // Declarations
+        Ogre::NameValuePairList miscParams;
+        Ogre::RenderWindow*     pWindow;
+
+        miscParams["title"] = strTitle;
+
+        #if ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
+            miscParams["macAPI"] = "cocoa";
+        #endif
+
+        pWindow = Ogre::Root::getSingletonPtr()->createRenderWindow(strName, width, height, fullscreen, &miscParams);
+
+        // Initialise the resources, parse scripts, etc
+        Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+        return pWindow;
     }
 
 }
