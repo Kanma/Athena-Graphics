@@ -94,6 +94,13 @@ namespace Athena
         ///                                     "fileSystem": [ "path1", "path2" ],
         ///                                     "zip": [ "zip_file1", "zip_file2" ]
         ///                                 }
+        ///                             ],
+        ///                             "renderSystem": "OpenGL Rendering Subsystem",
+        ///                             "renderOptions": [
+        ///                                 {
+        ///                                     "name": "option-name",
+        ///                                     "value": "option-value"
+        ///                                 }
         ///                             ]
         ///                         }
         /// @return                 The Ogre Root

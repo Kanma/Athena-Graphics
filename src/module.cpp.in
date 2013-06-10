@@ -221,6 +221,62 @@ namespace Graphics {
             ATHENA_LOG_ERROR2("Graphics module", "No Resource path declared in the configuration");
         }
 
+        // Setup the render system
+        Ogre::RenderSystem* rs = 0;
+        if (configuration.HasMember("renderSystem") && configuration["renderSystem"].IsString())
+        {
+            rs = pRoot->getRenderSystemByName(configuration["renderSystem"].GetString());
+            if (rs)
+            {
+                if (configuration.HasMember("renderOptions") && configuration["renderOptions"].IsObject())
+                {
+                    const rapidjson::Value& options = configuration["renderOptions"];
+
+                    rapidjson::Value::ConstValueIterator iter, iterEnd;
+                    for (iter = options.Begin(), iterEnd = options.End(); iter != iterEnd; ++iter)
+                    {
+                        if (!iter->IsObject())
+                        {
+                            ATHENA_LOG_ERROR2("Graphics module", "Invalid render option declaration: must be an object");
+                            continue;
+                        }
+                
+                        if (!iter->HasMember("name") || !(*iter)["name"].IsString())
+                        {
+                            ATHENA_LOG_ERROR2("Graphics module", "Invalid render option declaration: no name found");
+                            continue;
+                        }
+
+                        if (!iter->HasMember("value") || !(*iter)["value"].IsString())
+                        {
+                            ATHENA_LOG_ERROR2("Graphics module", "Invalid render option declaration: no value found");
+                            continue;
+                        }
+                        
+                        rs->setConfigOption((*iter)["name"].GetString(), (*iter)["value"].GetString());
+                    }
+                }
+            }
+            else
+            {
+                ATHENA_LOG_ERROR2("Graphics module", std::string("Unknown render system: ") + configuration["renderSystem"].GetString());
+            }
+        }
+
+        if (!rs)
+        {
+            // Use the first render system available
+            Ogre::RenderSystemList renderSystems = pRoot->getAvailableRenderers();
+            if (!renderSystems.empty())
+                rs = renderSystems[0];
+            else
+                ATHENA_LOG_ERROR2("Graphics module", "No render system found");
+        }
+
+        if (rs)
+            pRoot->setRenderSystem(rs);
+
+        // Return the Ogre root object
         return pRoot;
     }
 
