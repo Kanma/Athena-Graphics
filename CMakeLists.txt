@@ -7,7 +7,7 @@ project(ATHENA_GRAPHICS)
 set(ATHENA_GRAPHICS_VERSION_MAJOR 1)
 set(ATHENA_GRAPHICS_VERSION_MINOR 2)
 set(ATHENA_GRAPHICS_VERSION_PATCH 0)
-set(ATHENA_GRAPHICS_VERSION_SUFFIX " (Dev)")
+set(ATHENA_GRAPHICS_VERSION_SUFFIX "")
 
 
 ##########################################################################################
@@ -42,6 +42,7 @@ Athena-Graphics requires the following dependencies:
    - Ogre
    - FreeImage
    - FreeType
+   - rapidjson
    - ZLib
    - zziplib
 They are provided as GIT submodules of this repository.
