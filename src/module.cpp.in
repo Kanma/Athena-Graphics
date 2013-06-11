@@ -26,6 +26,7 @@
 #include <Athena-Core/Data/Serialization.h>
 #include <Athena-Core/Log/LogManager.h>
 #include <Athena-Core/Utils/StringConverter.h>
+#include <Athena-Core/Utils/Path.h>
 #include <Ogre/OgreRoot.h>
 #include <Ogre/OgreRenderWindow.h>
 
@@ -198,8 +199,12 @@ namespace Graphics {
                     rapidjson::Value::ConstValueIterator iter, iterEnd;
                     for (iter = paths.Begin(), iterEnd = paths.End(); iter != iterEnd; ++iter)
                     {
+                        std::string path = iter->GetString();
+                        if (!Path::isAbsolute(path))
+                            path = prefix + path;
+
                         Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-                                    prefix + iter->GetString(), "FileSystem", group);
+                                    path, "FileSystem", group);
                     }
                 }
 
@@ -210,8 +215,12 @@ namespace Graphics {
                     rapidjson::Value::ConstValueIterator iter, iterEnd;
                     for (iter = paths.Begin(), iterEnd = paths.End(); iter != iterEnd; ++iter)
                     {
+                        std::string path = iter->GetString();
+                        if (!Path::isAbsolute(path))
+                            path = prefix + path;
+
                         Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-                                    prefix + iter->GetString(), "Zip", group);
+                                    path, "Zip", group);
                     }
                 }
             }
