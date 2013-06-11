@@ -10,6 +10,7 @@
 #include <Athena-Entities/Prerequisites.h>
 #include <Athena-Graphics/Config.h>
 #include <Ogre/OgrePrerequisites.h>
+#include <rapidjson/Document.h>
 
 
 /// Used to export symbols from the library
@@ -44,9 +45,9 @@ namespace Athena
         class OgreLogListener;
         class SceneRenderTargetListener;
 
-        //------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------
         /// @brief  Contains all the debug components
-        //------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------
         namespace Debug
         {
             class AudioListener;
@@ -60,9 +61,9 @@ namespace Athena
             class Spotlight;
         }
 
-        //------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------
         /// @brief  Contains all the visual components
-        //------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------
         namespace Visual
         {
             class Camera;
@@ -77,26 +78,77 @@ namespace Athena
         }
 
 
-        //------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------
         /// @brief  Initialize the Graphics module
         ///
         /// The Root object of Ogre is created here
         ///
-        /// @param strPluginFileName        The file that contains plugins information.
-        ///                                 Defaults to "plugins.cfg", may be left blank to
-        ///                                 ignore.
-        /// @param strOgreConfigFileName    The file that contains the configuration to be
-        ///                                 loaded. Defaults to "ogre.cfg", may be left blank
-        ///                                 to load nothing.
-        /// @param strOgreLogFileName       The logfile to create, defaults to Ogre.log, may
-        ///                                 be left blank if you've already set up LogManager
-        ///                                 & Log yourself
-        /// @return                         The Ogre Root
-        //------------------------------------------------------------------------------------
-        extern Ogre::Root* initialize(const std::string& strPluginFileName = "plugins.cfg",
-                                      const std::string& strOgreConfigFileName = "ogre.cfg",
-                                      const std::string& strOgreLogFileName = "Ogre.log");
+        /// @param configuration    JSON object containing the configuration options, in
+        ///                         the form:
+        ///                         {
+        ///                             "pluginsFolder": "path/to/the/plugins",
+        ///                             "plugins": [ "plugin1", "plugin2" ],
+        ///                             "resources": [
+        ///                                 {
+        ///                                     "group": "name",
+        ///                                     "fileSystem": [ "path1", "path2" ],
+        ///                                     "zip": [ "zip_file1", "zip_file2" ]
+        ///                                 }
+        ///                             ],
+        ///                             "renderSystem": "OpenGL Rendering Subsystem",
+        ///                             "renderOptions": [
+        ///                                 {
+        ///                                     "name": "option-name",
+        ///                                     "value": "option-value"
+        ///                                 }
+        ///                             ]
+        ///                         }
+        /// @return                 The Ogre Root
+        //--------------------------------------------------------------------------------
+        extern Ogre::Root* initialize(const rapidjson::Value& configuration);
 
+
+        //--------------------------------------------------------------------------------
+        /// @brief  Initialize the Graphics module
+        ///
+        /// The Root object of Ogre is created here
+        ///
+        /// @param configuration    Path to the JSON file containing the configuration
+        ///                         options
+        /// @return                 The Ogre Root
+        //--------------------------------------------------------------------------------
+        extern Ogre::Root* initialize(const std::string& strConfigurationFileName);
+
+
+        //--------------------------------------------------------------------------------
+        /// @brief  Use an existing window as a render window
+        /// @param  existingwindowhandle    Handle of the existing window
+        /// @param  strName                 Name of the window
+        /// @param  width                   Width of the window
+        /// @param  height                  Height of the window
+        /// @param  fullscreen              Indicates if the rendering must be done on the full
+        ///                                 screen
+        /// @return                         The render window, 0 if failed
+        //--------------------------------------------------------------------------------
+        Ogre::RenderWindow* createRenderWindow(size_t existingwindowhandle,
+                                               const std::string& strName,
+                                               int width, int height,
+                                               bool fullscreen);
+
+        //--------------------------------------------------------------------------------
+        /// @brief  Create a render window
+        /// @param  strName                 Name of the window
+        /// @param  strTitle                Title of the window
+        /// @param  width                   Width of the window
+        /// @param  height                  Height of the window
+        /// @param  fullscreen              Indicates if the rendering must be done on the
+        ///                                 full screen
+        /// @return                         The render window, 0 if failed
+        //--------------------------------------------------------------------------------
+        Ogre::RenderWindow* createRenderWindow(const std::string& strName,
+                                               const std::string& strTitle,
+                                               int width, int height,
+                                               bool fullscreen);
 
 
         ATHENA_GRAPHICS_SYMBOL extern const char* VERSION;

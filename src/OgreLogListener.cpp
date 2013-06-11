@@ -13,12 +13,6 @@ using namespace Athena::Log;
 using namespace std;
 
 
-/************************************** CONSTANTS **************************************/
-
-/// Context used for logging
-static const char* __CONTEXT__ = "Ogre";
-
-
 /****************************** CONSTRUCTION / DESTRUCTION *****************************/
 
 OgreLogListener::OgreLogListener()
@@ -38,5 +32,10 @@ void OgreLogListener::messageLogged(const Ogre::String& message, Ogre::LogMessag
                                     bool maskDebug, const Ogre::String& logName,
                                     bool &skipThisMessage)
 {
-    ATHENA_LOG_EVENT(message);
+    switch (lml)
+    {
+        case Ogre::LML_TRIVIAL:  LogManager::Log(LOG_COMMENT, "Ogre", message, "", "", 0); break;
+        case Ogre::LML_NORMAL:   LogManager::Log(LOG_EVENT, "Ogre", message, "", "", 0); break;
+        case Ogre::LML_CRITICAL: LogManager::Log(LOG_ERROR, "Ogre", message, "", "", 0); break;
+    }
 }

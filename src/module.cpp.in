@@ -23,13 +23,50 @@
 #include <Athena-Graphics/Debug/Skeleton.h>
 #include <Athena-Graphics/Debug/Spotlight.h>
 #include <Athena-Entities/ComponentsManager.h>
+#include <Athena-Core/Data/Serialization.h>
+#include <Athena-Core/Log/LogManager.h>
+#include <Athena-Core/Utils/StringConverter.h>
+#include <Athena-Core/Utils/Path.h>
 #include <Ogre/OgreRoot.h>
+#include <Ogre/OgreRenderWindow.h>
 
 #if ATHENA_GRAPHICS_SCRIPTING
     #include <Athena-Graphics/Scripting.h>
 #endif
 
 using namespace Athena::Entities;
+using namespace Athena::Log;
+using namespace Athena::Utils;
+
+
+#if ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
+
+#include <CoreFoundation/CoreFoundation.h>
+
+// This function will locate the path to our application on OS X,
+// unlike windows you can not rely on the curent working directory
+// for locating your configuration files and resources.
+std::string macBundlePath()
+{
+    char path[1024];
+    CFBundleRef mainBundle = CFBundleGetMainBundle();
+    assert(mainBundle);
+
+    CFURLRef mainBundleURL = CFBundleCopyBundleURL(mainBundle);
+    assert(mainBundleURL);
+
+    CFStringRef cfStringRef = CFURLCopyFileSystemPath( mainBundleURL, kCFURLPOSIXPathStyle);
+    assert(cfStringRef);
+
+    CFStringGetCString(cfStringRef, path, 1024, kCFStringEncodingASCII);
+
+    CFRelease(mainBundleURL);
+    CFRelease(cfStringRef);
+
+    return std::string(path);
+}
+
+#endif
 
 
 namespace Athena {
@@ -37,13 +74,39 @@ namespace Graphics {
 
     const char* VERSION = "@ATHENA_GRAPHICS_VERSION_MAJOR@.@ATHENA_GRAPHICS_VERSION_MINOR@.@ATHENA_GRAPHICS_VERSION_PATCH@@ATHENA_GRAPHICS_VERSION_SUFFIX@";
 
+    //---------------------------------------------------------------------
 
-    Ogre::Root* initialize(const std::string& strPluginFileName,
-                           const std::string& strOgreConfigFileName,
-                           const std::string& strOgreLogFileName)
+    Ogre::Root* initialize(const std::string& strConfigurationFileName)
     {
+        // Assertions
+        assert(!strConfigurationFileName.empty());
+
+        // Load the configuration file
+        rapidjson::Document document;
+        if (!Data::loadJSONFile(strConfigurationFileName, document))
+        {
+            ATHENA_LOG_ERROR2("Graphics module", "Failed to process the configuration file '" + strConfigurationFileName + "'");
+            return 0;
+        }
+
+        // Initialization
+        return initialize(document);
+    }
+
+    //---------------------------------------------------------------------
+
+    Ogre::Root* initialize(const rapidjson::Value& configuration)
+    {
+        // Assertions
         assert(ComponentsManager::getSingletonPtr());
         assert(!Ogre::Root::getSingletonPtr());
+
+        // Check that a valid configuration object was provided
+        if (!configuration.IsObject())
+        {
+            ATHENA_LOG_ERROR2("Graphics module", "Invalid configuration object");
+            return 0;
+        }
 
         ComponentsManager* pComponentsManager = ComponentsManager::getSingletonPtr();
 
@@ -69,7 +132,217 @@ namespace Graphics {
         pComponentsManager->registerType<Debug::Skeleton>();
         pComponentsManager->registerType<Debug::Spotlight>();
 
-        return new Ogre::Root(strPluginFileName, strOgreConfigFileName, strOgreLogFileName);
+        // Create the Ogre Root object
+        Ogre::Root* pRoot = new Ogre::Root("", "", "");
+
+        // Load the Ogre plugins
+        std::string pluginsDir = ".";
+
+        if (configuration.HasMember("pluginsFolder"))
+            pluginsDir = configuration["pluginsFolder"].GetString();
+
+        if (!pluginsDir.empty() && (*pluginsDir.rbegin() != '/') && (*pluginsDir.rbegin() != '\\'))
+        {
+            #if ATHENA_PLATFORM == ATHENA_PLATFORM_WIN32
+                pluginsDir += "\\";
+            #elif ATHENA_PLATFORM == ATHENA_PLATFORM_LINUX
+                pluginsDir += "/";
+            #endif
+        }
+
+        if (configuration.HasMember("plugins") && configuration["plugins"].IsArray())
+        {
+            const rapidjson::Value& plugins = configuration["plugins"];
+
+            rapidjson::Value::ConstValueIterator iter, iterEnd;
+            for (iter = plugins.Begin(), iterEnd = plugins.End(); iter != iterEnd; ++iter)
+                pRoot->loadPlugin(pluginsDir + iter->GetString());
+        }
+        else
+        {
+            ATHENA_LOG_ERROR2("Graphics module", "No Ogre plugin declared in the configuration");
+        }
+
+        // Setup the resource groups
+        if (configuration.HasMember("resources") && configuration["resources"].IsArray())
+        {
+            #if ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
+                std::string prefix = macBundlePath() + "/";
+            #else
+                std::string prefix = "";
+            #endif
+
+            const rapidjson::Value& groups = configuration["resources"];
+
+            rapidjson::Value::ConstValueIterator iterGroup, iterGroupEnd;
+            for (iterGroup = groups.Begin(), iterGroupEnd = groups.End();
+                 iterGroup != iterGroupEnd; ++iterGroup)
+            {
+                if (!iterGroup->IsObject())
+                {
+                    ATHENA_LOG_ERROR2("Graphics module", "Invalid Resource group declaration: must be an object");
+                    continue;
+                }
+                
+                if (!iterGroup->HasMember("group") || !(*iterGroup)["group"].IsString())
+                {
+                    ATHENA_LOG_ERROR2("Graphics module", "Invalid Resource group declaration: no name found");
+                    continue;
+                }
+
+                std::string group = (*iterGroup)["group"].GetString();
+
+                if (iterGroup->HasMember("fileSystem") && (*iterGroup)["fileSystem"].IsArray())
+                {
+                    const rapidjson::Value& paths = (*iterGroup)["fileSystem"];
+
+                    rapidjson::Value::ConstValueIterator iter, iterEnd;
+                    for (iter = paths.Begin(), iterEnd = paths.End(); iter != iterEnd; ++iter)
+                    {
+                        std::string path = iter->GetString();
+                        if (!Path::isAbsolute(path))
+                            path = prefix + path;
+
+                        Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+                                    path, "FileSystem", group);
+                    }
+                }
+
+                if (iterGroup->HasMember("zip") && (*iterGroup)["zip"].IsArray())
+                {
+                    const rapidjson::Value& paths = (*iterGroup)["zip"];
+
+                    rapidjson::Value::ConstValueIterator iter, iterEnd;
+                    for (iter = paths.Begin(), iterEnd = paths.End(); iter != iterEnd; ++iter)
+                    {
+                        std::string path = iter->GetString();
+                        if (!Path::isAbsolute(path))
+                            path = prefix + path;
+
+                        Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+                                    path, "Zip", group);
+                    }
+                }
+            }
+        }
+        else
+        {
+            ATHENA_LOG_ERROR2("Graphics module", "No Resource path declared in the configuration");
+        }
+
+        // Setup the render system
+        Ogre::RenderSystem* rs = 0;
+        if (configuration.HasMember("renderSystem") && configuration["renderSystem"].IsString())
+        {
+            rs = pRoot->getRenderSystemByName(configuration["renderSystem"].GetString());
+            if (rs)
+            {
+                if (configuration.HasMember("renderOptions") && configuration["renderOptions"].IsObject())
+                {
+                    const rapidjson::Value& options = configuration["renderOptions"];
+
+                    rapidjson::Value::ConstValueIterator iter, iterEnd;
+                    for (iter = options.Begin(), iterEnd = options.End(); iter != iterEnd; ++iter)
+                    {
+                        if (!iter->IsObject())
+                        {
+                            ATHENA_LOG_ERROR2("Graphics module", "Invalid render option declaration: must be an object");
+                            continue;
+                        }
+                
+                        if (!iter->HasMember("name") || !(*iter)["name"].IsString())
+                        {
+                            ATHENA_LOG_ERROR2("Graphics module", "Invalid render option declaration: no name found");
+                            continue;
+                        }
+
+                        if (!iter->HasMember("value") || !(*iter)["value"].IsString())
+                        {
+                            ATHENA_LOG_ERROR2("Graphics module", "Invalid render option declaration: no value found");
+                            continue;
+                        }
+                        
+                        rs->setConfigOption((*iter)["name"].GetString(), (*iter)["value"].GetString());
+                    }
+                }
+            }
+            else
+            {
+                ATHENA_LOG_ERROR2("Graphics module", std::string("Unknown render system: ") + configuration["renderSystem"].GetString());
+            }
+        }
+
+        if (!rs)
+        {
+            // Use the first render system available
+            Ogre::RenderSystemList renderSystems = pRoot->getAvailableRenderers();
+            if (!renderSystems.empty())
+                rs = renderSystems[0];
+            else
+                ATHENA_LOG_ERROR2("Graphics module", "No render system found");
+        }
+
+        if (rs)
+            pRoot->setRenderSystem(rs);
+
+        // Return the Ogre root object
+        return pRoot;
+    }
+
+    //---------------------------------------------------------------------
+
+    Ogre::RenderWindow* createRenderWindow(size_t existingwindowhandle,
+                                           const std::string& strName,
+                                           int width, int height, bool fullscreen)
+    {
+        // Assertions
+        assert(Ogre::Root::getSingletonPtr());
+        assert(Ogre::ResourceGroupManager::getSingletonPtr());
+
+        // Declarations
+        Ogre::NameValuePairList miscParams;
+        Ogre::RenderWindow*     pWindow;
+
+        miscParams["externalWindowHandle"] = StringConverter::toString(existingwindowhandle);
+
+        #if ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
+            miscParams["macAPI"] = "cocoa";
+        #endif
+
+        pWindow = Ogre::Root::getSingletonPtr()->createRenderWindow(strName, width, height, fullscreen, &miscParams);
+
+        // Initialise the resources, parse scripts, etc
+        Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+        return pWindow;
+    }
+
+    //---------------------------------------------------------------------
+
+    Ogre::RenderWindow* createRenderWindow(const std::string& strName,
+                                           const std::string& strTitle,
+                                           int width, int height, bool fullscreen)
+    {
+        // Assertions
+        assert(Ogre::Root::getSingletonPtr());
+        assert(Ogre::ResourceGroupManager::getSingletonPtr());
+
+        // Declarations
+        Ogre::NameValuePairList miscParams;
+        Ogre::RenderWindow*     pWindow;
+
+        miscParams["title"] = strTitle;
+
+        #if ATHENA_PLATFORM == ATHENA_PLATFORM_APPLE
+            miscParams["macAPI"] = "cocoa";
+        #endif
+
+        pWindow = Ogre::Root::getSingletonPtr()->createRenderWindow(strName, width, height, fullscreen, &miscParams);
+
+        // Initialise the resources, parse scripts, etc
+        Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+        return pWindow;
     }
 
 }
