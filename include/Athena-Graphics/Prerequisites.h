@@ -10,7 +10,7 @@
 #include <Athena-Entities/Prerequisites.h>
 #include <Athena-Graphics/Config.h>
 #include <Ogre/OgrePrerequisites.h>
-#include <rapidjson/Document.h>
+#include <rapidjson/document.h>
 
 
 /// Used to export symbols from the library

@@ -882,6 +882,11 @@ Ogre::VertexData* MeshBuilder::createVertexData()
                     fBuffer[2] = iterVertex->texCoord[iter->usIndex].z;
                     vbuffer->writeData(offset, VertexElement::getTypeSize(iter->type), fBuffer);
                     break;
+
+                case Ogre::VES_BLEND_WEIGHTS:
+                case Ogre::VES_BLEND_INDICES:
+                    // Nothing to do, but the compiler complains if not present
+                    break;
                 }
 
                 offset += VertexElement::getTypeSize(iter->type);
